@@ -1,0 +1,376 @@
+/*-- FONTS --*/
+
+@font-face {
+    font-family: 'Regular';
+    src: url('../fonts/RajdhaniRegular.eot');
+    src: url('../fonts/RajdhaniRegular.eot') format('embedded-opentype'),
+         url('../fonts/RajdhaniRegular.woff2') format('woff2'),
+         url('../fonts/RajdhaniRegular.woff') format('woff'),
+         url('../fonts/RajdhaniRegular.ttf') format('truetype'),
+         url('../fonts/RajdhaniRegular.svg#RajdhaniRegular') format('svg');
+}
+
+@font-face {
+    font-family: 'Bold';
+    src: url('../fonts/RajdhaniBold.eot');
+    src: url('../fonts/RajdhaniBold.eot') format('embedded-opentype'),
+         url('../fonts/RajdhaniBold.woff2') format('woff2'),
+         url('../fonts/RajdhaniBold.woff') format('woff'),
+         url('../fonts/RajdhaniBold.ttf') format('truetype'),
+         url('../fonts/RajdhaniBold.svg#RajdhaniBold') format('svg');
+}
+
+@font-face {
+    font-family: 'Medium';
+    src: url('../fonts/RajdhaniMedium.eot');
+    src: url('../fonts/RajdhaniMedium.eot') format('embedded-opentype'),
+         url('../fonts/RajdhaniMedium.woff2') format('woff2'),
+         url('../fonts/RajdhaniMedium.woff') format('woff'),
+         url('../fonts/RajdhaniMedium.ttf') format('truetype'),
+         url('../fonts/RajdhaniMedium.svg#RajdhaniMedium') format('svg');
+}
+
+/*-- END FONTS --*/
+
+/*-- CLAXSON THEME OVERRIDES --*/
+
+body {
+    font-family:Regular;
+}
+
+.clearF{
+    clear:both;
+}
+
+/* HEADER */
+
+.head-tit {
+    background-color: #fb7102;
+}
+
+h1{
+    font-family: 'Medium';
+    font-size: 30px;
+    padding: 10px 0;
+    margin: 0;
+    color:#fff; 
+}
+
+label {
+    padding: 6px 0 0 0;
+}
+
+.separate-bottom {
+    margin-bottom: 10px;
+}
+
+.monoContent {
+    padding-top: 12px;
+}
+
+.unpadLeft{
+    padding-left:5px!important;
+}
+.unpadRight{
+    padding-right:5px!important;
+}
+
+.floatL{
+    float:left;
+}
+
+.floatR{
+    float:right;
+}
+
+.taR{
+    text-align: right;
+}
+
+.unmargTop{
+    margin-top: -10px;
+}
+
+/* END OF HEADER*/
+
+/* TABLE */
+
+.scrollerT{
+    max-height: 300px;
+    overflow: auto;
+}
+
+table thead {
+    background: rgba(52,73,94,0.94);
+    color: #ecf0f1;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #f9f9f9;
+}
+
+.table-striped > tbody > tr:hover{
+    background-color:#999;
+    color:#fff;
+}
+
+/* END OF TABLE */
+
+/* FOOTER */
+
+
+.footer{
+    background-color: #3f5367;
+    bottom: 0;
+    left:0;
+    position: fixed;
+    width: 100%;
+    color: #fff;
+}
+
+
+/* MEDIA QUERIES */
+
+@media(max-width:991px){
+    .butL{
+        float: left!important;
+    }
+    
+    .butCont{
+            margin: 20px auto 40px;
+            border-bottom: dotted #cccccc 2px;
+    }
+    
+   
+
+}
+
+@media(max-width:450px){
+ .btn {
+    /* float: left!important; */
+        float: none!important;;
+        margin: auto!important;;
+        text-align: center!important;;
+        display: inherit!important;;
+    }
+    .xs-6{
+        width:100%!important;
+        margin-bottom: 30px;
+    }
+}
+
+
+<!-- isotope -->
+
+
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: sans-serif;
+}
+
+/* ---- button ---- */
+
+.button {
+  display: inline-block;
+  padding: 0.5em 1.0em;
+  background: #EEE;
+  border: none;
+  border-radius: 7px;
+  background-image: linear-gradient( to bottom, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) );
+  color: #222;
+  font-family: sans-serif;
+  font-size: 16px;
+  text-shadow: 0 1px white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #8CF;
+  text-shadow: 0 1px hsla(0, 0%, 100%, 0.5);
+  color: #222;
+}
+
+.button:active,
+.button.is-checked {
+  background-color: #28F;
+}
+
+.button.is-checked {
+  color: white;
+  text-shadow: 0 -1px hsla(0, 0%, 0%, 0.8);
+}
+
+.button:active {
+  box-shadow: inset 0 1px 10px hsla(0, 0%, 0%, 0.8);
+}
+
+/* ---- button-group ---- */
+
+.button-group {
+  margin-bottom: 20px;
+}
+
+.button-group:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.button-group .button {
+  float: left;
+  border-radius: 0;
+  margin-left: 0;
+  margin-right: 1px;
+}
+
+.button-group .button:first-child { border-radius: 0.5em 0 0 0.5em; }
+.button-group .button:last-child { border-radius: 0 0.5em 0.5em 0; }
+
+/* ---- isotope ---- */
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: sans-serif;
+}
+
+/* ---- button ---- */
+
+.button {
+  display: inline-block;
+  padding: 0.5em 1.0em;
+  background: #EEE;
+  border: none;
+  border-radius: 7px;
+  background-image: linear-gradient( to bottom, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) );
+  color: #222;
+  font-family: sans-serif;
+  font-size: 16px;
+  text-shadow: 0 1px white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #8CF;
+  text-shadow: 0 1px hsla(0, 0%, 100%, 0.5);
+  color: #222;
+}
+
+.button:active,
+.button.is-checked {
+  background-color: #28F;
+}
+
+.button.is-checked {
+  color: white;
+  text-shadow: 0 -1px hsla(0, 0%, 0%, 0.8);
+}
+
+.button:active {
+  box-shadow: inset 0 1px 10px hsla(0, 0%, 0%, 0.8);
+}
+
+/* ---- button-group ---- */
+
+.button-group {
+  margin-bottom: 20px;
+}
+
+.button-group:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.button-group .button {
+  float: left;
+  border-radius: 0;
+  margin-left: 0;
+  margin-right: 1px;
+}
+
+.button-group .button:first-child { border-radius: 0.5em 0 0 0.5em; }
+.button-group .button:last-child { border-radius: 0 0.5em 0.5em 0; }
+
+/* ---- isotope ---- */
+
+.grid {
+  border: 1px solid #333;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .element-item ---- */
+
+.element-item {
+  position: relative;
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  padding: 10px;
+  background: #888;
+  color: #262524;
+}
+
+.element-item > * {
+  margin: 0;
+  padding: 0;
+}
+
+.element-item .name {
+  position: absolute;
+
+  left: 10px;
+  top: 60px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.element-item .symbol {
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  font-size: 42px;
+  font-weight: bold;
+  color: white;
+}
+
+.element-item .number {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+}
+
+.element-item .weight {
+  position: absolute;
+  left: 10px;
+  top: 76px;
+  font-size: 12px;
+}
+
+.element-item.alkali          { background: #F00; background: hsl(   0, 100%, 50%); }
+.element-item.alkaline-earth  { background: #F80; background: hsl(  36, 100%, 50%); }
+.element-item.lanthanoid      { background: #FF0; background: hsl(  72, 100%, 50%); }
+.element-item.actinoid        { background: #0F0; background: hsl( 108, 100%, 50%); }
+.element-item.transition      { background: #0F8; background: hsl( 144, 100%, 50%); }
+.element-item.post-transition { background: #0FF; background: hsl( 180, 100%, 50%); }
+.element-item.metalloid       { background: #08F; background: hsl( 216, 100%, 50%); }
+.element-item.diatomic        { background: #00F; background: hsl( 252, 100%, 50%); }
+.element-item.halogen         { background: #F0F; background: hsl( 288, 100%, 50%); }
+.element-item.noble-gas       { background: #F08; background: hsl( 324, 100%, 50%); }
+.
+
+/* ---- isotope ---- fin */
+

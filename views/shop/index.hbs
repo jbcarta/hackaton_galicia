@@ -1,0 +1,137 @@
+<!--
+Usuario Activo: {{x_email}}
+-->
+
+<div class="footer">
+  <p>Usuario Activo: {{x_email}}</p>
+</div>
+
+
+<form method="get" action="" name="frm_menu">
+       <!--
+            <button onclick="placeOrder()">Place Order</button>
+        -->
+</form>
+<!--
+<p> Demo Validación de Facturas de Proveedores</p>
+-->
+
+<!--
+    
+         init Isotope    
+-->
+<script>
+
+//    $(document).ready(function () 
+//    {   
+    
+        var $grid = $('.grid_isotope').isotope(
+                {
+                    itemSelector: '.element-item',
+                    layoutMode: 'fitRows',
+                    getSortData: 
+                    {
+                        name: '.name',
+                        symbol: '.symbol',
+                        number: '.number parseInt',
+                        category: '[data-category]',
+                        weight: function( itemElem ) 
+                        {
+                          var weight = $( itemElem ).find('.weight').text();
+                          return parseFloat( weight.replace( /[\(\)]/g, '') );
+                        }
+                    }
+                });
+
+        // filter functions
+        var filterFns = 
+            {
+                // show if number is greater than 50
+                numberGreaterThan50: function()
+                    {
+                        var number = $(this).find('.number').text();
+                        return parseInt( number, 10 ) > 50;
+                    },
+                // show if name ends with -ium
+                ium: function() 
+                    {
+                        var name = $(this).find('.name').text();
+                        return name.match( /ium$/ );
+                    }
+            };
+
+        // bind filter button click
+        $('#filters').on( 'click', 'button', function() 
+            {
+                var filterValue = $( this ).attr('data-filter');
+                // use filterFn if matches value
+                filterValue = filterFns[ filterValue ] || filterValue;
+                $grid.isotope({ filter: filterValue });
+            });
+
+        // bind sort button click
+        $('#sorts').on( 'click', 'button', function() 
+        {
+          var sortByValue = $(this).attr('data-sort-by');
+          $grid.isotope({ sortBy: sortByValue });
+        });
+
+        // change is-checked class on buttons
+        $('.button-group').each( function( i, buttonGroup ) 
+            {
+                var $buttonGroup = $( buttonGroup );
+                $buttonGroup.on( 'click', 'button', function() 
+                    {
+                        $buttonGroup.find('.is-checked').removeClass('is-checked');
+                        $( this ).addClass('is-checked');
+                    });
+            });
+  
+    //});
+    
+    // -------------------
+    //     Create Key
+    // ----------------------    
+    $('#createkey').on( 'click', function() {
+
+            //alert("Createkey click...");
+            var f = document.createElement("form");
+            f.setAttribute('method',"get");
+            f.setAttribute('action',"/createKey");
+
+            //var i = document.createElement("input"); //input element, text
+            //i.setAttribute('type',"text");
+            //i.setAttribute('name',"username");
+
+            var s = document.createElement("input"); //input element, Submit button
+            //s.setAttribute('type',"submit");
+            //s.setAttribute('value',"Submit");
+            $(document.body).append(f);
+        //function placeOrder(){
+            f.submit();
+            //}
+    });    
+    
+    // ----------------------
+    //     Create Asset
+    // ----------------------
+    $('#createasset').on( 'click', function() {
+
+        //alert("Createkey click...");
+        var f = document.createElement("form");
+        f.setAttribute('method',"get");
+        f.setAttribute('action',"/createAsset");
+
+        //var i = document.createElement("input"); //input element, text
+        //i.setAttribute('type',"text");
+        //i.setAttribute('name',"username");
+
+        var s = document.createElement("input"); //input element, Submit button
+        //s.setAttribute('type',"submit");
+        //s.setAttribute('value',"Submit");
+        $(document.body).append(f);
+    //function placeOrder(){
+        f.submit();
+        //}
+});    
+    </script>    

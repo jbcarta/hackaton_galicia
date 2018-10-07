@@ -1,0 +1,87 @@
+{{recdata}}
+{{recdata1}}
+{{recdata2}}
+
+
+
+    <!-- Column -->           
+    <div class="col-lg-4 col-md-4 col-sm-12">
+
+        <div class="panel panel-default panel-table">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col col-xs-6">
+                        <h3 class="panel-title">Cadena</h3>
+                    </div>
+                    <div class="col col-xs-6 text-right">
+                        <button type="button" class="btn btn-sm btn-primary btn-create" onclick="addtax()">button temp</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table  id="tchain" name="tchain" 
+                        class="table table-striped table-bordered table-list">
+                  <thead>
+                        <tr>
+                            <th><em class="fa fa-cog"></em></th>
+                            <!--
+                                <th class="hidden-xs">ID</th>
+                            -->
+                            <th>Index</th>
+                            <th>TimeStamp</th>
+                            <th>Nonce</th>
+                            <th>Hash</th>
+                            <th>PrevBlockHash</th>
+
+                        </tr> 
+                  </thead>
+                  <tbody>
+                    {{# each recdata2 }}                      
+                      <tr>
+                        <td align="center">
+                            <a class="btn btn-danger" onclick="deletetax()"><em class="fa fa-detail"></em></a>
+                        </td>                              
+                        <td>
+                            <input  type="text" class="form-control separate-bottom"  
+                                    placeholder="vacio index" name="index" id="index" value="{{index}}"/>
+                        </td>
+                        <td>                              
+                            <time>hola {{timestamp}}</time>
+                            <input  type="time" class="form-control separate-bottom"  
+                                        name="timestamp" id="timestamp" value="{{timestamp}}"/>
+                        </td>
+                        <td>                              
+                            <input  type="text" class="form-control separate-bottom"  
+                                        name="nonce" id="nonce" value="{{nonce}}"/>
+
+                        </td>
+                        <td>                              
+                            <input  type="text" class="form-control separate-bottom"  
+                                        name="hash" id="hash" value="{{hash}}"/>
+                        </td>
+                        <td>                              
+                            <input  type="text" class="form-control separate-bottom"  
+                                        name="prevblockhash" id="prevblockhas" value="{{prevBlockHash}}"/>
+                        </td>
+                      </tr>
+                    {{/each}}                                 
+                  </tbody>
+                </table>
+            </div>
+        </div>          
+    </div>
+ 
+                  
+                
+
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+-->
+
+<script type="text/javascript">
+    /*
+  $.getJSON(document.getElementById("chain").value).done(function (data) {
+    $(".output").append(data);
+  });
+  */
+</script>

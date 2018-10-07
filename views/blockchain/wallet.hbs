@@ -1,0 +1,279 @@
+<!-- *****************************************
+
+        Wallet
+
+***************************************** -->  
+
+
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<!--
+    <div class="container container-fluid head-tit">
+    sin el container, toma todo el ancho de la pantalla
+-->    
+    <div class="container-fluid head-tit">
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+                 data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h1 name="titulo" id="titulo">
+               {{ title }}
+          </h1>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+          <ul class="nav navbar-nav">
+            <li class="active"> <span class="sr-only">(current)</span></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+            
+                {{# ifeq keyExist false}}
+                <li><a onclick="grabar()" name="grabar" id="grabar">Grabar</a></li>
+                  
+                <!--                
+                    <li><a href="/supplierInvoiceInsert">Grabar Nueva Factura</a></li>
+
+                    <li><a href="/userdm">Salir sin Grabar</a></li>
+
+                    <li role="separator" class="divider"></li>
+
+                    <li><a href="#" data-href="#" 
+                          data-toggle="modal" data-target="#confirm-delete">Borrar Documento</a></li>
+                -->
+                  
+                <li role="separator" class="divider"></li>
+                {{/ifeq}}
+
+                <li><a href="/">Regresar al Menu Principal</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="footer">
+  <p>Usuario Activo: {{email}}</p>
+</div>
+
+
+
+<div class="row">
+
+
+    <!-- variables globales -->
+    <input id="currentRow"  name="currentRow" type="hidden" />
+
+    <!--
+        <form action="/supplierinvoice_edit/{{ this._id }}" method="post" id="checkout-form" class="form-horizontal">
+    -->
+
+    
+    <form action="/save_key" method="post" id="form_save_key"
+          name="form_save_key" class="form-horizontal" 
+            onsubmit="return formValidation()">
+
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+
+
+
+            <!-- First Column -->         
+            <div class="col-lg-2 col-md-2 col-sm-6">
+
+                <input id="returnaction"  name="returnaction" type="hidden" />
+
+                <input  name="id" id="id" value="{{this._id}}" type="hidden"/>
+                
+                <!-- vacio para bjar una linea -->
+                <div class="form-group">
+                   <label for="email" 
+                         class="control-label"> </label>
+                                          
+                </div>                
+
+                <!-- Email -->
+                <div class="form-group">
+                   <label for="email" 
+                         class="control-label">Email :</label>
+                   <div>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' class="form-control separate-bottom" placeholder="indique el email" name="email" id="email" value="{{email}}" readonly/>
+                        </div>
+                   </div>                                               
+                </div>
+
+                <!-- Name -->
+                <div class="form-group">
+                   <label for="name"  
+                        class="control-label">Nombre: </label>
+                   <div>
+                        <div class='input-group'>
+                            <input  type='text' class="form-control separate-bottom" 
+                                    name="name" id="name" value="{{name}}" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Name -->    
+                
+                <!-- Public Key -->
+                <div class="form-group">
+                   <label for="publickey"  
+                        class="control-label">Public Key:  </label>
+                   <div>
+                       
+                        <div class='input-group'>
+                            <input  type="hidden" class="form-control separate-bottom" 
+                                    name="publickey" id="publickey" value="{{publicKey}}"/>
+                        </div>
+                       
+                        {{publicKey}}
+
+                    </div>
+                </div>
+                <!-- End Public -->
+            
+                <!-- Private key-->
+                <div class="form-group">
+                   <label for="privatekey"  
+                        class="control-label">Private Key:  </label>
+                   <div>
+                     
+                        <div class='input-group'>
+                            <input  type="hidden" class="form-control separate-bottom" 
+                                    name="privatekey" id="privatekey" value="{{privateKey}}"/>
+
+                        </div>
+                     
+                        {{privateKey}}
+
+                    </div>
+                </div>
+                <!-- End Public -->            
+                 
+            </div>
+
+
+    
+
+        </div>
+            
+    </div>
+  
+  </form>
+    
+</div>
+
+
+
+<!--  ************************************************ -->
+
+<!--  *********     J A V A S C R I P T    *********** -->
+
+<!--  ************************************************ -->
+
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () 
+    {   
+
+        var currentColumn = 0;
+
+        var currentRow = [];
+
+    });
+
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+    function grabar()
+    {
+        $('#form_save_key').submit();
+    };
+ //);
+
+
+
+</script>   
+
+   <script>
+
+        // -------------------------------------
+        //     formValidation
+        // -------------------------------------        
+        function formValidation() 
+        {  
+              return true;  
+            
+          var email = document.form_create_post_userdm.email;  
+
+            var name = document.form_create_post_userdm.name;  
+          if(email_validation(email))  
+          {  
+            if(name_validation(name,1,40))  
+            {
+              return true;  
+            }  
+          }  
+          return false;  
+        } 
+
+
+        function email_validation(email,mx,my)  
+        {  
+          var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+          if(email.value.match(mailformat))  
+          {  
+            return true;  
+          }  
+          else  
+          {  
+            alert("Email no valido");  
+            email.focus();  
+            return false;  
+          }  
+        }  
+
+
+        function name_validation(name,mx,my)  
+        {  
+          var name_len = name.value.length;  
+          if (name_len == 0 || name_len >= my || name_len < mx)  
+          {  
+            alert("Nombre no puede estar vacío / logitud debe ser entre "+mx+" to "+my);  
+            name.focus();  
+            return false;  
+          }  
+          return true;  
+        }  
+
+
+        // -------------------------------------
+        //   Button de Eliminar documento
+        // -------------------------------------        
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            
+            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+        });
+    </script>
