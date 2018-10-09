@@ -37,9 +37,6 @@ var passport = require('passport');
 
     const connDb = new bcDb_driver.Connection(
               "https://test.bigchaindb.com/api/v1/",
-            //'https://test.bigchaindb.com/api/v1/',
-            //'https://test.bigchaindb.com/',
-            //'https://12.34.56.78:9984',
             {
                 app_id: '385b62f9',
                 app_key: '185a4d7d619448dbf0c725f3485fa0b6'
@@ -119,7 +116,7 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
     router.get('/createKey', function (req, res) 
     {
             res.locals.activateIsotope = false; //showisotope();
-            var keyExist = false;
+            var keyExist = true; //false;
             var tmp_id = req.session.passport.user;
             var tmp_email = "sin valor";
             var tmp_name = "sin valor";
@@ -137,21 +134,24 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
                     tmp_email = doc.email;
                     tmp_name = doc.name;                    
                     console.log("Exist doc:",doc);
-                    if (doc.privatekey != undefined && doc.publickey.length > 0)                
+                    if (doc.privateKey != undefined && doc.publicKey.length > 0)                
                     {
                         keyExist = true;
-
                     }
                 };
                 if(keyExist)
                 {
                     console.log("**********  /verkey  *******************"); 
-                    var xpublicKey = doc.publickey;
-                    var xprivateKey = doc.privatekey;
+                    var keypair = 
+                        {
+                            publicKey : doc.publicKey,
+                            privateKey : doc.privateKey
 
-                    console.log("keypair:", keypair);
-                    console.log("keypair.publicKey:", xpublicKey);
-                    console.log("keypair.privateKey:", xprivateKey);
+                        };
+
+                    //console.log("doc.keypair.publicKey:", doc.keypair.publicKey);
+                    console.log("keypair.publicKey:", keypair.publicKey);
+                    console.log("keypair.privateKey:", keypair.privateKey);
                     var tmp_title = "Ver Key";
                     /*
                     res.render('blockchain/wallet', {   title: 'Create Key',  
@@ -167,36 +167,44 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
                 else
                 {
                     console.log("**********  /createKey  *******************"); 
-                    var keypair = new bcDb_driver.Ed25519Keypair();        
+                    var keypair = new bcDb_driver.Ed25519Keypair(); 
+                         // const alice = new driver.Ed25519Keypair()
                     console.log("keypair:", keypair);
-                    var xpublicKey = keypair.publicKey;
-                    var xprivateKey = keypair.privateKey;                    
-                    console.log("keypair.publicKey:", xpublicKey);
-                    console.log("keypair.privateKey:", xprivateKey);
+                    //var xpublicKey = keypair.publicKey;
+                    //var xprivateKey = keypair.privateKey;                    
+                    console.log("keypair.publicKey:", keypair.publicKey);
+                    console.log("keypair.privateKey:", keypair.privateKey);
 
                     var tmp_title = "Create Key";
 
                     //res.redirect("/");
-                    var xkeypair = JSON.stringify(keypair);
+                    //var xkeypair = JSON.stringify(keypair);
 
-                    console.log("keypair.stringify:", xkeypair);
+                
+				        doc.publicKey = keypair.publicKey;
+				        doc.privateKey = keypair.privateKey;
+                        doc.keypair = keypair;
+
+
+				        // Save the updated document back to the database
+                      
+				        doc.save(function (err, todo) {
+				            if (err) {
+				                res.status(500).send(err)
+				            }
+				            console.log('doc saved:',doc)
+				            //res.send(todo);
+				        });                         
 
                     console.log("**********  end /createKey  *******************");         
 
-                    /*
-                    res.render('blockchain/wallet', {   title: 'Create Key',  
-                                                        keypair : keypair, 
-                                                        keypair1 : xkeypair, 
-                                                        publicKey : keypair.publicKey,
-                                                        privateKey: keypair.privateKey});
-                    */
                 }
 
                 res.render('blockchain/wallet', {   title: tmp_title,  
                                                     keypair : keypair, 
-                                                    keypair1 : xkeypair, 
-                                                    publicKey : xpublicKey,
-                                                    privateKey: xprivateKey,
+                                                    //keypair1 : keypair, 
+                                                    publicKey : keypair.publicKey,
+                                                    privateKey: keypair.privateKey,
                                                     name : tmp_name,
                                                     email : tmp_email,
                                                     keyExist : keyExist                                                
@@ -207,9 +215,200 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
      
     });
 
+    router.get('/findasset', function (req, res) 
+    {
+        connDb.searchAssets('Hacienda Renacimiento')
+        .then(assets => console.log('Found assets with serial number Hacienda Renacimiento:', assets))
+    });        
 
+    router.get('/createAsset_general', function (req, res) 
+    {
+            res.locals.activateIsotope = false; //showisotope();
+            var keyExist = false;
+            var tmp_id = req.session.passport.user;
+            var tmp_email = "sin valor";
+            var tmp_name = "sin valor";
+            console.log("****** Antes de findById......");   
+            console.log("****** tmp_id    :", tmp_id);         
+            User.findById(tmp_id, function (err, doc) 
+            {         
+        
+                const assetdata =   {
+                                        "name": "Hacienda Renacimiento",
+                                        "propietaria": "Sucesión Rodriguez Perez",
+                                        "country": "Argentina",
+                                        "region": "Buenos Aires",
+                                        "year": "1656"
+                                    }         
+
+                const driver = require('bigchaindb-driver');
+                /*
+                console.log("doc.keypair.publicKey:", doc.keypair.publicKey);
+                console.log("doc.keypair.privateKey:", doc.keypair.privateKey);  
+                */
+                console.log("doc.publicKey:", doc.publicKey);
+                console.log("doc.rivateKey:", doc.privateKey);                  
+                
+                
+                const alice = 
+                      {
+                          publicKey : doc.publicKey,
+                          privateKey: doc.privateKey
+                      } //doc.keypair; //   new driver.Ed25519Keypair();
+                console.log("alice.publicKey:", alice.publicKey);
+                console.log("alice.privateKey:", alice.privateKey); 
+                
+                const conn = new driver.Connection(
+                    'https://test.bigchaindb.com/api/v1/',
+                    { app_id: '385b62f9',
+                      app_key: '185a4d7d619448dbf0c725f3485fa0b6' })
+                const tx = driver.Transaction.makeCreateTransaction(
+                    assetdata,
+                    {
+                        "datetime": new Date().toString(),
+                        "hectarea": "1000",
+                        "hectarea_aptas" : "700",
+                        "hectarea_sembradas" : "500"  
+                    },
+                    [ driver.Transaction.makeOutput(
+                        driver.Transaction.makeEd25519Condition(alice.publicKey))],
+                    alice.publicKey)
+                const txSigned = driver.Transaction.signTransaction(tx, alice.privateKey);
+                console.log("antes de commit");
+                conn.postTransactionCommit(txSigned);
+                console.log("after commit:");
+                console.log(txSigned);
+            });
+        res.redirect('/');          
+
+    });
+
+    router.get('/createAsset_general_old_work_fine', function (req, res) 
+    {
+
+        const driver = require('bigchaindb-driver')
+
+        const alice = new driver.Ed25519Keypair()
+        const conn = new driver.Connection(
+            'https://test.bigchaindb.com/api/v1/',
+            { app_id: '385b62f9',
+              app_key: '185a4d7d619448dbf0c725f3485fa0b6' })
+        const tx = driver.Transaction.makeCreateTransaction(
+            { message: '' },
+            null,
+            [ driver.Transaction.makeOutput(
+                driver.Transaction.makeEd25519Condition(alice.publicKey))],
+            alice.publicKey)
+        const txSigned = driver.Transaction.signTransaction(tx, alice.privateKey);
+        console.log("antes de commit");
+        conn.postTransactionCommit(txSigned);
+        console.log("after commit:");
+        console.log(txSigned);
+        res.redirect('/');          
+
+    });
 
     router.get('/createAsset', function (req, res) 
+    {
+
+            var keyExist = false;
+            var tmp_id = req.session.passport.user;
+            var tmp_email = "sin valor";
+            var tmp_name = "sin valor";
+            console.log("****** Antes de findById......");   
+            console.log("****** tmp_id    :", tmp_id);         
+            User.findById(tmp_id, function (err, doc) 
+            {  
+                console.log("****** encontré user......");  
+                // Handle any possible database errors
+                if (err) 
+                {
+                    //res.status(500).send(err);
+                } else 
+                {
+                    tmp_email = doc.email;
+                    tmp_name = doc.name;                    
+                    //console.log("Exist doc:",doc);
+                    if (doc.privatekey != undefined && doc.publickey.length > 0)                
+                    {
+                        var keyPair = [];
+                        keyPair.publicKey = doc.publickey;
+                        keyPair.privateKey = doc.privatekey;
+                        
+                        console.log("doc.email:",doc.email);                        
+                        console.log("doc.publickey:",doc.publickey);
+                        console.log("doc.privatekey:",doc.privatekey);
+                        
+                        const assetdata = {
+                            "name": "Hacienda Renacimiento",
+                            "propietaria": "Sucesión Rodriguez Perez",
+                            "country": "Argentina",
+                            "region": "Buenos Aires",
+                            "year": "1656"
+                        } 
+                        
+
+                        // Construct a transaction payload
+                        console.log("connDb:",connDb);
+                        
+                        console.log("------ ***** entrando a txCreateAsset ");                        
+                        const txCreateAsset = bcDb_driver.Transaction.makeCreateTransaction(
+                            // Asset field
+                            {
+                                assetdata,
+                            },
+                            // Metadata field, contains information about the transaction itself
+                            // (can be `null` if not needed)
+                            {
+                                "datetime": new Date().toString(),
+                                "hectarea": "1000",
+                                "hectarea_aptas" : "700",
+                                "hectarea_sembradas" : "500"  
+                            },
+                            // Output. For this case we create a simple Ed25519 condition
+                            [bcDb_driver.Transaction.makeOutput(
+                                //bcDb_driver.transaction.Ed25519Keypair(doc.publickey))],
+                                bcDb_driver.Transaction.makeEd25519Condition(doc.publickey))],
+                            // Issuers
+                            doc.publicKey
+                        );
+                        console.log("txCreateAsset :",txCreateAsset);  
+                        console.log("------ ***** txSigned ");                         
+                        // The owner of the painting signs the transaction
+                        const txSigned = bcDb_driver.Transaction.signTransaction(txCreateAsset,
+                            doc.privatekey);
+
+                        console.log("txSigned :",txSigned);
+                        
+                        // Send the transaction off to BigchainDB
+                        console.log("------ ***** Commit ");  
+                        
+                      
+                        connDb.postTransactionCommit(txSigned);
+                        
+                        // v2.0
+                        //connDb.postTransactionCommit(txSigned)    
+                        /*
+                            .then(res => {
+                                console.log("------ ***** postTransaction then: "+txtSigned);
+                                document.body.innerHTML += '<h3>Transaction created</h3>';
+                                document.body.innerHTML += txSigned.id
+                                // txSigned.id corresponds to the asset id of the painting
+                            });
+                        */
+                        console.log("------ ***** despues commit ");                        
+
+      
+
+                    }
+                };
+                res.redirect('/');     
+            });
+        
+     
+    });
+
+    router.get('/createAsset_v2', function (req, res) 
     {
 
             var keyExist = false;
@@ -281,8 +480,13 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
                         console.log("txSigned :",txSigned);
                         
                         // Send the transaction off to BigchainDB
-                        console.log("------ ***** Commit ");                           
-                        connDb.postTransactionCommit(txSigned)
+                        console.log("------ ***** Commit ");  
+                        
+                        // v1.0                        
+                        bcDb_driver.postTransactionCommit(txSigned)
+                        
+                        // v2.0
+                        //connDb.postTransactionCommit(txSigned)                        
                             .then(res => {
                                 console.log("------ ***** postTransaction then: "+txtSigned);
                                 document.body.innerHTML += '<h3>Transaction created</h3>';
@@ -300,6 +504,7 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
         
      
     });
+
 
     router.get('/ver_blockchain', function (req, res) {
       console.log("---------------------------------------------");    

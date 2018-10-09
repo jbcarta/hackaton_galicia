@@ -30,8 +30,8 @@ var userApprovalarea = new mongoose.Schema({
 })
 
 var userKeyPair = new mongoose.Schema({
-    publickey: {type: String, required: false},
-    privatekey: {type: String, required: false},    
+    publicKey: {type: String, required: false},
+    privateKey: {type: String, required: false},    
 })
 
 var userSchema = new Schema (
@@ -39,9 +39,9 @@ var userSchema = new Schema (
 	name: {type: String, required: false},
 	email: {type: String, required: true},
 	password: {type: String, required: false},
-    keyPair : [userKeyPair],
-    publickey: {type: String, required: false},
-    privatekey: {type: String, required: false},    
+    keypair : [userKeyPair],
+    publicKey: {type: String, required: false},
+    privateKey: {type: String, required: false},    
 	cecos: [userCecos],
 	accounts: [userAccount],	
 	supplier: [userSupplierSchema],

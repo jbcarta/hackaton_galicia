@@ -130,8 +130,55 @@ Usuario Activo: {{x_email}}
         //s.setAttribute('type',"submit");
         //s.setAttribute('value',"Submit");
         $(document.body).append(f);
-    //function placeOrder(){
+        //function placeOrder(){
         f.submit();
         //}
-});    
+    });
+    
+    
+    // ----------------------
+    //     Create Asset
+    // ----------------------
+    $('#createasset_general').on( 'click', function() {
+
+        //alert("Createkey click...");
+        var f = document.createElement("form");
+        f.setAttribute('method',"get");
+        f.setAttribute('action',"/createAsset_general");
+
+        //var i = document.createElement("input"); //input element, text
+        //i.setAttribute('type',"text");
+        //i.setAttribute('name',"username");
+
+        var s = document.createElement("input"); //input element, Submit button
+        //s.setAttribute('type',"submit");
+        //s.setAttribute('value',"Submit");
+        $(document.body).append(f);
+        //function placeOrder(){
+        f.submit();
+        //}
+    });    
+    
+    
+    $('#findasset').on( 'click', function() {
+
+        //alert("Createkey click...");
+        var f = document.createElement("form");
+        f.setAttribute('method',"get");
+        f.setAttribute('action',"/findasset");
+
+        //var i = document.createElement("input"); //input element, text
+        //i.setAttribute('type',"text");
+        //i.setAttribute('name',"username");
+
+        var s = document.createElement("input"); //input element, Submit button
+        //s.setAttribute('type',"submit");
+        //s.setAttribute('value',"Submit");
+        $(document.body).append(f);
+        //function placeOrder(){
+        f.submit();
+        //}
+    });    
+
+    
     </script>    
