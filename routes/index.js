@@ -42,6 +42,31 @@ var passport = require('passport');
                 app_key: '185a4d7d619448dbf0c725f3485fa0b6'
             });
 
+
+    // Bigchain in Mongodb to direct query
+
+     /*
+    const MongoClient = require('mongodb').MongoClient
+    const assert = require('assert')
+
+
+    const urlMongo = "https://test.bigchaindb.com/api/v1/"; 
+    const dbName = 'bigchain'
+
+	MongoClient.connect(urlMongo, function(err, client) {
+	  assert.equal(null, err);
+	  console.log("Connected successfully to server")
+
+	  const db = client.db(dbName);
+        console.log("db:",db);
+        
+	  const collection = db.collection('assets');
+        console.log("despues de collection");
+     
+
+    });
+    */
+
     //connDb.define("crabModel", "https://schema.org/v1/crab");
 
 // -----------------------------------
@@ -60,21 +85,21 @@ var passport = require('passport');
  
 
 
-// Invoice2pay settings
-var settings = require('../I2P_settings.js');
+    // Invoice2pay settings
+    var settings = require('../I2P_settings.js');
 
 
 
-console.log("settings.MongoServer :",settings.MongoServer);
-console.log("settings.sapWebServer :",settings.sapWebServer);
+    console.log("settings.MongoServer :",settings.MongoServer);
+    console.log("settings.sapWebServer :",settings.sapWebServer);
 
 
 
-// Evitar el robo de sesiones de browser
-// el servidor valida cada solicitud del
-// cliente se del mismo browser
-	var csrf = require('csurf');
-	var csrfProtection = csrf();
+    // Evitar el robo de sesiones de browser
+    // el servidor valida cada solicitud del
+    // cliente se del mismo browser
+        var csrf = require('csurf');
+        var csrfProtection = csrf();
 
 
 // -----------------------------------
@@ -215,11 +240,39 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
      
     });
 
+
+    // Buscar AssetData
     router.get('/findasset', function (req, res) 
     {
+        console.log("*************************************************");     
+        console.log("/findasset             -------------------------*");
+        
+        connDb.searchAssets('Hacienda')
+        .then(assets => console.log('Found assets with serial number Hacienda Renacimiento:', assets));
+        res.redirect('/');        
+    }); 
+
+    // Buscar AssetData
+    router.get('/findassetxx', function (req, res) 
+    {
+        console.log("*************************************************");     
+        console.log("/findasset             -------------------------*");
+        
         connDb.searchAssets('Hacienda Renacimiento')
-        .then(assets => console.log('Found assets with serial number Hacienda Renacimiento:', assets))
+        .then(assets => console.log('Found assets with serial number Hacienda Renacimiento:', assets));
+        
+        res.redirect('/');        
     });        
+
+    // Buscar Metadata
+    router.get('/findMetadataxx', function (req, res) 
+    {
+        conn.searchMetadata('1.32')
+                .then(assets => console.log('Found assets with serial number Bicycle Inc.:', assets));
+        res.redirect('/');
+    });        
+
+
 
     router.get('/createAsset_general', function (req, res) 
     {
@@ -238,9 +291,26 @@ console.log("settings.sapWebServer :",settings.sapWebServer);
                                         "propietaria": "Sucesión Rodriguez Perez",
                                         "country": "Argentina",
                                         "region": "Buenos Aires",
-                                        "year": "1656"
+                                        "year fundación": "1656",
+                                        "tipo:":"Agricultor"
                                     }         
 
+                /*
+                
+                  Datos base de la hacienda/finca
+                  Pais
+                  
+                    provincia/estado
+                    partido/municipio
+                    ciudad
+                    info adicional
+                    coordenadas GPS:
+                    Latitud:-34.6036844
+                    Longitud: -58.381559100000004
+                    https://www.coordenadas-gps.com/convertidor-de-coordenadas-gps
+                
+                */
+                
                 const driver = require('bigchaindb-driver');
                 /*
                 console.log("doc.keypair.publicKey:", doc.keypair.publicKey);
