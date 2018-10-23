@@ -1,0 +1,324 @@
+
+                
+                <!-- Company -->
+                <div class="form-group">
+                   <label for="doctype" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Compañia:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <select class="form-control selectpicker show-tick" name="company"
+                                     id="company" required>
+
+                                     
+                                <option selected>{{company}}</option>
+                                <!--                                
+                                <option selected>000:Indique Compañia</option>
+                                <option>XA01:CLAXSON ARGENTINA</option>
+                                <option>XA02:LIFESTYLE TV SRL</option>
+                                -->
+                                <option>XA03:NAVAJO ENTERTAINMENT</option>
+                                <!--
+                                <option>XSDC:MIXPLAY S.A.</option>
+                                -->
+                                <option>XU01:CLAXSON USA II, INC.</option>
+                                <option>XU06:CLAXSON MEDIA LLC</option>
+                                <option>XU12:PLAYBOY TV BV</option>
+                                <!--
+                                <option>XU40:DLA, INC.</option>
+                                -->
+                                <option>XU42:PLAYBOY LIFESTYLES H</option>
+                                <option>XVE1:CONTRIBUTION S.R.L.</option>
+                                <!--
+                                <option>XVE2:VENUS TV, INC</option>
+                                -->
+                            </select>
+                        </div>
+                   </div>                                               
+                </div>                                           
+
+
+                <!-- Proveedor -->
+                <div class="form-group">
+                   <label for="supplier" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Proveedor :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique el proveedor" name="supplier" id="supplier" value="{{supplier}}"/> <span class="input-group-addon">
+                            <a href="#" name="modal-provee" id="modal-provee" data-toggle="modal" data-target=".modal-provee"><span class="fa fa-external-link"></a></span>
+                        </div>
+                   </div>                                               
+                </div>
+
+                <!-- Fecha Contable -->
+                <div class="form-group">
+                   <label for="accountingdate"  
+                        class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fecha Contable: </label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input  type='date' class="form-control separate-bottom" 
+                                    name="accountingdate" id="accountingdate" value="{{accountingdate}}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fecha Documento -->
+                <div class="form-group">
+                   <label for="documentdate" 
+                          class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fecha Doc: </label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input  type='date' class="form-control separate-bottom" 
+                                    name="documentdate" id="documentdate" value="{{documentdate}}"/>
+                        </div>
+                    </div>
+                </div>            
+
+
+                <!-- Tipo de Doc -->
+                <div class="form-group">
+                   <label for="doctype" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tipo de Doc :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                        <!--                            
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique tipo de documento" name="supplier" id="supplier" value="{{this.doctype}}"/> 
+                        -->
+                            <select class="form-control selectpicker show-tick" name="tpdoc"
+                                     id="tpdoc" required>
+                                <option selected>{{documenttype}}</option>               
+                                <option> 00:Indique tipo Doc</option>
+                                <!--
+                                <option>KA:DOC.DE ACREEDOR</option>
+                                <option>KB:DOC.DE ACREEDOR</option>
+                                <option>KC:COMPENSACION ACREED</option>
+                                -->
+                                <option>KD:NOTA DEB.ACREEDOR</option>
+                                <!--
+                                <option>KE:FACTURA ACREEDOR SL</option>
+                                <option>KF:FACTURA ACREEDOR</option>
+                                -->
+                                <option>KG:NOTA CRED.ACREEDOR</option>
+                                <option>KL:FACTURA ACREEDOR SL</option>
+                                <!--
+                                <option>KM:NOTA DEB.ACREEDOR SL</option>
+                                <option>KN:ACREEDORES NETO</option>
+                                <option>KO:NOTA CRED.ACREED.SL</option>
+                                <option>KP:ACTUALIZ.CUENTAS</option>
+                                -->
+                                <option>KR:FACTURA ACREEDOR</option>
+                                <!--
+                                <option>KT:FACT.SERV.PUBLICOS</option>
+                                <option>KU:N.CRED.SERV.PUBLICOS</option>
+                                -->
+
+                                <!--                                     
+                                <option value="{{documenttype}}" selected>{{documenttype}}</option>               
+                                <option value="00">00:Indique tipo Doc</option>
+                                <option value="KR">KR:Factura Nac</option>
+                                <option value="KA">KA:Factura Exp</option>
+                                <option value="K2">K2:Nota Crédito</option>
+                                <option value="K3">K3:Nota Débito</option>
+                                -->                                
+                            </select>
+                        </div>
+                   </div>                                               
+                </div>
+
+
+                <!-- Estatus Envio a SAP -->
+                <div class="form-group">
+                   <label for="sap_status" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Envio a SAP :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                             <input type='text' class="form-control separate-bottom" 
+                                    name="sap_status" id="sap_status" value="{{sap_status}}"
+                                    readonly="readonly"/> 
+                        </div>
+                   </div>                                               
+                </div>
+                
+
+
+                <!-- Currency -->
+                <div class="form-group">
+                   <label for="doctype" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Moneda :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <select class="form-control selectpicker show-tick" name="currency"
+                                     id="currency" required>
+                                <option selected>{{currency}}</option>
+
+                                <option>000:Indique Moneda</option>
+                                <option>ARS</option>
+                                <option>BRL</option>
+                                <option>CLP</option>
+                                <option>COP</option>
+                                <option>EUR</option>
+                                <option>MXN</option>
+                                <option>USD</option>
+                                <option>VEB</option>
+                                <option>VEL</option>
+                            </select>
+                        </div>
+                   </div>                                               
+                </div>
+
+                <!-- Tasa de Cambio -->
+                <div class="form-group">
+                   <label for="exchangerate" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tasa de Cambio :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+
+                            <input type='text' class="form-control separate-bottom" placeholder="Tasa de Cambio" name="exchangerate" id="exchangerate" value="{{exchangerate}}"/> 
+                        </div>
+                   </div>                                               
+                </div>  
+
+
+
+
+
+                <!-- Monto neto de Factura -->
+                <div class="form-group">
+                   <label for="doctype" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Neto:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input  type='text' class="form-control separate-bottom" 
+                                    placeholder="Monto Neto" name="amountinvoice" id="amountinvoice" value="{{netamountinvoice}}"/> 
+                        </div>
+                   </div>                                               
+                </div>                
+
+
+                    <!-- Monto de Impuestos -->
+                    <div class="form-group">
+                       <label for="doctype" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Impuestos :</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom" placeholder="Indique impuestos" name="totaltax" id="totaltax" 
+                                value="{{totaltax}}" />  <!-- readonly -->
+                            </div>
+                       </div>                                               
+                    </div>                
+
+
+                <!-- Monto total de Factura -->
+                <div class="form-group">
+                   <label for="doctype" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Total:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" placeholder="Monto Total" name="totalinvoice" id="totalinvoice" value="{{totalinvoice}}" readonly/> 
+                        </div>
+                   </div>                                               
+                </div>                
+
+                <!-- Sap Date -->
+                <div class="form-group">
+                   <label for="sap_date" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fecha Envio :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                             <input type='text' class="form-control separate-bottom" 
+                                    name="sap_date" id="sap_date" value="{{sap_date}}"
+                                    readonly="readonly"/> 
+                        </div>
+                   </div>                                               
+                </div>
+
+
+            </div>
+            
+            <!-- Third Column -->           
+            <div class="col-lg-4 col-md-4 col-sm-12">
+
+              <div class="panel panel-default panel-table">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col col-xs-6">
+                        <h3 class="panel-title">Impuestos</h3>
+                      </div>
+                      <div class="col col-xs-6 text-right">
+                        <button type="button" class="btn btn-sm btn-primary btn-create" onclick="addtax()">Nuevo Impuesto</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-body">
+                    <table  id="ttax" name="ttax" 
+                            class="table table-striped table-bordered table-list">
+                      <thead>
+                        <tr>
+                            <th><em class="fa fa-cog"></em></th>
+                            <!--
+                                <th class="hidden-xs">ID</th>
+                            -->
+                            <th>Cod.Imp.</th>
+                            <th>Monto</th>
+                        </tr> 
+                      </thead>
+                      <tbody>
+                        {{# each detailtax }}                      
+                              <tr>
+                                <td align="center">
+                                  <!--
+                                    <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                  -->
+
+                                  <a class="btn btn-danger" onclick="deletetax()"><em class="fa fa-trash"></em></a>
+                                </td>
+                                <!--
+                                <td class="hidden-xs">1</td>
+                                -->
+                                <td> 
+                                  <select class="form-control selectpicker show-tick" 
+                                          name="taxcode"
+                                          id="taxcode" required>
+                                      <option selected>{{this.taxcode}}</option>
+                                      <option>00:Cod</option>
+                                      <option>C1:IVA 21%</option>
+                                      <option>CX:Sin Impuestos</option>
+                                      <option>S1:IVA 27%</option>
+                                      <option>T1:IVA 10,5%</option>
+                                      <option>XC:Per.IVA 1,5%</option>
+                                      <option>XD:Per.IVA 3,00%</option>
+                                      <option>X3:Per.IVA 5%</option>
+                                      <option>XN:Perc. IIBB CABA 1,00%</option>           
+                                      <option>X2:Perc. IIBB CABA 3.5%</option>
+                                      <option>X6:Perc. IIBB CABA 2.0%</option>
+                                      <option>X0:Perc. IIBB CABA 6.0%</option>
+                                      <option>XH:Perc. IIBB Pcia. Buenos Aires 2.5%</option>
+                                      <option>XB:Perc. IIBB Pcia. Buenos Aires 5.0%</option>
+                                      <option>X5:Perc. IIBB Santa Fe 1.25%</option>
+                                      <option>XG:Perc. IIBB Tucumán 1.75%</option>
+                                      <option>X9:Perc. IIBB Tucumán 1.50%</option>
+                                      <option>XE:Perc. IIBB San Luis 2.0%</option>
+                                      <option>XF:Perc. IIBB Misiones 3.31%</option>
+                                      <option>XI:Perc. IIBB San Juan 1.20%</option>
+                                      <option>XJ:Perc. IIBB Salta 0.02%</option>
+                                      <option>XK:Perc. IIBB Catamarca 2.5%</option>
+                                      <option>XL:Perc. IIBB Mendoza 1.5%</option>
+                                      <option>XM:Perc. IIBB Jujuy 3,00%</option>
+                                  </select>
+                                </td>
+                                <td>
+                                    <input  type="text" class="form-control separate-bottom"  
+                                            placeholder="Monto" name="taxamount" id="taxamount" value="{{this.taxamount}}"/>
+                                </td>
+                              </tr>
+                        {{/each}}                                 
+                      </tbody>
+                    </table>
+                
+                  </div>
+                  <!--
+                  <div class="panel-footer">
+                    <div class="row">                 
+                    </div>
+                  </div>
+                  -->
+              </div>

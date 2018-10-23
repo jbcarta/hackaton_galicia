@@ -1,6 +1,6 @@
 <!-- *****************************************
 
-        Supplierinvoice_new_detail.hbs
+        access_detail_create.hbs
 
 ***************************************** -->  
 
@@ -28,9 +28,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <h1 name="titulo" id="titulo">
+          <h2 name="titulo" id="titulo">
                {{ title }}
-          </h1>
+          </h2>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,8 +41,10 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a onclick="grabar()" name="grabar" id="grabar">Grabar</a></li>
-<!--                <li><a href="/supplierInvoiceInsert">Grabar Nueva Factura</a></li>                
--->
+                  
+                <!--
+                    <li><a href="/supplierInvoiceInsert">Grabar Nueva Factura</a></li>
+                -->
 
                 <li><a href="/supplierInvoice_Pending">Salir sin Grabar</a></li>
                 <li role="separator" class="divider"></li>
@@ -74,8 +76,10 @@
 -->
 
 
-
+<!--
     <form action="/supplierInvoiceInsert/{{ this.tdetail }}" method="post" 
+-->
+<form action="/access_create/{{ this.tdetail }}" method="post"           
           id="supplierInvoice_new" name="supplierInvoice_new" onsubmit="return formValidation()" 
           class="form-horizontal" , enctype='application/x-www-form-urlencoded'> 
 
@@ -91,372 +95,170 @@
             <input name="approver5" id="approver5" type="hidden"/>             
             <input name="crud_type" id="crud_type" type="hidden"/>
 
+
+            
             <!-- First Column -->         
             <div class="col-lg-4 col-md-4 col-sm-12">
-                <!-- Company -->
+                
+                <!-- dummy -->
                 <div class="form-group">
-                   <label for="doctype" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Compañia:</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <select class="form-control selectpicker show-tick" name="company"
-                                     id="company" required>
-
-                                     
-                                <option selected>{{company}}</option>
-                                <!--                                
-                                <option selected>000:Indique Compañia</option>
-                                <option>XA01:CLAXSON ARGENTINA</option>
-                                <option>XA02:LIFESTYLE TV SRL</option>
-                                -->
-                                <option>XA03:NAVAJO ENTERTAINMENT</option>
-                                <!--
-                                <option>XSDC:MIXPLAY S.A.</option>
-                                -->
-                                <option>XU01:CLAXSON USA II, INC.</option>
-                                <option>XU06:CLAXSON MEDIA LLC</option>
-                                <option>XU12:PLAYBOY TV BV</option>
-                                <!--
-                                <option>XU40:DLA, INC.</option>
-                                -->
-                                <option>XU42:PLAYBOY LIFESTYLES H</option>
-                                <option>XVE1:CONTRIBUTION S.R.L.</option>
-                                <!--
-                                <option>XVE2:VENUS TV, INC</option>
-                                -->
-                            </select>
-                        </div>
-                   </div>                                               
-                </div>                                           
-
-
-                <!-- Approval Area -->
+                   <label for="x1" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12"> </label>
+                </div>                
+                
+                <!-- Name -->
                 <div class="form-group">
-                   <label for="approvalarea" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Area Aprobad :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique el Area Approbadora" name="approvalarea" id="approvalarea" value="{{approvalarea}}"/> <span class="input-group-addon">
-                            <a href="#" data-toggle="modal" data-target=".modal-approvalarea"><span class="fa fa-external-link"></a></span>
-                        </div>
-                   </div>                                               
-                </div>
-
-
-                <!-- Proveedor -->
-                <div class="form-group">
-                   <label for="supplier" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Proveedor :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique el proveedor" name="supplier" id="supplier" value="{{supplier}}"/> <span class="input-group-addon">
-                            <a href="#" name="modal-provee" id="modal-provee" data-toggle="modal" data-target=".modal-provee"><span class="fa fa-external-link"></a></span>
-                        </div>
-                   </div>                                               
-                </div>
-
-                <!-- Fecha Contable -->
-                <div class="form-group">
-                   <label for="accountingdate"  
-                        class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fecha Contable: </label>
+                   <label for="name" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nombre :</label>
                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <div class='input-group'>
-                            <input  type='date' class="form-control separate-bottom" 
-                                    name="accountingdate" id="accountingdate" value="{{accountingdate}}"/>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Fecha Documento -->
-                <div class="form-group">
-                   <label for="documentdate" 
-                          class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fecha Doc: </label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-                            <input  type='date' class="form-control separate-bottom" 
-                                    name="documentdate" id="documentdate" value="{{documentdate}}"/>
-                        </div>
-                    </div>
-                </div>            
-
-
-                <!-- Tipo de Doc -->
-                <div class="form-group">
-                   <label for="doctype" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tipo de Doc :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-                        <!--                            
-                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique tipo de documento" name="supplier" id="supplier" value="{{this.doctype}}"/> 
-                        -->
-                            <select class="form-control selectpicker show-tick" name="tpdoc"
-                                     id="tpdoc" required>
-                                <option selected>{{documenttype}}</option>               
-                                <option> 00:Indique tipo Doc</option>
-                                <!--
-                                <option>KA:DOC.DE ACREEDOR</option>
-                                <option>KB:DOC.DE ACREEDOR</option>
-                                <option>KC:COMPENSACION ACREED</option>
-                                -->
-                                <option>KD:NOTA DEB.ACREEDOR</option>
-                                <!--
-                                <option>KE:FACTURA ACREEDOR SL</option>
-                                <option>KF:FACTURA ACREEDOR</option>
-                                -->
-                                <option>KG:NOTA CRED.ACREEDOR</option>
-                                <option>KL:FACTURA ACREEDOR SL</option>
-                                <!--
-                                <option>KM:NOTA DEB.ACREEDOR SL</option>
-                                <option>KN:ACREEDORES NETO</option>
-                                <option>KO:NOTA CRED.ACREED.SL</option>
-                                <option>KP:ACTUALIZ.CUENTAS</option>
-                                -->
-                                <option>KR:FACTURA ACREEDOR</option>
-                                <!--
-                                <option>KT:FACT.SERV.PUBLICOS</option>
-                                <option>KU:N.CRED.SERV.PUBLICOS</option>
-                                -->
-
-                                <!--                                     
-                                <option value="{{documenttype}}" selected>{{documenttype}}</option>               
-                                <option value="00">00:Indique tipo Doc</option>
-                                <option value="KR">KR:Factura Nac</option>
-                                <option value="KA">KA:Factura Exp</option>
-                                <option value="K2">K2:Nota Crédito</option>
-                                <option value="K3">K3:Nota Débito</option>
-                                -->                                
-                            </select>
-                        </div>
-                   </div>                                               
-                </div>
-
-
-                <!-- Estatus Envio a SAP -->
-                <div class="form-group">
-                   <label for="sap_status" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Envio a SAP :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-                             <input type='text' class="form-control separate-bottom" 
-                                    name="sap_status" id="sap_status" value="{{sap_status}}"
-                                    readonly="readonly"/> 
+                            <input type='text' class="form-control separate-bottom" placeholder="Nombre del activo" name="name" id="name" value="{{name}}"/> 
+                            
                         </div>
                    </div>                                               
                 </div>
                 
-
-
+                <!-- Cuit_name -->
+                <div class="form-group">
+                   <label for="cuit_name" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">CUIT :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" placeholder="Cuit del Activo" name="cuit_name" id="cuit_name" value="{{cuit_name}}"/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>                
+                
+                <!-- Registro Catastral -->
+                <div class="form-group">
+                   <label for="cadastral_reg" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Reg.Catastral :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" placeholder="Registro Catastral" name="cadastral_reg" id="cadastral_reg" value="{{cuit_name}}"/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>                
+                                
+                <!-- Owner -->
+                <div class="form-group">
+                   <label for="owner" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Propietario :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" placeholder="Nombre del propietario" name="owner" id="owner" value="{{owner}}"/>                            
+                        </div>
+                   </div>                                               
+                </div> 
+                
+                <!-- Cuit_owner -->
+                <div class="form-group">
+                   <label for="cuit_owner" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">CUIT :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" placeholder="Cuit del Propietario" name="cuit_owner" id="cuit_owner" value="{{cuit_owner}}"/> 
+                            
+                        </div>
+                   </div>                                               
+                </div> 
             </div>
-            
+
+                    
             <!-- Second Column --> 
             <div class="col-lg-4 col-md-4 col-sm-12">
-
-                <!-- Numero de Documento -->
-                <div class="form-group">
-                   <label for="doctype" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Num Doc :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-
-                            <input type='text' class="form-control separate-bottom" placeholder="Número del documento" name="numdoc" id="numdoc" value="{{documentnumber}}"/> 
-                            <span class="input-group-addon">
-                            <a href="#" data-toggle="modal" data-target=".modal-imgfact"><span class="fa fa-external-link"></a></span>
-                        </div>
-                   </div>                                               
-                </div>
-
-
-
-
-                <!-- Currency -->
-                <div class="form-group">
-                   <label for="doctype" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Moneda :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <select class="form-control selectpicker show-tick" name="currency"
-                                     id="currency" required>
-                                <option selected>{{currency}}</option>
-
-                                <option>000:Indique Moneda</option>
-                                <option>ARS</option>
-                                <option>BRL</option>
-                                <option>CLP</option>
-                                <option>COP</option>
-                                <option>EUR</option>
-                                <option>MXN</option>
-                                <option>USD</option>
-                                <option>VEB</option>
-                                <option>VEL</option>
-                            </select>
-                        </div>
-                   </div>                                               
-                </div>
-
-                <!-- Tasa de Cambio -->
-                <div class="form-group">
-                   <label for="exchangerate" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tasa de Cambio :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-
-                            <input type='text' class="form-control separate-bottom" placeholder="Tasa de Cambio" name="exchangerate" id="exchangerate" value="{{exchangerate}}"/> 
-                        </div>
-                   </div>                                               
-                </div>  
-
-
-
-
-
-                <!-- Monto neto de Factura -->
-                <div class="form-group">
-                   <label for="doctype" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Neto:</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-                            <input  type='text' class="form-control separate-bottom" 
-                                    placeholder="Monto Neto" name="amountinvoice" id="amountinvoice" value="{{netamountinvoice}}"/> 
-                        </div>
-                   </div>                                               
-                </div>                
-
-
-                    <!-- Monto de Impuestos -->
-                    <div class="form-group">
-                       <label for="doctype" 
-                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Impuestos :</label>
-                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <div class='input-group'>
-                                <input type='text' class="form-control separate-bottom" placeholder="Indique impuestos" name="totaltax" id="totaltax" 
-                                value="{{totaltax}}" />  <!-- readonly -->
-                            </div>
-                       </div>                                               
-                    </div>                
-
-
-                <!-- Monto total de Factura -->
-                <div class="form-group">
-                   <label for="doctype" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Total:</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-                            <input type='text' class="form-control separate-bottom" placeholder="Monto Total" name="totalinvoice" id="totalinvoice" value="{{totalinvoice}}" readonly/> 
-                        </div>
-                   </div>                                               
-                </div>                
-
-                <!-- Sap Date -->
-                <div class="form-group">
-                   <label for="sap_date" 
-                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fecha Envio :</label>
-                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <div class='input-group'>
-                             <input type='text' class="form-control separate-bottom" 
-                                    name="sap_date" id="sap_date" value="{{sap_date}}"
-                                    readonly="readonly"/> 
-                        </div>
-                   </div>                                               
-                </div>
-
-
-            </div>
-            
-            <!-- Third Column -->           
-            <div class="col-lg-4 col-md-4 col-sm-12">
-
-              <div class="panel panel-default panel-table">
-                  <div class="panel-heading">
-                    <div class="row">
-                      <div class="col col-xs-6">
-                        <h3 class="panel-title">Impuestos</h3>
-                      </div>
-                      <div class="col col-xs-6 text-right">
-                        <button type="button" class="btn btn-sm btn-primary btn-create" onclick="addtax()">Nuevo Impuesto</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel-body">
-                    <table  id="ttax" name="ttax" 
-                            class="table table-striped table-bordered table-list">
-                      <thead>
-                        <tr>
-                            <th><em class="fa fa-cog"></em></th>
-                            <!--
-                                <th class="hidden-xs">ID</th>
-                            -->
-                            <th>Cod.Imp.</th>
-                            <th>Monto</th>
-                        </tr> 
-                      </thead>
-                      <tbody>
-                        {{# each detailtax }}                      
-                              <tr>
-                                <td align="center">
-                                  <!--
-                                    <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
-                                  -->
-
-                                  <a class="btn btn-danger" onclick="deletetax()"><em class="fa fa-trash"></em></a>
-                                </td>
-                                <!--
-                                <td class="hidden-xs">1</td>
-                                -->
-                                <td> 
-                                  <select class="form-control selectpicker show-tick" 
-                                          name="taxcode"
-                                          id="taxcode" required>
-                                      <option selected>{{this.taxcode}}</option>
-                                      <option>00:Cod</option>
-                                      <option>C1:IVA 21%</option>
-                                      <option>CX:Sin Impuestos</option>
-                                      <option>S1:IVA 27%</option>
-                                      <option>T1:IVA 10,5%</option>
-                                      <option>XC:Per.IVA 1,5%</option>
-                                      <option>XD:Per.IVA 3,00%</option>
-                                      <option>X3:Per.IVA 5%</option>
-                                      <option>XN:Perc. IIBB CABA 1,00%</option>           
-                                      <option>X2:Perc. IIBB CABA 3.5%</option>
-                                      <option>X6:Perc. IIBB CABA 2.0%</option>
-                                      <option>X0:Perc. IIBB CABA 6.0%</option>
-                                      <option>XH:Perc. IIBB Pcia. Buenos Aires 2.5%</option>
-                                      <option>XB:Perc. IIBB Pcia. Buenos Aires 5.0%</option>
-                                      <option>X5:Perc. IIBB Santa Fe 1.25%</option>
-                                      <option>XG:Perc. IIBB Tucumán 1.75%</option>
-                                      <option>X9:Perc. IIBB Tucumán 1.50%</option>
-                                      <option>XE:Perc. IIBB San Luis 2.0%</option>
-                                      <option>XF:Perc. IIBB Misiones 3.31%</option>
-                                      <option>XI:Perc. IIBB San Juan 1.20%</option>
-                                      <option>XJ:Perc. IIBB Salta 0.02%</option>
-                                      <option>XK:Perc. IIBB Catamarca 2.5%</option>
-                                      <option>XL:Perc. IIBB Mendoza 1.5%</option>
-                                      <option>XM:Perc. IIBB Jujuy 3,00%</option>
-                                  </select>
-                                </td>
-                                <td>
-                                    <input  type="text" class="form-control separate-bottom"  
-                                            placeholder="Monto" name="taxamount" id="taxamount" value="{{this.taxamount}}"/>
-                                </td>
-                              </tr>
-                        {{/each}}                                 
-                      </tbody>
-                    </table>
                 
-                  </div>
-                  <!--
-                  <div class="panel-footer">
-                    <div class="row">                 
-                    </div>
-                  </div>
-                  -->
-              </div>
+                <!-- dummy -->
+                <div class="form-group">
+                   <label for="x1" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12"> </label>
+                </div>                    
 
+                <!-- Country -->
+                <div class="form-group">
+                   <label for="country" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">País:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique el País" name="country" id="country" value="{{country}}"/> <span class="input-group-addon">
+                            <a href="#" data-toggle="modal" data-target=".modal-country"><span class="fa fa-external-link"></a></span>
+                        </div>
+                   </div>                                               
+                </div> 
+                
+                    
+                <!-- Region -->
+                <div class="form-group">
+                   <label for="state" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Región:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique la provincia" name="state" id="state" value="{{state}}"/> <span class="input-group-addon">
+                            <a href="#" name="btn-state" id="btn-state" data-toggle="modal" data-target=".modal-state"><span class="fa fa-external-link"></a></span>
+                        </div>
+                   </div>                                               
+                </div>                     
+        
 
-            </div> <!-- Fourth Column --> 
+                <!-- County -->
+                <div class="form-group">
+                   <label for="county" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Partido:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique el partido" name="county" id="county" value="{{county}}"/> <span class="input-group-addon">
+                            <a href="#" name="btn-county" id="btn-county" data-toggle="modal" data-target=".modal-county"><span class="fa fa-external-link"></a></span>
+                        </div>
+                   </div>                                               
+                </div>
+                    
+                <!-- Locality -->
+                <div class="form-group">
+                   <label for="locality" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Localidad :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"
+                                   placeholder="Localidad" name="locality" id="locality" 
+                                   value="{{locality}}"/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>
+
+                <!-- info_additional -->
+                <div class="form-group">
+                   <label for="info_additional" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Info.Adicional:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <textarea class="form-control rounded-0" name="info_additional" id="info_additional"rows="10"></textarea>
+                            <!--
+                            <input type='text' class="form-control separate-bottom"
+                                   placeholder="info Additional" name="info_additional" id="info_additional" 
+                                   value="{{info_additional}}"/>                 -->
+                        </div>
+                   </div>                                               
+                </div>
+                    
+        </div> <!-- Second Column -->
+                    
+                    
+ <!--           
+localidad
+info_additional
+coordenas gps
+año de fundación
+-->   
+                    
+                    
+            <!-- Third Column -->    
             <div class="col-lg-3 col-md-3 col-sm-12 butCont">
 
 
-            </div>
+            </div> <!-- Third Column -->
             
         </div>
     </div>
@@ -517,52 +319,21 @@
 
 <!--  ************************************************ -->
 
-
-  <!--   
-
-         Tabla Dinamica Proveedores
-
-  -->    
-<!--
-      <div    class="modal fade modal-provee" tabindex="-1" 
-            id="modal-provee" name="modal-provee"
-            data-target="#bs-example-modal-sm-provee"
-            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">   
-        -->
-    <div    class="modal fade modal-provee" tabindex="-1" 
-            id="modal-provee"
-            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" id="bt_modal_provee" name="bt_modal_provee" class="close" data-dismiss="modal" aria-hidden="true">Proveedores x Area Aprob &times;</button>
-                        {{火}} {{huo}}
-                </div>
-                <div class="modal-body">
-                    <table id="tsuppliers_by_approval_area" name="tsuppliers_by_approval_area" class="table table-striped table-bordered" 
-                           cellspacing="0" width="50%">
-                    </table>      
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-<!--   
-       Tabla Dinamica Approval Area
--->       
-    <div    class="modal fade modal-approvalarea" tabindex="-1" 
-            id="modal-approvalarea"
+    
+    <!--   
+       Tabla Dinamica Pais
+    -->       
+    <div    class="modal fade modal-country" tabindex="-1" 
+            id="modal-country"
             role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button id="btn_mapprovalarea" name="btn_mapprovalarea" type="button" class="close" data-dismiss="modal" aria-hidden="true">Area Aprobadora &times;</button>
+                    <button id="btn_country" name="btn_country" type="button" class="close" data-dismiss="modal" aria-hidden="true">Paises &times;</button>
                         {{火}} {{huo}}
                 </div>
                 <div class="modal-body">
-                    <table id="tuseraa" name="tuseraa" class="table table-striped table-bordered" 
+                    <table id="tcountry" name="tcountry" class="table table-striped table-bordered" 
                            cellspacing="0" width="50%">
                     </table>      
 
@@ -575,165 +346,75 @@
             </div>
         </div>
     </div>
-
-<!--   
-       Tabla Dinamica Cecos
--->       
-    <div    class="modal fade modal-cecos" tabindex="-1" 
-            id="modal-cecos"
+    
+    
+    <!--   
+            Tabla Dinamica State
+    -->       
+    <div    class="modal fade modal-state" tabindex="-1"
+            id = "modal-state" name = "modal-state"
             role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button id="btn_mcecos" name="btn_mcecos" type="button" class="close" data-dismiss="modal" aria-hidden="true">Centro de Costos &times;</button>
+                    <button id="btn_state" name="btn_state" type="button" class="close" data-dismiss="modal" aria-hidden="true">Provincias &times;</button>
                         {{火}} {{huo}}
                 </div>
                 <div class="modal-body">
-                    <table id="tusercecos" name="tusercecos" class="table table-striped table-bordered" 
+                    <table id="tstate" name="tstate" class="table table-striped table-bordered" 
                            cellspacing="0" width="50%">
-                    </table>      
-
+                      <thead>
+                          <tr>
+                              <th>Pais</th>
+                              <th>Provincia</th>
+                          </tr>
+                      </thead>                        
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button id="btn_clearcecos" name="btn_clearcecos" type="button" 
-                            class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
-                        {{火}} {{huo}}
-                </div>                                
-            </div>
-        </div>
-    </div>
-
-
-<!--   
-       Tabla Dinamica Accounts
--->       
-    <div    class="modal fade modal-accounts" tabindex="-1" 
-            id="modal-accounts"
-            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Cuentas &times;</button>
-                        {{火}} {{huo}}
-                </div>
-                <div class="modal-body">
-                    <table id="tuseraccounts" name="tuseraccounts" class="table table-striped table-bordered" 
-                           cellspacing="0" width="50%">
-                    </table> 
-                </div>
-                <div class="modal-footer">
-                    <button id="btn_clearaccount" name="btn_clearaccount" type="button" 
+                    <button id="btn_clearaa" name="btn_clearaa" type="button" 
                             class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
                         {{火}} {{huo}}
                 </div>
             </div>
         </div>
     </div>
-
-<!--   
-       Tabla Dinamica Order
--->       
-    <div    class="modal fade modal-tfiorders" tabindex="-1" 
-            id="modal-tfiorders"
+    
+    
+    <!--   
+            Tabla Dinamica County
+    -->       
+    <div    class="modal fade modal-county" tabindex="-1"
+            id = "modal-county" name = "modal-county"
             role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ordenes &times;</button>
+                    <button id="btn_county" name="btn_county" type="button" class="close" data-dismiss="modal" aria-hidden="true">Partidos &times;</button>
                         {{火}} {{huo}}
                 </div>
                 <div class="modal-body">
-                    <table id="tuserfiorders" name="tuserfiorders" class="table table-striped table-bordered" 
+                    <table id="tcounty" name="tcounty" class="table table-striped table-bordered" 
                            cellspacing="0" width="50%">
-                    </table>      
-
+                      <thead>
+                          <tr>
+                              <th>Pais</th>
+                              <th>Provincia</th>
+                              <th>Partidos</th>                              
+                          </tr>
+                      </thead>                        
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button id="btn_clearorden" name="btn_clearorden" type="button" 
+                    <button id="btn_clearaa" name="btn_clearaa" type="button" 
                             class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
                         {{火}} {{huo}}
-                </div>                                                
-            </div>
-        </div>
-    </div>
-
-
-
-<!--   
-       Concepts 
--->       
-    <div    class="modal fade modal-concepts" tabindex="-1" 
-            id="modal-concepts"
-            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Conceptos &times;</button>
-                        {{火}} {{huo}}
-                </div>
-                <div class="modal-body">
-                    <table id="tconcepts" name="tconcepts" class="table table-striped table-bordered" 
-                           cellspacing="0" width="50%">
-                    </table> 
-                </div>
-                <div class="modal-footer">
-                    <button id="btn_clearconcept" name="btn_clearconcept" type="button" 
-                            class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
-                        {{火}} {{huo}}
-                </div>                                    
-            </div>
-        </div>
-    </div>
-
-
-<!--   
-       Tabla Dinamica ServiceMonth
--->       
-    <div    class="modal fade modal-tservicemonth" tabindex="-1" 
-            id="modal-tservicemonth"
-            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Meses &times;</button>
-                        {{火}} {{huo}}
-                </div>
-                <div class="modal-body">
-                    <table id="tservicemonth" name="tservicemonth" class="table table-striped table-bordered" 
-                           cellspacing="0" width="50%">
-                    </table>      
-
                 </div>
             </div>
         </div>
     </div>
 
-
-<!--   
-       Description 
--->       
-    <div    class="modal fade modal-description" tabindex="-1" 
-            id="modal-descriptions"
-            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button id="btn_mdescription" name="btn_mdescription" type="button" class="close" data-dismiss="modal" aria-hidden="true">Description &times;</button>
-                        {{火}} {{huo}}
-                </div>
-                <div class="modal-body">
-                      <textarea rows="3" cols="50" class="form-control separate-bottom" placeholder="indique descripción" name="tdescription" id="tdescription"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button id="btn_cleardescription" name="btn_cleardescription" type="button" 
-                            class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
-                        {{火}} {{huo}}
-                </div>                 
-            </div>
-        </div>
-    </div>
-
-
+  
 
 <!--  ************************************************ -->
 
@@ -741,39 +422,42 @@
 
 <!--  ************************************************ -->
 
-<script type="text/javascript">
-     var currentRow = -1;
-</script>
+    <script type="text/javascript">
+         var currentRow = -1;
+    </script>
 
-<script src="/js/casupolibs.js" type="text/javascript"> </script>
+    <script src="/js/casupolibs.js" type="text/javascript"> </script>
 
+    <script src="/js/t_country.js" type="text/javascript"> </script>
 
-<script src="/js/t_userapprovalarea.js" type="text/javascript"> </script>
-
-<!--
-<script src="/js/tsuppliers_by_approval_area.js" type="text/javascript"> </script>
--->
-
-<script src="/js/t_usercecos.js" type="text/javascript"> </script>
-<script src="/js/tconcepts.js" type="text/javascript"> </script>
-<script src="/js/t_useraccounts.js" type="text/javascript"> </script>
-<script src="/js/t_userfiorders.js" type="text/javascript"> </script>
-<script src="/js/tservicemonth.js" type="text/javascript"> </script>
-<script src="/js/tcompany.js" type="text/javascript"> </script>
-
-<!--
-
-<script src="/js/casupolibs.js" type="text/javascript"> </script>
+    <!--    
+        <script src="/js/t_state.js" type="text/javascript"> </script>    
 
 
-<script src="/js/tsuppliers.js" type="text/javascript"> </script>
-<script src="/js/t_usercecos.js" type="text/javascript"> </script>
-<script src="/js/tconcepts.js" type="text/javascript"> </script>
-<script src="/js/t_useraccounts.js" type="text/javascript"> </script>
-<script src="/js/t_userfiorders.js" type="text/javascript"> </script>
-<script src="/js/tservicemonth.js" type="text/javascript"> </script>
-<script src="/js/tcompany.js" type="text/javascript"> </script>
--->
+    <script src="/js/tsuppliers_by_approval_area.js" type="text/javascript"> </script>
+
+
+    <script src="/js/t_usercecos.js" type="text/javascript"> </script>
+    <script src="/js/tconcepts.js" type="text/javascript"> </script>
+    <script src="/js/t_useraccounts.js" type="text/javascript"> </script>
+    <script src="/js/t_userfiorders.js" type="text/javascript"> </script>
+    <script src="/js/tservicemonth.js" type="text/javascript"> </script>
+    <script src="/js/tcompany.js" type="text/javascript"> </script>
+    -->
+
+    <!--
+
+    <script src="/js/casupolibs.js" type="text/javascript"> </script>
+
+
+    <script src="/js/tsuppliers.js" type="text/javascript"> </script>
+    <script src="/js/t_usercecos.js" type="text/javascript"> </script>
+    <script src="/js/tconcepts.js" type="text/javascript"> </script>
+    <script src="/js/t_useraccounts.js" type="text/javascript"> </script>
+    <script src="/js/t_userfiorders.js" type="text/javascript"> </script>
+    <script src="/js/tservicemonth.js" type="text/javascript"> </script>
+    <script src="/js/tcompany.js" type="text/javascript"> </script>
+    -->
 
 <script type="text/javascript">
 
@@ -788,6 +472,92 @@
         var currentColumn = 0;
 
         var currentRow = [];
+        
+        // ------------------------------------
+        //         Actitate table State
+        // -----------------------------------
+        var table_state =  $('#tstate').DataTable(
+        {
+            "pagingType": "full_numbers",
+            "processing": true,
+            "select" : true,            
+            "language": {
+                          "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                        },
+            "serverSide": false,
+            dom: 'Blfrtip',        
+             buttons: [
+                    'colvis',
+                    'excel',
+                    'print'
+                ],       
+
+            "columnDefs": 
+                [
+                    { targets: [0,1], visible: true}
+                    //{ targets: [0,1], width: "20%"},
+                    //{ targets: [2], width: "60%"}
+                ]     
+        });
+
+        // ------------------------------------
+        //         #ts tbody CLICK
+        // -----------------------------------
+        $('#tstate tbody').on( 'click', 'tr', function () 
+        {
+
+            var data = table_state.row( this ).data();
+            // alert("data : "+data[1]);
+
+            
+            $("#modal-state").modal('hide');
+            $("#state").val(data[1]);
+
+        });
+
+
+        // ------------------------------------
+        //         Actitate table County
+        // -----------------------------------
+        var table_county =  $('#tcounty').DataTable(
+        {
+            "pagingType": "full_numbers",
+            "processing": true,
+            "select" : true,            
+            "language": {
+                          "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                        },
+            "serverSide": false,
+            dom: 'Blfrtip',        
+             buttons: [
+                    'colvis',
+                    'excel',
+                    'print'
+                ],       
+
+            "columnDefs": 
+                [
+                    { targets: [0,1,2], visible: true}
+                    //{ targets: [0,1], width: "20%"},
+                    //{ targets: [2], width: "60%"}
+                ]     
+        });
+
+        // ------------------------------------
+        //         #ts tbody CLICK
+        // -----------------------------------
+        $('#tcounty tbody').on( 'click', 'tr', function () 
+        {
+
+            var data = table_county.row( this ).data();
+            // alert("data : "+data[1]);
+
+            
+            $("#modal-county").modal('hide');
+            $("#county").val(data[2]);
+
+        });
+
 
         // ------------------------------------
         //         Actitate table Supply
@@ -801,10 +571,9 @@
                       "pageLength": 50,
                       dom: 'Bfrtip',
                       select: true,
-                      "language": 
-                            {
-                              "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
-                            },            
+                      "language": {
+                                      "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                                  },            
                         "columnDefs": 
                       [
                           { targets: [0,1,2,3,4,5,6,7], visible: true},
@@ -841,10 +610,13 @@
                 { targets: [2], width: "60%"}
             ]     
         }); 
+        
+        /*
 
         addline();
         addtax();
-
+        */
+        
        // -----------------------------------------------------
         //         Actitate table tsuppliers_by_approval_area
         // -----------------------------------------------------
@@ -900,7 +672,7 @@
     });
 
 </script>
- 
+
 
 
 <script type="text/javascript">
@@ -909,69 +681,105 @@
 
         // *******************************************************
         //
-        //                tsuppliers_by_approval_area
+        //                modal
+        //              btn_state
         //
         // *******************************************************
 
-
-
-        // --------------------------------------------------
-        //         modal-provee (supplier by approval_area)
-        // --------------------------------------------------
-        $('#modal-provee').on( 'click', function () 
+        $('#btn-state').on( 'click', function () 
         {
 
-          //alert("modal-provee");
+          //alert("modal-state");
 
-          var t_params = "approvalarea="+$("#approvalarea").val()
+          var t_params = "country="+$("#country").val()
           var dataString = "dat1=hola"
 
           $.ajax(
           {
             type: "GET",
-            url: "/api/restGetAllSupplier_by_approval_area",
+            url: "/api/states/",
             data: t_params,
             success: function(data_resp) 
             {
-              //alert("success");
-              var table = $('#tsuppliers_by_approval_area').DataTable();
-              table.clear();
+                //alert("success");
+                var table = $('#tstate').DataTable();
+                table.clear();
 
-              for(var key in data_resp[0].suppliers) 
-              {
-                var tval =  data_resp[0].suppliers[key].supplier;
-                var ndospuntos = tval.indexOf(":");
-                if (ndospuntos > 0)
+                //alert(JSON.stringify(data_resp));
+
+                for(var key in data_resp) 
                 {
-                  //alert(data_resp[0].suppliers[key].supplier);
-                  table.row.add([data_resp[0].suppliers[key].supplier,""]).draw();
-                }
-              } 
-              table.draw();                  
+                    //alert(JSON.stringify(data_resp[0].data[key]));
+                    //alert(data_resp[key].state);
+                    //var tval =  data_resp[0].data[key].supplier;
+                    var tval =  data_resp[0].datastate;
+                    /*
+                    var ndospuntos = tval.indexOf(":");
+                    if (ndospuntos > 0)
+                    {
+                      //alert(data_resp[0].suppliers[key].supplier);
+                      table.row.add([data_resp[0].suppliers[key].supplier,""]).draw();
+                    }
+                    */
+                    //console.log([data_resp[key].country+"<>"+data_resp[key].state]);
+                    table.row.add([data_resp[key].country, data_resp[key].state]).draw();  
+                } 
+                table.draw();                  
             }
-          });                  
+          });   
+        });  
+    
 
-                
-        });          
-           
-         
-        // --------------------------------------------
-        //   #tsuppliers_by_approval_are tbody CLICK
-        // --------------------------------------------
-        $('#tsuppliers_by_approval_area').on( 'click', 'tr', function () 
+        // *******************************************************
+        //
+        //                modal
+        //              btn_county
+        //
+        // *******************************************************
+
+        $('#btn-county').on( 'click', function () 
         {
 
+          //alert("modal-state");
 
-            var tsupplier_by_approval_area =  $('#tsuppliers_by_approval_area').DataTable()
-            var data = tsupplier_by_approval_area.row( this ).data();
+          var t_params = "country="+$("#country").val()+"&state="+$("#state").val()
+          var dataString = "dat1=hola"
 
-            //alert("data : ");
-            //alert(data[0]);   
+          $.ajax(
+          {
+            type: "GET",
+            url: "/api/county/",
+            data: t_params,
+            success: function(data_resp) 
+            {
+                //alert("success");
+                var table = $('#tcounty').DataTable();
+                table.clear();
 
-            $('#supplier').val(data[0]);           
-            $(".modal-provee").modal('hide');
+                //alert(JSON.stringify(data_resp));
 
-        });         
+                for(var key in data_resp) 
+                {
+                    //alert(JSON.stringify(data_resp[0].data[key]));
+                    //alert(data_resp[key].state);
+                    //var tval =  data_resp[0].data[key].supplier;
+                    //var tval =  data_resp[0].datastate;
+                    /*
+                    var ndospuntos = tval.indexOf(":");
+                    if (ndospuntos > 0)
+                    {
+                      //alert(data_resp[0].suppliers[key].supplier);
+                      table.row.add([data_resp[0].suppliers[key].supplier,""]).draw();
+                    }
+                    */
+                    //console.log([data_resp[key].country+"<>"+data_resp[key].state]);
+                    table.row.add([data_resp[key].country, data_resp[key].state,                                data_resp[key].county]).draw();  
+                } 
+                table.draw();                  
+            }
+          });   
+        });  
+
 
         // *******************************************************
         //

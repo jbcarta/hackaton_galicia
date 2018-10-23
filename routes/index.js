@@ -28,6 +28,13 @@ var passport = require('passport');
 // 		BigchainDB definitions
 // -----------------------------------
 
+        
+    // -----------------------------------
+    // 			Modelos
+    // -----------------------------------
+    var Countries = require('../models/loc_countries');
+    var States = require('../models/loc_states');
+    var County = require('../models/loc_county');
 
     const bcDb_driver = require('bigchaindb-driver');
 
@@ -68,6 +75,120 @@ var passport = require('passport');
     */
 
     //connDb.define("crabModel", "https://schema.org/v1/crab");
+
+
+	// -------------------------------------
+	//      get api /api/countries
+	// -------------------------------------	
+	router.get('/api/countries', function(req, res, next) 
+	{
+		// console.log('Entro en /api/countries.........');
+	   	Countries.find({ country: { $exists: true } } , {country : 1}, function(err, alldata)
+		{
+			// console.log('Entro en /api/countries .. dentro de find');
+
+			if (err)
+			{
+				console.log('api-error:',err);
+				res.send(err);
+			}
+
+            //console.log('alldata :',alldata);
+            // console.log('alldata.size:',alldata.length);
+			var totrec = alldata.length;
+            //		console.log('totrec :',totrec);
+		    var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
+		    output["data"] = alldata;
+
+            // res.json(output);
+
+					
+			// Return all clients
+            //  console.log(output);
+            res.json(output);
+		});
+
+	});
+
+
+	// -------------------------------------
+	//      get api /api/state
+	// -------------------------------------	
+	router.get('/api/states', function(req, res, next) 
+	{
+		// console.log('Entro en /api/states.........');
+        // console.log("req.query:", req.query);
+        // console.log("Country:", req.query.country);
+        //	   	States.find({ country: req.query.xcountry }, [{country : 1}, {state : 1}], function(err, alldata)
+        States.find({ country: req.query.country }, function(err, alldata)        
+		{
+			console.log('Entro en /api/states .. dentro de find');
+
+			if (err)
+			{
+				console.log('api-error:',err);
+				res.send(err);
+
+			}
+
+            //console.log('alldata :',alldata);
+            // console.log('alldata.size:',alldata.length);
+			var totrec = alldata.length;
+            //		console.log('totrec :',totrec);
+		    var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
+		    output["data"] = alldata;
+
+	//		res.json(output);
+
+					
+			// Return all clients
+	//		console.log(output);
+	//		res.json(output);
+            res.json(alldata);
+		});
+
+	});
+
+
+	// -------------------------------------
+	//      get api /api/county
+	// -------------------------------------	
+	router.get('/api/county', function(req, res, next) 
+	{
+		console.log('Entro en /api/county.........');
+        console.log("req.query:", req.query);
+        console.log("Country:", req.query.country);
+        console.log("State:", req.query.state);
+        
+        //	   	States.find({ country: req.query.xcountry }, [{country : 1}, {state : 1}], function(err, alldata)
+        County.find({ country: req.query.country, state: req.query.state }, function(err, alldata)        
+		{
+			console.log('Entro en /api/county .. dentro de find');
+
+			if (err)
+			{
+				console.log('api-error:',err);
+				res.send(err);
+
+			}
+
+            // console.log('alldata :',alldata);
+            // console.log('alldata.size:',alldata.length);
+			var totrec = alldata.length;
+            //		console.log('totrec :',totrec);
+		    var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
+		    output["data"] = alldata;
+
+	//		res.json(output);
+
+					
+			// Return all clients
+	//		console.log(output);
+	//		res.json(output);
+            res.json(alldata);
+		});
+
+	});
 
 // -----------------------------------
 // 	    End	BigchainDB definitions
@@ -241,7 +362,7 @@ var passport = require('passport');
     });
 
 
-    // Buscar AssetData
+    // Buscar findasset
     router.get('/findasset', function (req, res) 
     {
         console.log("*************************************************");     
@@ -271,6 +392,24 @@ var passport = require('passport');
                 .then(assets => console.log('Found assets with serial number Bicycle Inc.:', assets));
         res.redirect('/');
     });        
+
+    // Buscar createasset
+    router.get('/createasset', function (req, res) 
+    {
+            res.locals.activateIsotope = false; //showisotope();
+			var tmp_id = req.params.id;
+
+			console.log("------------------------------: ");
+
+			console.log("/createasset/get 1: ");		
+
+			res.render('blockchain/asset_detail_create', { title: 'Crear Activos'});
+
+			//  	return res.redirect('/process/supplierinvoice_edit');        
+        
+        
+     
+    });
 
 
 
@@ -378,7 +517,7 @@ var passport = require('passport');
 
     });
 
-    router.get('/createAsset', function (req, res) 
+    router.get('/createasset1', function (req, res) 
     {
 
             var keyExist = false;
@@ -7245,38 +7384,7 @@ router.post('/supplierInvoice2release_approval', function(req, res, next)
 
 
 
-	// -------------------------------------
-	//      get api /api/approvers
-	// -------------------------------------	
-	router.get('/api/approvers', function(req, res, next) 
-	{
-		console.log('Entro en /api/approvers.........');
-	   	Approver.find({ approver_code: { $exists: true } } , function(err, alldata)
-		{
-			console.log('Entro en /api/approvers .. dentro de find');
 
-			if (err)
-			{
-				console.log('api-error:',err);
-				res.send(err);
-
-			}
-
-			console.log('alldata.size:',alldata.length);
-			var totrec = alldata.length;
-	//		console.log('totrec :',totrec);
-		    var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
-		    output["data"] = alldata;
-
-	//		res.json(output);
-
-					
-			// Return all clients
-	//		console.log(output);
-			res.json(output);
-		});
-
-	});
 
 
 	// -------------------------------------

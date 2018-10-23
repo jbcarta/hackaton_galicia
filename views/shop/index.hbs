@@ -110,17 +110,41 @@ Usuario Activo: {{x_email}}
         //function placeOrder(){
             f.submit();
             //}
-    });    
+    });  
+    
     
     // ----------------------
     //     Create Asset
     // ----------------------
     $('#createasset').on( 'click', function() {
 
-        //alert("Createkey click...");
+        // alert("CreateAsset click...");
         var f = document.createElement("form");
         f.setAttribute('method',"get");
-        f.setAttribute('action',"/createAsset");
+        f.setAttribute('action',"/createasset");
+
+        //var i = document.createElement("input"); //input element, text
+        //i.setAttribute('type',"text");
+        //i.setAttribute('name',"username");
+
+        var s = document.createElement("input"); //input element, Submit button
+        //s.setAttribute('type',"submit");
+        //s.setAttribute('value',"Submit");
+        $(document.body).append(f);
+        //function placeOrder(){
+        f.submit();
+        //}
+    });    
+    
+    // ----------------------
+    //     Create Asset
+    // ----------------------
+    $('#createasset1').on( 'click', function() {
+
+        //alert("CreateAsset1 click...");
+        var f = document.createElement("form");
+        f.setAttribute('method',"get");
+        f.setAttribute('action',"/createasset1");
 
         //var i = document.createElement("input"); //input element, text
         //i.setAttribute('type',"text");
