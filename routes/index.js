@@ -361,6 +361,96 @@ var passport = require('passport');
      
     });
 
+    // Buscar ReportAsset
+    router.get('/assetlist', function (req, res)
+    {
+        console.log("*************************************************");     
+        console.log("//assetlist             -------------------------*");
+        
+        res.locals.activateIsotope = false; //showisotope();
+        var keyExist = false;
+
+        
+        //connDb.searchAssets('PRIMARIA')
+        //.then(assets => console.log('Found assets :', assets));
+
+        res.render('blockchain/asset_all', { title: 'listado de Activos'});
+    }); 
+
+
+    // Buscar ReportAsset
+    router.get('/api/assetlist', function (req, res)
+    {
+        var asset_alldata = [];
+        console.log("*************************************************");     
+        console.log("/api/assetlist         -------------------------*");
+        var tmp_id = req.session.passport.user;
+        var tmp_email = "sin valor";
+        var tmp_name = "sin valor";
+        console.log("****** Antes de findById......");   
+        console.log("****** tmp_id    :", tmp_id);   
+        var output = ""; // { "iTotalRecords" : 0, "iTotalDisplayRecords" : 10 };
+        connDb.searchAssets('PRIMARIA')
+        .then(assets => //console.log('Found assets :', assets));
+        {
+            //console.log('Found assets :', assets);
+            console.log('assets.length :', assets.length);
+            for(i = 0; i < assets.length; i++) 
+            {
+                console.log("i: "+i);
+                if (assets[i].data.asset_type != "Producci�n Primaria")
+                {
+                    asset_alldata[i] = 
+                    {
+                        asset_type: assets[i].data.asset_type,
+                        asset_name: assets[i].data.asset_name,
+                        year_foundation: assets[i].data.year_foundation /*, 
+                        asset_cuit : vals1[3],
+                        asset_tipo_doc: vals1[4],
+                        asset_num_doc: vals1[5],
+                        asset_bank_register: vals1[6],
+                        cadastro: vals1[7],
+                        country: vals1[8],
+                        state: vals1[9],
+                        city: vals1[10],
+                        location: vals1[11],
+                        latitude: vals1[12],
+                        longitude: vals1[13],
+                        surface_total: vals1[14],
+                        surface_agricultura: vals1[15],
+                        owner_name: vals1[16],
+                        owner_cuit: vals1[17],
+                        owner_doc_type: vals1[18],
+                        owner_num_type: vals1[19],
+                        owner_bank_register: vals1[20],
+                        products: vals1[21], 
+                        period: vals1[22],
+                        agricultural_system: vals1[23],
+                        surface_planted: vals1[24],
+                        tons_harvested: vals1[25],
+                        income_gross: vals1[26],
+                        income_net: vals1[27]  */
+                    };
+                    console.log("asset_alldata:"+asset_alldata[i].asset_name);
+                    //output["data"].push(asset_alldata);
+                };               
+     
+            }
+
+            
+            console.log("Encontré registros!!!...cantidad de registros: "+assets.length);
+            var totrec = assets.length;
+            console.log('totrec :',totrec);
+            var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
+            //output["data"] = assets.data;
+            output["data"] = asset_alldata;
+            console.log('Json(output) :'+output["data"]);
+            res.json(output);
+        });
+
+		        
+        //res.redirect('/');      
+    }); 
 
     // Buscar findasset
     router.get('/findasset', function (req, res) 
@@ -368,7 +458,7 @@ var passport = require('passport');
         console.log("*************************************************");     
         console.log("/findasset             -------------------------*");
         
-        connDb.searchAssets('Hacienda')
+        connDb.searchAssets('PRIMARIA')
         .then(assets => console.log('Found assets with serial number Hacienda Renacimiento:', assets));
         res.redirect('/');        
     }); 
@@ -431,7 +521,7 @@ var passport = require('passport');
                                         "country": "Argentina",
                                         "region": "Buenos Aires",
                                         "year fundación": "1656",
-                                        "tipo:":"Agricultor"
+                                        "tipo:":"Producción Primaria"
                                     }         
 
                 /*
@@ -773,6 +863,92 @@ var passport = require('passport');
 
             res.redirect("/");            
 	});
+
+	// ----------------------------------------------
+	//   get /customerexistinBank
+	// ----------------------------------------------
+	router.get('/customerexistinBank', function(req, res, next) 
+	{
+
+		console.log("-------------------------------------- ");
+        console.log("/customerexistinBank");
+
+        
+        var doc_type = req.query.doc_type;
+        var doc_num  = req.query.doc_num;
+        
+        
+        console.log(req.query);
+        
+         //url: "http://apicast-hackaton-galicia.b9ad.pro-us-east-1.openshiftapps.com/api/v1/customers?apikey=b5776541fc93e7f10a07f7c5f0ec7c8e";
+
+		//		tmp_id = temp_id.split(":")[0];
+
+				//console.log("t_invoice:",t_invoice);
+				//var json_t_invoice = JSON.stringify(t_invoice);
+				//var json_t_invoice = t_invoice;
+				//console.log("json_t_invoice:",json_t_invoice);
+	            var destinatioUrl = "http://apicast-hackaton-galicia.b9ad.pro-us-east-1.openshiftapps.com/api/v1/customers?apikey=b5776541fc93e7f10a07f7c5f0ec7c8e";
+				var options = 
+				{
+				  uri: destinatioUrl,
+				  method: 'GET'
+				  //json: json_t_invoice
+				  //body: json_t_invoice
+				};
+
+				console.log("----------------------------------");
+				console.log("Request --------------------------");			
+
+				request(options, function (error, response, body) 
+				{
+                    if (!error && response.statusCode == 200) 
+                    {
+                     console.log("body.id:",body.id) // Print the shortened url.
+                    }
+                    console.log("Error:", error);
+                    //console.log("Response:", response);´´
+                    //console.log("body:", body);
+
+                    var t_body = JSON.parse(body);
+                    var record_selected = -1;
+                    console.log("t_body:", t_body);
+                    for (var i = t_body.length-1; i > 0; i--) 
+                    {
+                        console.log(t_body[i].Doc_Type+"<>"+doc_type+"<>"+i);
+                        //console.log(t_body[i].Doc_Type);                        
+                        if (t_body[i].Doc_Type == doc_type && t_body[i].Doc_Number == doc_num)
+                        {
+                            record_selected = i;
+                            console.log("RecSelected"+">"+t_body[i]+"<>"+t_body[i].Doc_Type+"<>"+i);
+                            i = -10;
+                        }
+                        
+                    };
+                    if (record_selected > -1)
+                    {
+                        res.send(t_body[record_selected]);
+                    }
+                    else
+                    {
+                        res.send("MENSAJE: No esta registrado en el Banco.  Recuerde usted dará mayor confianza a los inversores si posee cuentas en el BANCO GALICIA");
+                    }
+                /*
+				  console.log("t_body.status: ", t_body[0].status);
+				  //console.log("status:", status);
+				  console.log("body.messages:", t_body[0].messages[0].message);
+   				  console.log("body.messages.length :", t_body[0].messages.length);
+
+  				  console.log("body.messages:", t_body[0].messages[1].id);
+  				  console.log("body.messages:", t_body[0].messages[1].number);
+				  console.log("body.messages ultimo:", t_body[0].messages[1].message);
+                  */
+				  //res.send(t_body);
+				  console.log("despues de body")
+				});
+				 console.log("Fuera de request")
+
+	}); //router.get
 
 
 

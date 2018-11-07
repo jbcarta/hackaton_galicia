@@ -2,10 +2,13 @@
 Usuario Activo: {{x_email}}
 -->
 
+<!--  esto permite tener una barra en el bottom de la pantalla
+
 <div class="footer">
   <p>Usuario Activo: {{x_email}}</p>
 </div>
 
+-->
 
 <form method="get" action="" name="frm_menu">
        <!--
@@ -182,6 +185,30 @@ Usuario Activo: {{x_email}}
         f.submit();
         //}
     });    
+    
+      
+    // ----------------------
+    //     Asset List
+    // ----------------------
+    $('#assetlist').on( 'click', function() {
+
+        //alert("Createkey click...");
+        var f = document.createElement("form");
+        f.setAttribute('method',"get");
+        f.setAttribute('action',"/assetlist");
+
+        //var i = document.createElement("input"); //input element, text
+        //i.setAttribute('type',"text");
+        //i.setAttribute('name',"username");
+
+        var s = document.createElement("input"); //input element, Submit button
+        //s.setAttribute('type',"submit");
+        //s.setAttribute('value',"Submit");
+        $(document.body).append(f);
+        //function placeOrder(){
+        f.submit();
+        //}
+    });
     
     
     $('#findasset').on( 'click', function() {

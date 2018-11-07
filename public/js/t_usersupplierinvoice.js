@@ -1,4 +1,4 @@
-    $(document).ready(function () 
+    $(document).ready(function ()
     {   
         var xtmp = '<a href="/supplierinvoice_add" class="btn btn-success pull-left" role="button">A</a>';
 
