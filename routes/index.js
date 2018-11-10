@@ -24,6 +24,15 @@ var url = require("url");
 
 var passport = require('passport');
 
+// email
+
+var nodemailer = require('nodemailer');
+
+// twilio mensage de textos
+                const accountSid = 'AC50f5c041158be840e607172e8951159e';
+                const authToken = 'ea5f7bd3d9fbae19e4718f16dc33595f';
+                const Twilio = require('twilio'); 
+
 // -----------------------------------
 // 		BigchainDB definitions
 // -----------------------------------
@@ -35,6 +44,7 @@ var passport = require('passport');
     var Countries = require('../models/loc_countries');
     var States = require('../models/loc_states');
     var County = require('../models/loc_county');
+    var Proposal = require('../models/proposal');
 
     const bcDb_driver = require('bigchaindb-driver');
 
@@ -209,7 +219,7 @@ var passport = require('passport');
     // Invoice2pay settings
     var settings = require('../I2P_settings.js');
 
-
+    var Casupo = require('../public/js/casupolibs.js');
 
     console.log("settings.MongoServer :",settings.MongoServer);
     console.log("settings.sapWebServer :",settings.sapWebServer);
@@ -248,7 +258,29 @@ var passport = require('passport');
 // var loaddata = require('../ownfunction/load_referencedata');
 
 
+        function getDateTime_asString() 
+        {
+            var date = new Date();
 
+            var hour = date.getHours();
+            hour = (hour < 10 ? "0" : "") + hour;
+
+            var min  = date.getMinutes();
+            min = (min < 10 ? "0" : "") + min;
+
+            var sec  = date.getSeconds();
+            sec = (sec < 10 ? "0" : "") + sec;
+
+            var year = date.getFullYear();
+
+            var month = date.getMonth() + 1;
+            month = (month < 10 ? "0" : "") + month;
+
+            var day  = date.getDate();
+            day = (day < 10 ? "0" : "") + day;
+
+            return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+        }
 
 
 
@@ -361,7 +393,9 @@ var passport = require('passport');
      
     });
 
-    // Buscar ReportAsset
+    //  --------------------
+    //        assetlist
+    //  --------------------
     router.get('/assetlist', function (req, res)
     {
         console.log("*************************************************");     
@@ -378,7 +412,9 @@ var passport = require('passport');
     }); 
 
 
-    // Buscar ReportAsset
+    //  ------------------------
+    //        /api/assetlist
+    //  ------------------------
     router.get('/api/assetlist', function (req, res)
     {
         var asset_alldata = [];
@@ -393,45 +429,55 @@ var passport = require('passport');
         connDb.searchAssets('PRIMARIA')
         .then(assets => //console.log('Found assets :', assets));
         {
-            //console.log('Found assets :', assets);
+            console.log('Found assets :', assets);
             console.log('assets.length :', assets.length);
+            var j = 0;
             for(i = 0; i < assets.length; i++) 
             {
-                console.log("i: "+i);
-                if (assets[i].data.asset_type != "Producci�n Primaria")
+                console.log("i: "+i+"<>"+assets[i].id); //data.asset_type);
+                if (assets[i].data.asset_type != "Producci�n Primaria" && assets[i].data.user_publicKey != undefined)
                 {
-                    asset_alldata[i] = 
+                    asset_alldata[j] = 
                     {
+                        id: assets[i].id,
+                        owner_publicKey : assets[i].data.owner_publicKey,
                         asset_type: assets[i].data.asset_type,
                         asset_name: assets[i].data.asset_name,
-                        year_foundation: assets[i].data.year_foundation /*, 
-                        asset_cuit : vals1[3],
-                        asset_tipo_doc: vals1[4],
-                        asset_num_doc: vals1[5],
-                        asset_bank_register: vals1[6],
-                        cadastro: vals1[7],
-                        country: vals1[8],
-                        state: vals1[9],
-                        city: vals1[10],
-                        location: vals1[11],
-                        latitude: vals1[12],
-                        longitude: vals1[13],
-                        surface_total: vals1[14],
-                        surface_agricultura: vals1[15],
-                        owner_name: vals1[16],
-                        owner_cuit: vals1[17],
-                        owner_doc_type: vals1[18],
-                        owner_num_type: vals1[19],
-                        owner_bank_register: vals1[20],
-                        products: vals1[21], 
-                        period: vals1[22],
-                        agricultural_system: vals1[23],
-                        surface_planted: vals1[24],
-                        tons_harvested: vals1[25],
-                        income_gross: vals1[26],
-                        income_net: vals1[27]  */
+                        year_foundation: assets[i].data.year_foundation, 
+                        asset_cuit : assets[i].data.asset_cuit,
+                        asset_tipo_doc: assets[i].data.asset_tipo_doc,
+                        asset_num_doc: assets[i].data.asset_num_doc,
+                        asset_bank_register: assets[i].data.asset_bank_register,
+                        cadastro: assets[i].data.cadastro,
+                        country: assets[i].data.country,
+                        state: assets[i].data.state,
+                        city: assets[i].data.city,
+                        location: assets[i].data.location,
+                        latitude: assets[i].data.latitude,
+                        longitude: assets[i].data.longitude,
+                        surface_total: assets[i].data.surface_total,
+                        surface_agricultura: assets[i].data.surface_agricultura,
+                        owner_name: assets[i].data.owner_name,
+                        owner_cuit: assets[i].data.owner_cuit,
+                        owner_doc_type: assets[i].data.owner_doc_type,
+                        owner_num_type: assets[i].data.owner_num_type,
+                        owner_bank_register: assets[i].data.owner_bank_register,
+                        products: assets[i].data.products, 
+                        period: assets[i].data.period,
+                        agricultural_system: assets[i].data.agricultural_system,
+                        surface_planted: assets[i].data.surface_planted,
+                        tons_harvested: assets[i].data.tons_harvested,
+                        income_gross: assets[i].data.income_gross,
+                        income_net: assets[i].data.income_net,
+                        amount_requested: assets[i].data.amount_requested,
+                        numbers_payment: assets[i].data.numbers_payment,
+                        first_payment: assets[i].data.first_payment,
+                        interest_rate: assets[i].data.interest_rate,
+                        frecuency: assets[i].data.frecuency
                     };
-                    console.log("asset_alldata:"+asset_alldata[i].asset_name);
+                    console.log("j: "+j);                    
+                    console.log("asset_alldata:"+asset_alldata[j].asset_name);                    
+                    j++;
                     //output["data"].push(asset_alldata);
                 };               
      
@@ -439,7 +485,7 @@ var passport = require('passport');
 
             
             console.log("Encontré registros!!!...cantidad de registros: "+assets.length);
-            var totrec = assets.length;
+            var totrec = j; //assets.length;
             console.log('totrec :',totrec);
             var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
             //output["data"] = assets.data;
@@ -447,6 +493,265 @@ var passport = require('passport');
             console.log('Json(output) :'+output["data"]);
             res.json(output);
         });
+
+		        
+        //res.redirect('/');      
+    }); 
+
+
+	// -------------------------------------------
+	//      Post /asset_detail_view
+	// -------------------------------------------	
+		router.post('/asset_detail_view', function(req, res, next) 
+		{
+
+            var temp_id = req.body.post_id;
+
+            //		tmp_id = temp_id.split(":")[0];
+            console.log("---------------------------------: ");
+
+            // aquiestoy
+            console.log("post /asset_detail_view/post_id : "+temp_id);
+            console.log("post /asset_detail_view -req.user.username : "+req.user.username);
+            console.log("post /asset_detail_view - req.session: "+req.session);
+            console.log("post /asset_detail_view - req.session.passport.user: "+req.session.passport);
+
+            connDb.searchAssets(temp_id)
+            .then(asset => //console.log('Found assets :', assets));
+            {
+                console.log('Found assets :', asset);
+                //var results_mongodb = [];
+                //results_mongodb.push(assets);
+                //console.log("---------------------------------: ");
+
+                //console.log("docs : "+docs);
+
+
+                //console.log("results_mongodb : "+results_mongodb);
+
+                res.render('blockchain/asset_detail_view', { title: 'Detalle del Activo', 
+                                                                    recdata: asset
+                                                                    //, 
+                                                                    //xsup: results_mongodb.supplier,
+                                                                    //user_id: req.user.username
+                                                                    });
+                console.log("despues de res.render ---------------------------------: ");                
+                
+            });
+            console.log("fuera del connDB ---------------------------------: ");            
+
+
+
+	       });
+
+
+    //  ------------------------------
+    //     Get   proposal_aprovreject
+    //  ------------------------------
+    router.get('/proposal_aprovreject', function (req, res)
+    {
+        console.log("*************************************************");     
+        console.log("//proposal_aprovreject  ------------------------*");
+        
+        res.locals.activateIsotope = false; //showisotope();
+        var keyExist = false;
+
+        
+        //connDb.searchAssets('PRIMARIA')
+        //.then(assets => console.log('Found assets :', assets));
+
+        res.render('blockchain/proposal_aprovreject', { title: 'Propuestas Pendientes'});
+    }); 
+
+	// -------------------------------------------
+	//      Post /proposal_aprovreject_detail
+	// -------------------------------------------	
+        router.post('/proposal_approvreject_detail', function(req, res, next) 
+        {
+            var temp_id = req.body.post_id;            
+            console.log("---------------------------------: ");
+            console.log("/proposal_aprovreject_detail : ");            
+            console.log("req.body : ",req.body);            
+            console.log("temp_id : "+temp_id);
+
+            // -------------------------------------
+            //   Buscar propuestas
+
+            Proposal.findById(temp_id, function (err, docs) 
+            {  
+                // Handle any possible database errors
+                if (err) 
+                {
+                    console.log("Error:"+err);
+                } 
+                else 
+                {                             
+                    console.log("Encontré registro!!!...: "+docs);
+                    
+                    // proposal_approvrejec_detail_test
+                    // proposal_approvreject_detail
+
+                    res.render('blockchain/proposal_approvrejec_detail_test', 
+                                        {   
+                                            title: 'Detalle de la Propuesta', 
+                                            recdata: docs
+                                        });  
+                }
+            });
+        });
+
+	// -------------------------------------------
+	//      Post /proposal_approvreject
+	// -------------------------------------------	
+		router.post('/proposal_approvreject', function(req, res, next) 
+		{
+            console.log("------------------------------------------");            
+            console.log("post /proposal_approvreject --------------");
+            console.log("req.body :",req.body);
+            var temp_id = req.body.operation_id;
+            console.log("temp_id :",temp_id);            
+            
+            // -------------------------------------
+            //   Buscar propuesta 
+            Proposal.findById(temp_id, function (err, docs) 
+            {  
+                // Handle any possible database errors
+                if (err) 
+                {
+                    console.log("Error:"+err);
+                } 
+                else 
+                {                             
+                    console.log("proposal_approvreject -> Encontré registro!!!...: "+docs);
+                    if(req.body.returnaction == 'REJECT')
+                    {
+                        docs.status = '02-rechazado',
+                        docs.status_date = getDateTime_asString();
+     
+                        docs.save(function (err, todo) 
+                        {
+                            if (err) 
+                            {
+                                console.log(" error al grabar:"+err);   
+                            }
+                            else
+                            {
+                                console.log('doc saved:',docs)
+                                //res.send(todo);                    
+                        
+                                // -------------------------------------
+                                //   Enviar email de notificación
+
+                                    var transporter = nodemailer.createTransport({
+                                      service: 'gmail',
+                                      auth: {
+                                        user: 'sirmionep2planding@gmail.com',
+                                        pass: 'Sirmione01.'
+                                      }
+                                    });
+
+                                    var mailOptions = {
+                                        from: 'jbcarta@hotmail.com',
+                                        to: 'jbcarta@hotmail.com',
+                                        subject: 'Notificación sobre su Propuesta Enviada',
+                                        text: 
+                                            "Lamentamos informarle que su oferta no fue aceptada."+"\n"+"\n"+
+                                            "Detalle de su propuesta:"+"\n"+
+                                            "Nro. Propuesta:"+docs._id+"\n"+                                    
+                                            "Monto Ofertado:"+docs.amount_requested+"\n"+                    
+                                            "Nro. de Cuotas:"+docs.numbers_payment+"\n"+
+                                            "Primer Pago   :"+docs.first_payment+"\n"+  
+                                            "Tasa Interes  :"+docs.interest_rate+"\n"+                    
+                                            "Frecuencia    :"+docs.frecuency+"\n"+"\n"+
+
+                                            "SIRMIONE P2P Landing....Tu socio para ayudarte a crecer!"
+                                    };
+
+                                    transporter.sendMail(mailOptions, function(error, info)
+                                    {
+                                      if (error) 
+                                      {
+                                        console.log(error);
+                                      } else 
+                                      {
+                                        console.log('Email sent: ' + info.response);
+                                      }
+                                    }); 
+                                
+                                res.redirect('/');
+                            }
+                        });    // docs.save                  
+                        
+
+
+                    } // if(req.body.returnaction
+
+                    
+
+                }
+            });            
+            
+
+        });
+
+   //  -------------------------------
+    //        /api/proposal
+    //  ------------------------------
+    router.get('/api/proposal', function (req, res)
+    {
+        var asset_alldata = [];
+        console.log("*************************************************");     
+        console.log("/api/proposal          -------------------------*");
+
+        console.log("****** Antes de findById......");   
+        console.log("****** tmp_id    :", tmp_id);   
+        var output = ""; // { "iTotalRecords" : 0, "iTotalDisplayRecords" : 10 };
+        
+            // -------------------------------------
+            //   Buscar publicKey del inversor
+            
+                var tmp_id = req.session.passport.user;
+                var publicKey = "SinValor";
+				User.findById(tmp_id, function (err, doc) 
+                {  
+				    // Handle any possible database errors
+				    if (err) 
+                    {
+				        console.log("Error:"+err);
+                        publicKey = err;
+				    } 
+                    else 
+                    {                              
+				        publicKey = doc.publicKey;
+                        console.log("publicKey:",publicKey);
+                        // -------------------------------------
+                        //   Buscar propuestas
+                        
+                        Proposal.find({$and: 
+                                       [    {status : "01-esperando respuesta" }, 
+								            {operation : {$eq: "01-New Proposal" }}, 
+				                            {owner_publicKey : {$eq: publicKey}} 
+									   ]}, function (err, doc) 
+                                {  
+                                    // Handle any possible database errors
+                                    if (err) 
+                                    {
+                                        console.log("Error:"+err);
+                                    } 
+                                    else 
+                                    {                             
+                                        console.log("Encontré registros!!!...cantidad de registros: "+doc.length);
+                                        var totrec = doc.length;
+                                        console.log('totrec :',totrec);
+                                        var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
+                                        //output["data"] = assets.data;
+                                        output["data"] = doc;
+                                        console.log('Json(output) :'+output["data"]);
+                                        res.json(output);
+                                    }
+                                });
+                    }
+                });
 
 		        
         //res.redirect('/');      
@@ -805,6 +1110,401 @@ var passport = require('passport');
     });
 
 
+// *++++++++++++++++++++++++++++++++++++++++
+//
+//   investment functions
+//
+// *++++++++++++++++++++++++++++++++++++++++
+
+    //  --------------------
+    //        newinvestment
+    //  --------------------
+    router.get('/asset_newinvestment', function (req, res)
+    {
+        console.log("******************************************************");     
+        console.log("//newinvestment             -------------------------*");
+        
+        res.locals.activateIsotope = false; //showisotope();
+        var keyExist = false;
+
+        
+        //connDb.searchAssets('PRIMARIA')
+        //.then(assets => console.log('Found assets :', assets));
+
+        res.render('blockchain/asset_newinvestment', { title: 'Activos Disponibles'});
+    }); 
+
+
+    //  ------------------------
+    //        /api/assetlist
+    //  ------------------------
+    router.get('/api/asset_newinvestment', function (req, res)
+    {
+        var asset_alldata = [];
+        console.log("*************************************************");     
+        console.log("/api/assetlist         -------------------------*");
+        var tmp_id = req.session.passport.user;
+        var tmp_email = "sin valor";
+        var tmp_name = "sin valor";
+        console.log("****** Antes de findById......");   
+        console.log("****** tmp_id    :", tmp_id);   
+        var output = ""; // { "iTotalRecords" : 0, "iTotalDisplayRecords" : 10 };
+        connDb.searchAssets('PRIMARIA')
+        .then(assets => //console.log('Found assets :', assets));
+        {
+            //console.log('Found assets :', assets);
+            //console.log('assets.length :', assets.length);
+            var j = 0;
+            for(i = 0; i < assets.length; i++) 
+            {
+                console.log("i: "+i+"<>"+assets[i].data.asset_name);
+                if (assets[i].data.asset_type != "Producci�n Primaria" && assets[i].data.user_publicKey != undefined)
+                {
+                    asset_alldata[j] = 
+                    {
+                        id: assets[i].id,                        
+                        asset_type: assets[i].data.asset_type,
+                        asset_name: assets[i].data.asset_name,
+                        year_foundation: assets[i].data.year_foundation, 
+                        asset_cuit : assets[i].data.asset_cuit,
+                        asset_tipo_doc: assets[i].data.asset_tipo_doc,
+                        asset_num_doc: assets[i].data.asset_num_doc,
+                        asset_bank_register: assets[i].data.asset_bank_register,
+                        cadastro: assets[i].data.cadastro,
+                        country: assets[i].data.country,
+                        state: assets[i].data.state,
+                        city: assets[i].data.city,
+                        location: assets[i].data.location,
+                        latitude: assets[i].data.latitude,
+                        longitude: assets[i].data.longitude,
+                        surface_total: assets[i].data.surface_total,
+                        surface_agricultura: assets[i].data.surface_agricultura,
+                        owner_name: assets[i].data.owner_name,
+                        owner_cuit: assets[i].data.owner_cuit,
+                        owner_doc_type: assets[i].data.owner_doc_type,
+                        owner_num_type: assets[i].data.owner_num_type,
+                        owner_bank_register: assets[i].data.owner_bank_register,
+                        products: assets[i].data.products, 
+                        period: assets[i].data.period,
+                        agricultural_system: assets[i].data.agricultural_system,
+                        surface_planted: assets[i].data.surface_planted,
+                        tons_harvested: assets[i].data.tons_harvested,
+                        income_gross: assets[i].data.income_gross,
+                        income_net: assets[i].data.income_net,
+                        amount_requested: assets[i].data.amount_requested,
+                        numbers_payment: assets[i].data.numbers_payment,
+                        first_payment: assets[i].data.first_payment,
+                        interest_rate: assets[i].data.interest_rate,
+                        frecuency: assets[i].data.frecuency
+                    };
+                    //console.log("j: "+j);                    
+                    //console.log("asset_alldata:"+asset_alldata[j].asset_name);                    
+                    j++;
+                    //output["data"].push(asset_alldata);
+                };               
+     
+            }
+
+            
+            console.log("Encontré registros!!!...cantidad de registros: "+assets.length);
+            var totrec = j; //assets.length;
+            console.log('totrec :',totrec);
+            var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
+            //output["data"] = assets.data;
+            output["data"] = asset_alldata;
+            console.log('Json(output) :'+output["data"]);
+            res.json(output);
+        });
+
+		        
+        //res.redirect('/');      
+    }); 
+
+
+	// -------------------------------------------
+	//      Post /asset_detail_view
+	// -------------------------------------------	
+		router.post('/asset_newinvestment_view', function(req, res, next) 
+		{
+
+            var temp_id = req.body.post_id;
+
+            //		tmp_id = temp_id.split(":")[0];
+            console.log("---------------------------------: ");
+
+            // aquiestoy
+            console.log("post /asset_detail_view/post_id : "+temp_id);
+            console.log("post /asset_detail_view -req.user.username : "+req.user.username);
+            console.log("post /asset_detail_view - req.session: "+req.session);
+            console.log("post /asset_detail_view - req.session.passport.user: "+req.session.passport);
+
+            connDb.searchAssets(temp_id)
+            .then(asset => //console.log('Found assets :', assets));
+            {
+                console.log('Found assets :', asset);
+                //var results_mongodb = [];
+                //results_mongodb.push(assets);
+                //console.log("---------------------------------: ");
+
+                //console.log("docs : "+docs);
+
+
+                //console.log("results_mongodb : "+results_mongodb);
+
+                res.render('blockchain/asset_newinvestment_view', { title: 'Detalle de la Inversión', 
+                                                                    recdata: asset
+                                                                    //, 
+                                                                    //xsup: results_mongodb.supplier,
+                                                                    //user_id: req.user.username
+                                                                    });
+                console.log("despues de res.render ---------------------------------: ");                
+                
+            });
+            console.log("fuera del connDB ---------------------------------: ");            
+
+
+
+	       });
+
+
+    // Buscar findasset
+    router.get('/findasset', function (req, res) 
+    {
+        console.log("*************************************************");     
+        console.log("/findasset             -------------------------*");
+        
+        connDb.searchAssets('PRIMARIA')
+        .then(assets => console.log('Found assets with serial number Hacienda Renacimiento:', assets));
+        res.redirect('/');        
+    }); 
+
+
+	// -------------------------------------------
+	//      /createKey_investment
+	// -------------------------------------------
+    router.get('/createKey_investment', function (req, res) 
+    {
+            res.locals.activateIsotope = false; //showisotope();
+            var keyExist = false;
+            var tmp_id = req.session.passport.user;
+            var tmp_email = "sin valor";
+            var tmp_name = "sin valor";
+            console.log("****** Antes de findById......");   
+            console.log("****** tmp_id    :", tmp_id);         
+            User.findById(tmp_id, function (err, doc) 
+            {  
+                console.log("****** encontré user......");  
+                // Handle any possible database errors
+                if (err) 
+                {
+                    res.status(500).send(err);
+                } else 
+                {
+                    console.log("encontré registro"); 
+                    console.log("doc.investment_publicKey:", doc.investment_publicKey);                    
+                    tmp_email = doc.email;
+                    tmp_name = doc.name;                    
+                    console.log("Exist doc:",doc);
+                    if (doc.investment_publicKey != undefined && doc.investment_publicKey.length > 0)   
+                    {
+                        keyExist = true;
+                    }
+                };
+                if(keyExist)
+                {
+                    console.log("**********  /verkey  *******************"); 
+                    var keypair = 
+                        {
+                            publicKey : doc.investment_publicKey,
+                            privateKey : doc.investment_privateKey
+
+                        };
+
+                    //console.log("doc.keypair.publicKey:", doc.keypair.publicKey);
+                    console.log("keypair.publicKey:", keypair.publicKey);
+                    console.log("keypair.privateKey:", keypair.privateKey);
+                    var tmp_title = "Inversor - Ver Key";
+                }
+                else
+                {
+                    console.log("**********  /createKey  *******************"); 
+                    var keypair = new bcDb_driver.Ed25519Keypair(); 
+                         // const alice = new driver.Ed25519Keypair()
+                    console.log("keypair:", keypair);
+                    //var xpublicKey = keypair.publicKey;
+                    //var xprivateKey = keypair.privateKey;                    
+                    console.log("keypair.publicKey:", keypair.publicKey);
+                    console.log("keypair.privateKey:", keypair.privateKey);
+
+                    var tmp_title = "Inversor - Create Key";
+
+            
+                    doc.investment_publicKey = keypair.publicKey;
+                    doc.investment_privateKey = keypair.privateKey;
+
+                    // Save the updated document back to the database
+                    doc.save(function (err, todo) 
+                        {
+                            if (err) 
+                            {
+                                console.log(" error al grabar:"+err);   
+                            }
+                            console.log('doc saved:',doc)
+                            //res.send(todo);
+                        });                
+                    console.log("**********  end /createKey  *******************");         
+
+                }
+
+                res.render('blockchain/wallet', {   title: tmp_title,  
+                                                    keypair : keypair, 
+                                                    //keypair1 : keypair, 
+                                                    publicKey : keypair.publicKey,
+                                                    privateKey: keypair.privateKey,
+                                                    name : tmp_name,
+                                                    email : tmp_email,
+                                                    keyExist : keyExist                                                
+                                                });     
+                
+            });
+        
+     
+    });
+
+
+	// -------------------------------------------
+	//      Post /asset_detail_sendproposal
+	// -------------------------------------------	
+		router.post('/asset_detail_sendproposal', function(req, res, next) 
+		{
+            console.log("/asset_detail_sendproposal -------------");
+            console.log(req.body);
+            
+            // -------------------------------------
+            //   Buscar publicKey del inversor
+            
+                var tmp_id = req.session.passport.user;
+                var investment_publicKey = "SinValor";
+				User.findById(tmp_id, function (err, doc) 
+                {  
+				    // Handle any possible database errors
+				    if (err) 
+                    {
+				        console.log("Error:"+err);
+                        investment_publicKey = err;
+				    } 
+                    else 
+                    {                              
+				        investment_publicKey = doc.investment_publicKey;
+
+	
+
+
+            
+            // -------------------------------------
+            //   Crear registro en notificaciones     
+
+                var arecord = [];
+                arecord.push( 
+                    new Proposal( 
+                        {
+                            operation:              "01-New Proposal",
+                            date_operation:         getDateTime_asString(),
+                            status:                 "01-esperando respuesta",
+                            status_date:            getDateTime_asString(),
+                            asset_key :             req.body.asset_id,
+                            owner_publicKey:        req.body.owner_publicKey,
+                            investment_publicKey:   investment_publicKey,
+                            amount_requested:       req.body.amount_requested,
+                            numbers_payment:        req.body.numbers_payment,
+                            first_payment:          req.body.first_payment,
+                            interest_rate:          req.body.interest_rate,    
+                            frecuency:              req.body.frecuency                     
+
+                        }));
+
+                arecord[0].save(function(err, result) 
+                {
+                    console.log( "Grabando:", result, err );
+                    if(err) {
+                        console.log("Error .." + err);
+                    }
+                    else
+                    {
+                        console.log("Actualización existosa " + result + "document!");		
+                    }
+
+                });                    
+
+            // -------------------------------------
+            //   Enviar email de notificación
+
+                var transporter = nodemailer.createTransport({
+                  service: 'gmail',
+                  auth: {
+                    user: 'sirmionep2planding@gmail.com',
+                    pass: 'Sirmione01.'
+                  }
+                });
+
+                var mailOptions = {
+                    from: 'jbcarta@hotmail.com',
+                    to: 'jbcarta@hotmail.com',
+                    subject: 'Nueva Propuesta de Financiamiento',
+                    text: 
+                        "Tenemos Nuevas Noticias!"+"\n"+
+                        "Se han interesado en tu Requerimiento "+
+                        "y han hecho una nueva propuesta. "+
+                        "A continuación el detalle:"+"\n"+
+                        "Activo        :"+req.body.asset_name+"\n"+
+                        "Monto Requerid:"+req.body.amount_requested+"\n"+                    
+                        "Nro. de Cuotas:"+req.body.numbers_payment+"\n"+
+                        "Primer Pago   :"+req.body.first_payment+"\n"+  
+                        "Tasa Interes  :"+req.body.interest_rate+"\n"+                    
+                        "Frecuencia    :"+req.body.frecuency+"\n"+"\n"+
+                        "Si quieres aceptar la propuesta debes ingresar a "+
+                        "Sirmione y continuar con el proceso."+"\n"+"\n"+                    
+                        "SIRMIONE P2P Landing....Tu socio para ayudarte a crecer!"
+                };
+
+                transporter.sendMail(mailOptions, function(error, info){
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Email sent: ' + info.response);
+                  }
+                }); 
+                
+    
+            
+            
+              console.log("---------------------------------------------");    
+              console.log("antes de twilio...");
+            /*
+                
+              var clientTwilio = new Twilio(accountSid, authToken);
+                clientTwilio.messages
+                  .create({
+                     body: 'Mensaje enviado desde sirmione',
+                     from: 'whatsapp:+5491121701541',
+                     to: 'whatsapp:+5491121701541'
+                   })
+                  .then(message => console.log("Twilio:"+message.sid))
+                  .done(               console.log("dentro de twilio...")     );            
+               console.log("despues de twilio...");    
+            */
+            
+            res.render('blockchain/asset_newinvestment', { title: 'Activos Disponibles'});
+				    }  
+                    });	
+                    
+        });          
+            
+
+
+
+
+
     router.get('/ver_blockchain', function (req, res) {
       console.log("---------------------------------------------");    
       console.log("get /Blockchain...");
@@ -856,6 +1556,7 @@ var passport = require('passport');
 				            //res.send(todo);
 				        });         
 				    }
+                  
 				});			
             
 

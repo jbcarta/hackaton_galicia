@@ -1,0 +1,264 @@
+<!-- *****************************************
+
+        proposal_approvrejectview.hbs
+
+***************************************** -->  
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container  container-fluid head-tit">
+        
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+                 data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h3 name="titulo" id="titulo">
+               {{ title }}
+          </h3>
+        </div>
+        
+        
+        <!-- Collect the nav links, forms, and other content for toggling -->     
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+          <ul class="nav navbar-nav">
+            <li class="active"><span class="sr-only">(current)</span></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+               <!--
+                    <li><a onclick="grabar()" name="grabar" id="grabar">Acepar Oferta</a></li>                
+                    <li><a href="/supplierInvoiceInsert">Realizar Contra Oferta</a></li>
+                    <li role="separator" class="divider"></li>                   
+                -->
+                    <li><a href="/proposal_aprovreject">Regresar opción Anterior</a></li>                 
+                    <li><a href="/">Salir</a></li>                  
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+    </div>
+</nav>
+
+    <div class="container-fluid">
+        
+      <div class="row">      
+          <div class="col-lg-12 col-md-4 col-sm-12">
+
+            <div class="btn-group" role="group" aria-label="Basic example" >
+                <button type="button" class="btn btn-danger btn-lg" 
+                        data-toggle="modal" data-target=".modal-newplan" >Rechazar<i class="fa fa-thumbs-down"></i></button>
+                <button type="button" class="btn btn-success btn-lg" >Aceptar Propuesta <i class="fa fa-thumbs-up"></i></button>
+             </div>
+          </div>
+      </div>
+    </div> 
+
+ 
+       <form   action="/proposal_approvreject" method="post" id="proposal_approvreject_detail"
+                        name="proposal_approvreject_detail"  
+                        class="form-horizontal"> 
+        
+           
+                <input id="returnaction"  name="returnaction" type="hidden" />       
+
+                <!-- First Column -->         
+                <div class="col-lg-10 col-md-10 col-sm-12">
+                    
+
+                    
+                    <!-- dummy -->
+                    <div class="form-group">
+                       <label for="x1" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12"> </label>
+                    </div> 
+                    
+                    <!-- operation_id -->
+                    <div class="form-group">
+                       <label for="operation_id" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Test ID Operación :</label>
+                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                 <input type='text' class="form-control separate-bottom" name="operation_id" id="operation_id" value="{{recdata._id}}" readonly/> 
+                            </div>
+                       </div>                                               
+                    </div>                    
+
+                    <!-- operation -->
+                    <div class="form-group">
+                       <label for="operation" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Operación :</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom" name="operation" id="operation" value="{{recdata.operation}}" readonly/> 
+
+                            </div>
+                       </div>                                               
+                    </div> 
+
+                    <!-- date_operation -->
+                    <div class="form-group">
+                       <label for="date_operation" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12">Fecha Operac.:</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12">
+                            <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom" name="date_operation" id="date_operation" value="{{recdata.date_operation}}" readonly/> 
+
+                            </div>
+                       </div>                                               
+                    </div>                
+
+                    <!-- status -->
+                    <div class="form-group">
+                       <label for="status" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Estatus :</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom" name="status" id="status" value="{{recdata.status}}" readonly/>                             
+                            </div>
+                       </div>                                               
+                    </div>     
+
+                    <!-- status_date -->
+                    <div class="form-group">
+                       <label for="status_date" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fecha Estatus:</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                           <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom" 
+                                       name="status_date" id="status_date" value="{{recdata.status_date}}" readonly/>              
+                            </div>                     
+
+                       </div>                                               
+                    </div>                                    
+
+                    <!-- amount_requested  -->
+                    <div class="form-group">
+                       <label for="amount_requested" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Monto Solic :</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom" name="amount_requested" id="amount_requested" value="{{recdata.amount_requested}}" readonly/> 
+
+                            </div>
+                       </div>                                               
+                    </div>                
+
+                    <!--  numbers_payment -->
+                    <div class="form-group">
+                       <label for="numbers_payment" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nro. Cuotas:</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom" placeholder="ingrese Nro Cuotas" name="numbers_payment" id="numbers_payment" value="{{recdata.numbers_payment}}" readonly/>                             
+                            </div>
+                       </div>                                               
+                    </div>   
+
+                    <!-- first_payment -->
+                    <div class="form-group">
+                       <label for="documentdate" 
+                              class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Primer Pago: </label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                <input  type='text' class="form-control separate-bottom" 
+                                        name="first_payment" id="first_payment" value="{{recdata.first_payment}}" readonly/>
+                            </div>
+                        </div>
+                    </div>  
+
+                    <!-- interest rate -->
+                    <div class="form-group">
+                       <label for="amount_requested" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Interes:</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom"  name="interest_rate" id="interest_rate" value="{{recdata.interest_rate}}" readonly/>                             
+                            </div>
+                       </div>                                               
+                    </div>  
+
+                    <!-- frecuency -->
+                    <div class="form-group">
+                       <label for="frecuency" 
+                             class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Frecuencia:</label>
+                       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                           <div class='input-group'>
+                                <input type='text' class="form-control separate-bottom"  name="frecuency" id="frecuency" value="{{recdata.frecuency}}" readonly/>                             
+                            </div>                       
+                       </div>                                               
+                    </div>                  
+
+                </div>  <!-- First Column --> 
+
+
+        </form>
+
+
+<!--  ************************************************ -->
+
+<!--  *********  M O D A L   W I N D O W S *********** -->
+
+<!--  ************************************************ -->
+
+    <!--   
+        Confirmación de Cancelación
+    -->       
+    <div    class="modal fade modal-newplan" tabindex="-1" 
+            id="modal-newplan"
+            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="btn_newplan" name="btn_newplan" type="button" class="close" data-dismiss="modal" aria-hidden="true">Cerrar &times;</button>
+                        {{火}} {{huo}}
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-8 col-md-8 col-sm-12 col-xs-12">Esta Seguro?</label> 
+                    </div>  
+                </div>    
+                <div class="modal-footer">
+             
+                    
+                    <button id="btn_reject" name="btn_reject" type="button" 
+                            class="close" data-dismiss="modal" aria-hidden="true">Rechazar Propuesta</button>
+                        {{火}} {{huo}}
+                </div>                
+            </div>
+        </div>
+    </div>   
+
+
+<!--  ************************************************ -->
+
+<!--  *********     J A V A S C R I P T    *********** -->
+
+<!--  ************************************************ -->
+
+<script type="text/javascript">
+
+        // ------------------------------------
+        //         btn_reject
+        // -----------------------------------        
+            $('#btn_reject').on( 'click', function () 
+            {
+                //alert("btn_reject");
+                alert("operation_id:"+$('#operation_id').val());   
+                alert("operation_id:",$('#operation_id').val());                 
+                document.getElementById('returnaction').value = "REJECT"
+                $('#proposal_approvreject_detail').submit();                    
+
+            });
+
+</script>
+
+
+
+
+

@@ -57,6 +57,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
         var asset_schema = 
             {
+                publicKey_owner: {type: String, required: true},
                 asset_type: {type: String, required: true},
                 asset_name: {type: String, required: true},
                 year_foundation: {type: String, required: true},
@@ -126,7 +127,12 @@ reader.on('data', function(rec)
         console.log("surface planted:"+ vals1[24]);
         console.log("tons_harvested:"+ vals1[25]);
         console.log("income_gross:"+ vals1[26]);
-        console.log("income_net:"+vals1[27]);    
+        console.log("income_net:"+vals1[27]);  
+        console.log("amount_requested:"+vals1[28]);
+        console.log("numbers_payment:"+vals1[29]);
+        console.log("first_payment:"+vals1[30]);
+        console.log("interest_rate:"+vals1[31]);
+        console.log("frecuency:"+vals1[32]);
 	//console.log("rec:",done," Supplier creation in progress..", vals1[0]);
 
 //	arrayobject.push( 
@@ -134,6 +140,7 @@ reader.on('data', function(rec)
     
         var asset_alldata = 
         {
+            user_publicKey: "FY6tCC2YNQSCkoFuXHnVpoB4Mhs6UCk9tcKW7HWsSmck",           
             asset_type: vals1[0],
             asset_name: vals1[1],
             year_foundation: vals1[2],
@@ -161,10 +168,16 @@ reader.on('data', function(rec)
             surface_planted: vals1[24],
             tons_harvested: vals1[25],
             income_gross: vals1[26],
-            income_net: vals1[27]
+            income_net: vals1[27],
+            amount_requested: vals1[28],
+            numbers_payment: vals1[29],
+            first_payment: vals1[30],
+            interest_rate: vals1[31],
+            frecuency : vals1[32]
         }    
         var asset_data = 
         {
+            user_publicKey: "FY6tCC2YNQSCkoFuXHnVpoB4Mhs6UCk9tcKW7HWsSmck",             
             asset_type: vals1[0],
             asset_name: vals1[1],
             year_foundation: vals1[2],
@@ -200,6 +213,7 @@ reader.on('data', function(rec)
         }
 	//	}));
     
+  
 
 
                 const tx = driver.Transaction.makeCreateTransaction(

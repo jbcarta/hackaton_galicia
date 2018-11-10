@@ -60,31 +60,19 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-database" aria-hidden="true"></i> Agricultor/Empresario <span class="caret"></span></a>
               <ul class="dropdown-menu">
-               <li><a href="/createKey">Crear Claves Pub/Priv</a></li>      
-              <li><a href="/createasset">Crear Activo</a></li>                   
-              <li><a href="/ver_blockchain">Ver Blockchain</a></li>                   
-              <li><a href="/transaction">Crear Transacción</a></li>                  
+                <li><a href="/createasset">Nuevo Activo</a></li>
+                <li><a href="/assetlist">Ver Activos</a></li>
+                <li><a href="/proposal_aprovreject">Aprobar/Rechazar Propuestas</a></li>                   
+                <li role="separator" class="divider"></li>                  
+                <li><a href="/createKey">Crear/Ver Claves Pub/Priv</a></li>
+                <li role="separator" class="divider"></li> 
+                <!--
+                <li><a href="/ver_blockchain">Ver Blockchain</a></li>                   
+                <li><a href="/transaction">Crear Transacción</a></li>
+                -->
                   
-            <!--
-                      <li><a href="/supplierInvoice_Pending">Ingresar Facturas de Proveedores</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="/supplierInvoice2release">Liberar Facturas (Por Nivel)</a></li>
-                      <li><a href="/supplierInvoice_all">Todas las Facturas</a></li>                  
-                      <li role="separator" class="divider"></li>
-                      <li><a href="/supplierinvoice_sent2sap">Enviar Facturas  SAP xx</a></li>
-            -->
-
-                      <!--
-                      <li><a href="#">Facturas Aprobadas</a></li>
-                      -->
-
-                      <!--     
-                      <li><a href="/user/profile">Facturas</a></li>
-                      <li><a href="/user/profile">Liberar Facturas</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="/user/logout">Enviar Facturas Aprobadas al ERP</a></li>
-                      <li><a href="/user/signup">Estatus de Facturas</a></li>
-                      -->
+                  
+ 
               </ul>
             </li>
             <li class="dropdown">
@@ -92,10 +80,11 @@
               <ul class="dropdown-menu">
      
                     <li><a href="/portafolio">Inversiones Activas</a></li>                   
-                    <li><a href="/newinvestment">Nuevas Inversiones</a></li>                   
+                    <li><a href="/asset_newinvestment">Explorar Nuevas Inversiones</a></li>
+                    <li role="separator" class="divider"></li>                  
                     <li><a href="/transaction">Crear Transacción</a></li> 
                     <li role="separator" class="divider"></li>                  
-                    <li><a href="/createKey">Crear Claves Pub/Priv</a></li>                   
+                    <li><a href="/createKey_investment">Crear Claves Pub/Priv</a></li>                   
                   
             <!--
                       <li><a href="/supplierInvoice_Pending">Ingresar Facturas de Proveedores</a></li>
@@ -224,6 +213,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+<!-- barra footer fija - esta es la que funciona!!! 11-nov-2018
 <div class="footer">
   <p>Usuario Activo: {{x_email}}</p>
 </div>
+-->

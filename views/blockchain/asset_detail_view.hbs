@@ -1,0 +1,2118 @@
+<!-- *****************************************
+
+        access_detail_create.hbs
+
+***************************************** -->  
+
+<!--
+<div w3-include-html="supplierinvoice_detail_menu.hbs"></div>
+-->
+<!--
+<script type="text/hbs" src="supplierinvoice_detail_menu.hbs"></script>
+==>
+
+<!-- *****************************************
+
+        asset_detail_view.hbs
+
+***************************************** -->  
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container  container-fluid head-tit">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+                 data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h3 name="titulo" id="titulo">
+               {{ title }}
+          </h3>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+          <ul class="nav navbar-nav">
+            <li class="active">       <span class="sr-only">(current)</span></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!--                  
+                    <li><a onclick="grabar()" name="grabar" id="grabar">Grabar</a></li>                
+                    <li><a href="/supplierInvoiceInsert">Grabar Nueva Factura</a></li>
+                -->
+                <li><a href="/assetlist">Regresar lista de activos</a></li>
+                <li role="separator" class="divider"></li>                  
+                <li><a href="/">Salir</a></li>                  
+              </ul>
+            </li>
+          </ul>
+        </div>
+    </div>
+</nav>
+
+{{# each recdata }}
+
+<div class="row">
+
+
+
+
+
+<!-- variables globales -->
+  <input id="currentRow"  name="currentRow" type="hidden" />
+
+
+<!--
+    <form action="/supplierinvoice_edit/{{ this.id }}" method="post" id="checkout-form" class="form-horizontal">
+
+    <form action="" method="post" id="supplierInvoice_new" name="supplierInvoice_new" class="form-horizontal">
+-->
+
+
+<!--
+    <form action="/supplierInvoiceInsert/{{ this.tdetail }}" method="post" 
+-->
+<form action="/access_create/{{ this.tdetail }}" method="post"           
+          id="supplierInvoice_new" name="supplierInvoice_new" onsubmit="return formValidation()" 
+          class="form-horizontal" , enctype='application/x-www-form-urlencoded'> 
+
+    <div class="container-fluid">
+
+        <div class="row">          
+
+            <input name="aplevel" id="aplevel" type="hidden"/>
+            <input name="approver1" id="approver1" type="hidden"/>                
+            <input name="approver2" id="approver2" type="hidden"/>
+            <input name="approver3" id="approver3" type="hidden"/>
+            <input name="approver4" id="approver4" type="hidden"/>
+            <input name="approver5" id="approver5" type="hidden"/>             
+            <input name="crud_type" id="crud_type" type="hidden"/>
+
+
+            
+            <!-- First Column -->         
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                
+                <!-- dummy -->
+                <div class="form-group">
+                   <label for="x1" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12"> </label>
+                </div>                
+                
+                <!-- Name -->
+                <div class="form-group">
+                   <label for="name" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nombre :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="name" id="name" value="{{data.asset_name}}" readonly/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>
+                
+                <!-- year of Foundation -->
+                <div class="form-group">
+                   <label for="year_foundation" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fundación :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="year_foundation" id="year_foundation" value="{{data.year_foundation}}" readonly/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>                
+                
+                <!-- CUIT Asset -->
+                <div class="form-group">
+                   <label for="cuit" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">CUIT :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="cuit_asset" id="cuit_asset" value="{{data.cuit_asset}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>     
+                
+                <!-- doc type Asset -->
+                <div class="form-group">
+                   <label for="doctype_asset" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tipo Doc:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                       <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="doc_type_asset" id="doc_type_asset" value="{{data.doc_type_asset}}" readonly/>                             
+                        </div>                     
+
+                   </div>                                               
+                </div>                                     
+                
+                <!-- Doc number Asset -->
+                <div class="form-group">
+                   <label for="doc_number" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Num Doc :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="doc_number_asset" id="doc_number_asset" value="{{data.doc_number_asset}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>                
+
+                <!-- Validación cuenta registrada en Banco Galicia -->
+                <div class="form-group">
+                   <label for="text_banco_asset" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Cta.Banco :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="text_banco_asset" id="text_banco_asset" value="{{data.asset_bank_register}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div> 
+                
+      
+                  
+                <!-- Registro Catastral -->
+               <div class="form-group">
+                   <label for="cadastral_reg" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Reg.Catastral :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="cadastral_reg" id="cadastral_reg" value="{{data.cadastral_reg}}" readonly/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>                
+                
+                <!-- Country -->
+                <div class="form-group">
+                   <label for="country" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">País:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" name="country" id="country" value="{{data.country}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div> 
+                
+                    
+                <!-- Region -->
+                <div class="form-group">
+                   <label for="state" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Región:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" name="state" id="state" value="{{data.state}}"/>
+                        </div>
+                   </div>                                               
+                </div>                  
+
+                <!-- County -->
+                <div class="form-group">
+                   <label for="county" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Partido:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control separate-bottom" readonly="readonly" placeholder="indique el partido" name="county" id="county" value="{{data.city}}"/>
+                        </div>
+                   </div>                                               
+                </div>
+                    
+                <!-- Locality -->
+                <div class="form-group">
+                   <label for="locality" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Localidad :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"
+                                   name="locality" id="locality" 
+                                   value="{{data.locality}}" readonly/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>                
+                
+                <!-- Latitud -->
+                <div class="form-group">
+                   <label for="latitud" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Latitud :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"
+                                   name="latitude" id="latitude" 
+                                   value="{{data.latitude}}" readonly/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>
+                    
+                <!-- Longitude -->
+                <div class="form-group">
+                   <label for="longitude" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Longitud :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"
+                                   name="longitude" id="longitude" 
+                                   value="{{data.longitude}}" readonly/> 
+                            
+                        </div>
+                   </div>                                               
+                </div>                                      
+                    
+                <!-- info_additional -->
+                <div class="form-group">
+                   <label for="info_additional" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Info.Adicional:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <textarea class="form-control rounded-0" name="info_additional" id="info_additional" rows="4" cols="50" readonly></textarea>
+                        </div>
+                   </div>                                               
+                </div>              
+                                         
+
+        
+             </div> <!-- First Column --> 
+                    
+            <!-- Second Column --> 
+            <div class="col-lg-4 col-md-4 col-sm-12">               
+                
+
+                <!-- dummy -->
+                <div class="form-group">
+                   <label for="x1" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12"> </label>
+                </div>                    
+
+                <!-- Owner -->
+                <div class="form-group">
+                   <label for="owner" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Propietario :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="owner" id="owner" value="{{data.owner_name}}" readonly/>                            
+                        </div>
+                   </div>                                               
+                </div> 
+                
+                <!-- CUIT Owner -->
+                <div class="form-group">
+                   <label for="cuit_owner" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">CUIT :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="cuit_owner" id="cuit_owner" value="{{data.owner_cuit}}" readonly/>
+                        </div>
+                   </div>
+                </div>
+                
+                
+                <!-- doc type Owner -->
+                <div class="form-group">
+                   <label for="doctype_owner" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Prop.TipDoc:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="doc_number_asset" id="doc_number_asset" value="{{data.owner_doc_type}}" readonly/>                             
+                        </div>                       
+                   </div>                                               
+                </div>                                           
+                
+                
+                <!-- Doc number Owner -->
+                <div class="form-group">
+                   <label for="doc_number_owner" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Prop.Doc.Nro :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="doc_number_owner" id="doc_number_owner" value="{{data.owner_num_type}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>                            
+            
+                
+                <!-- Validación cuenta registrada en Banco Galicia -->
+                <div class="form-group">
+                   <label for="text_banco_asset" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Cta.Banco :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="text_banco_asset" id="text_banco_asset" value="{{data.owner_bank_register}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div> 
+                       
+                <!-- products -->
+                <div class="form-group">
+                   <label for="products" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Producto :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="products" id="products" value="{{data.products}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>                 
+                
+                
+                <!-- period -->
+                <div class="form-group">
+                   <label for="period" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Periodo :</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="period" id="period" value="{{data.period}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>         
+                
+                <!-- agricultural_system -->
+                <div class="form-group">
+                   <label for="agricultural_system" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Sist.Agricult.:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="agricultural_system" id="agricultural_system" value="{{data.agricultural_system}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>
+                
+                <!-- surface_planted -->
+                <div class="form-group">
+                   <label for="surface_planted" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Ha.Sembradas:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="surface_planted" id="surface_planted" value="{{data.surface_planted}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>
+                
+                <!-- tons_harvested -->
+                <div class="form-group">
+                   <label for="tons_harvested" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tn.Cosechadas:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="tons_harvested" id="tons_harvested" value="{{data.tons_harvested}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>
+                
+
+
+                                
+        </div> <!-- Second Column -->
+ 
+        <!-- Third Column --> 
+        <div class="col-lg-4 col-md-4 col-sm-12">
+ 
+                
+                <!-- dummy -->
+                <div class="form-group">
+                   <label for="x1" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12"> </label>
+                </div>  
+            
+                <!-- tons_ha -->
+                <div class="form-group">
+                   <label for="tons_ha" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Ton/Hectarea:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="tons_ha" id="tons_ha" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>   
+            
+                <!-- income_gross -->
+                <div class="form-group">
+                   <label for="income_gross" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Ingreso Bruto:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="income_gross" id="income_gross" value="{{data.income_gross}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>
+
+                <!-- income_net -->
+                <div class="form-group">
+                   <label for="income_net" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Ingreso Neto:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="income_net" id="income_net" value="{{data.income_net}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>             
+            
+                <!-- amount_requested -->
+                <div class="form-group">
+                   <label for="amount_requested" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Monto Req.:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" name="amount_requested" id="amount_requested" value="{{data.amount_requested}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>
+            
+                <!-- quota -->
+                <div class="form-group">
+                   <label for="amount_requested" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nro. Cuotas:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom" placeholder="ingrese Nro Cuotas" name="numbers_payment" id="numbers_payment" value="{{data.numbers_payment}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>   
+            
+                <!-- first_payment -->
+                <div class="form-group">
+                   <label for="documentdate" 
+                          class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Primer Pago: </label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input  type='text' class="form-control separate-bottom" 
+                                    name="first_payment" id="first_payment" value="{{data.first_payment}}" readonly/>
+                        </div>
+                    </div>
+                </div>  
+            
+                <!-- interest rate -->
+                <div class="form-group">
+                   <label for="amount_requested" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Interes:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="interest_rate" id="interest_rate" value="{{data.interest_rate}}" readonly/>                             
+                        </div>
+                   </div>                                               
+                </div>  
+            
+                <!-- frecuency -->
+                <div class="form-group">
+                   <label for="frecuency" 
+                         class="control-label col-lg-4 col-md-4 col-sm-12 col-xs-12">Frecuencia:</label>
+                   <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                       <div class='input-group'>
+                            <input type='text' class="form-control separate-bottom"  name="frecuency" id="frecuency" value="{{data.frecuency}}" readonly/>                             
+                        </div>                       
+                   </div>                                               
+                </div>                                   
+            
+            
+        </div> <!-- Third Column --> 
+                    
+    <!--
+amount_requested
+numbers_payment
+first_payment
+interest_rate
+frecuency: mensual
+
+http://apicast-hackaton-galicia.b9ad.pro-us-east-1.openshiftapps.com/api/v1/customers?apikey=b5776541fc93e7f10a07f7c5f0ec7c8e
+
+Esa api trae todos los clientes. buscar el que coincide con los datos indicados
+
+    "Id": 1406,
+    "First_Name": "YAGO",
+    "Last_Name": "BATKIS",
+    "Doc_Type": "LC",
+    "Doc_Number": "70443359",
+    "Birth_Date": "1985-03-22",
+    "Mobile_Phone_Number": "011-1563376307",
+    "Email_Address": "YAGO.BATKIS@wgmail.com",
+    "Third_Party_User_Id": "GANP",
+    "Street_Name": "AMADEO JACQUES",
+    "Street_Number": "957",
+    "City": "GENERAL PAZ",
+    "State": "CHACO",
+    "Zip": "7979",
+    "Lat": "-54.876913",
+    "Lng": "-10.716089",
+    "Gender": "M"
+
+api para mostrar cuentsa
+http://apicast-hackaton-galicia.b9ad.pro-us-east-1.openshiftapps.com/api/v1/customers/1406/accounts?apikey=b5776541fc93e7f10a07f7c5f0ec7c8e
+
+--> 
+                    
+ 
+                    
+                    
+            <!-- Fourth Column -->    
+            <div class="col-lg-3 col-md-3 col-sm-12 butCont">
+
+
+            </div> <!-- Fourth Column -->
+            
+        </div>
+    </div>
+            
+
+        <!-- END OF HEADER -->
+
+ 
+    </form>
+</div>
+
+        {{/each}}  
+
+<!--  ************************************************ -->
+
+<!--  *********  M O D A L   W I N D O W S *********** -->
+
+<!--  ************************************************ -->
+
+    
+    <!--   
+       Tabla Dinamica Pais
+    -->       
+    <div    class="modal fade modal-country" tabindex="-1" 
+            id="modal-country"
+            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="btn_country" name="btn_country" type="button" class="close" data-dismiss="modal" aria-hidden="true">Paises &times;</button>
+                        {{火}} {{huo}}
+                </div>
+                <div class="modal-body">
+                    <table id="tcountry" name="tcountry" class="table table-striped table-bordered" 
+                           cellspacing="0" width="50%">
+                    </table>      
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_clearaa" name="btn_clearaa" type="button" 
+                            class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
+                        {{火}} {{huo}}
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--   
+            Tabla Dinamica State
+    -->       
+    <div    class="modal fade modal-state" tabindex="-1"
+            id = "modal-state" name = "modal-state"
+            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="btn_state" name="btn_state" type="button" class="close" data-dismiss="modal" aria-hidden="true">Provincias &times;</button>
+                        {{火}} {{huo}}
+                </div>
+                <div class="modal-body">
+                    <table id="tstate" name="tstate" class="table table-striped table-bordered" 
+                           cellspacing="0" width="50%">
+                      <thead>
+                          <tr>
+                              <th>Pais</th>
+                              <th>Provincia</th>
+                          </tr>
+                      </thead>                        
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_clearaa" name="btn_clearaa" type="button" 
+                            class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
+                        {{火}} {{huo}}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--   
+            Tabla Dinamica County
+    -->       
+    <div    class="modal fade modal-county" tabindex="-1"
+            id = "modal-county" name = "modal-county"
+            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="btn_county" name="btn_county" type="button" class="close" data-dismiss="modal" aria-hidden="true">Partidos &times;</button>
+                        {{火}} {{huo}}
+                </div>
+                <div class="modal-body">
+                    <table id="tcounty" name="tcounty" class="table table-striped table-bordered" 
+                           cellspacing="0" width="50%">
+                      <thead>
+                          <tr>
+                              <th>Pais</th>
+                              <th>Provincia</th>
+                              <th>Partidos</th>                              
+                          </tr>
+                      </thead>                        
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_clearaa" name="btn_clearaa" type="button" 
+                            class="close" data-dismiss="modal" aria-hidden="true">Limpiar Campo</button>
+                        {{火}} {{huo}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+<!--  ************************************************ -->
+
+<!--  *********     J A V A S C R I P T    *********** -->
+
+<!--  ************************************************ -->
+
+    <script src="/js/casupolibs.js" type="text/javascript"> </script>
+
+    <script type="text/javascript">
+         var currentRow = -1;
+        
+    //   -------------------------------------
+    //      Calculate Tons by Heactarea
+    //   -------------------------------------       
+        var x_tons_ha = $("#tons_harvested").val() /  $("#surface_planted").val();
+        $("#tons_ha").val(x_tons_ha);
+        
+    //   -------------------------------------
+    //      Assign mille separetor
+    //   -------------------------------------       
+        var num1 = transform_2_number($("#amount_requested").val());
+        var num = transform_2_formatnumber(num1, true);
+        $("#amount_requested").val(num);   
+        
+        var num1 = transform_2_number($("#income_net").val());
+        var num = transform_2_formatnumber(num1, true);
+        $("#income_net").val(num);
+        
+        var num1 = transform_2_number($("#income_gross").val());
+        var num = transform_2_formatnumber(num1, true);
+        $("#income_gross").val(num);  
+        
+        var num1 = transform_2_number($("#tons_harvested").val());
+        var num = transform_2_formatnumber(num1, false);
+        $("#tons_harvested").val(num);           
+        
+    </script>
+
+    <script src="/js/t_country.js" type="text/javascript"> </script>
+
+
+
+<script type="text/javascript">
+    
+    
+
+        // ------------------------------------
+        //        doc_number_owner
+        // -----------------------------------
+        $("#doc_number_owner").blur(function () 
+        {
+            //alert("#doc_number_owner :"+$("#doc_number_owner").val());
+            validate_bank_account($("#doc_type_owner").val(), 
+                                  $("#doc_number_owner").val(),
+                                 "OWNER");   
+
+        });
+    
+        // ------------------------------------
+        //        doc_number_asset
+        // -----------------------------------
+        $("#doc_number_asset").blur(function () 
+        {
+            //alert("#doc_number_owner :"+$("#doc_number_owner").val());
+            validate_bank_account($("#doc_type_asset").val(), 
+                                  $("#doc_number_asset").val(),
+                                  "ASSET");   
+
+        });    
+    
+        // --------------------------------------------------
+        //                 validate_bank_account
+        // --------------------------------------------------
+        function validate_bank_account(doc_type, doc_number, origen)
+        {
+            //var t_params =  "doc_type="+$("#doc_type_owner").val()+
+            //                "&doc_num="+$("#doc_number_owner").val();
+            
+            //alert('doc_type :'+doc_type);            
+
+            var t_params =  "doc_type="+doc_type+
+                            "&doc_num="+doc_number;
+            data = "aa";
+            //alert('t_params :'+t_params);               
+            $.ajax(
+            {                
+                url: '/customerexistinBank',
+                headers: 
+                {
+                  'Content-Type' : 'application/json'
+                }, 
+                data: t_params,                
+                success: function(data) 
+                {
+                    //alert(data.Email_Address);
+                    console.log(data);
+                    //$("#reference_galicia").val(data.Email_Address);
+                    //document.getElementById('email').innerHTML = "Email:"+data.Email_Address;
+                    //$("#phone_number").val(data.Mobile_Phone_Number);
+                    //document.getElementById('phone_number').innerHTML = //"Telf:"+data.Mobile_Phone_Number;
+                    //document.getElementById('longitud').innerHTML = "Telf:"+data.Lng;
+                    if (origen=="ASSET")
+                    {   
+                        if (typeof data.Email_Address == "undefined") 
+                        //if (data.substring(0, 7) == "MENSAJE")
+                        {
+                          document.getElementById('text_banco_asset').innerHTML = data;  
+                        }
+                        else
+                        {
+                            document.getElementById('text_banco_asset').innerHTML =
+                            "  * * DATOS REGISTRADOS EN BANCO GALICIA * *"+"\n"+
+                            "Email:"+data.Email_Address+"\n"+ 
+                            "Telf:"+data.Mobile_Phone_Number+"\n"+
+                            "Longitud:"+data.Lng+"\n"+
+                            "Latitud:"+data.Lat;
+                            document.getElementById("text_banco").readOnly = "true"
+                        }
+                    }
+                    else
+                    {
+                        if (typeof data.Email_Address == "undefined") 
+                        //if (data.substring(0, 7) == "MENSAJE")
+                        {
+                          document.getElementById('text_banco').innerHTML = data;  
+                        }
+                        else
+                        {
+                            document.getElementById("text_banco").readOnly = "false";             
+                            document.getElementById('text_banco').innerHTML =
+                            "  * * DATOS REGISTRADOS EN BANCO GALICIA * *"+"\n"+
+                            "Email:"+data.Email_Address+"\n"+ 
+                            "Telf:"+data.Mobile_Phone_Number+"\n"+
+                            "Longitud:"+data.Lng+"\n"+
+                            "Latitud:"+data.Lat;
+                            document.getElementById("text_banco").readOnly = "true"
+                        }
+                    }
+                        
+                    /*
+                    if (returnval["error"] == true) 
+                    {
+                      var infotext = returnval["message"]+
+                                      "\n   Fecha Doc : "+returnval["documentdate"]+
+                                      "\n   Tipo Doc  : "+returnval["documenttype"]+
+                                      "\n   Num.Doc   : "+returnval["documentnumber"]+
+                                      "\n   Monto Neto: "+returnval["netamount"];
+                        alert("ADVERTENCIA! : "+infotext);
+                        $("#numdoc").val("");
+                        //$("#numdoc").focus();
+                    }
+                    else
+                    {
+                      //alert("testajax - validación OK:"+returnval["message"]);                       
+                    }
+                    */
+
+
+                },
+                error: function(returnval) {
+                            alert("Error - no pudo ejecutar la consulta al banco");
+                            //$(".message").text(returnval + " failure");
+                            //$(".message").fadeIn("slow");
+                            //$(".message").delay(2000).fadeOut(1000);
+                        }
+            });                        
+            
+            
+        }
+    
+
+
+    // ***********************************
+    //         Document Ready
+    // ***********************************
+
+    $(document).ready(function () 
+    {   
+
+        var currentColumn = 0;
+
+        var currentRow = [];
+        
+        // ------------------------------------
+        //         Actitate table State
+        // -----------------------------------
+        var table_state =  $('#tstate').DataTable(
+        {
+            "pagingType": "full_numbers",
+            "processing": true,
+            "select" : true,            
+            "language": {
+                          "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                        },
+            "serverSide": false,
+            dom: 'Blfrtip',        
+             buttons: [
+                    'colvis',
+                    'excel',
+                    'print'
+                ],       
+
+            "columnDefs": 
+                [
+                    { targets: [0,1], visible: true}
+                    //{ targets: [0,1], width: "20%"},
+                    //{ targets: [2], width: "60%"}
+                ]     
+        });
+
+        // ------------------------------------
+        //         #ts tbody CLICK
+        // -----------------------------------
+        $('#tstate tbody').on( 'click', 'tr', function () 
+        {
+
+            var data = table_state.row( this ).data();
+            // alert("data : "+data[1]);
+
+            
+            $("#modal-state").modal('hide');
+            $("#state").val(data[1]);
+
+        });
+
+
+        // ------------------------------------
+        //         Actitate table County
+        // -----------------------------------
+        var table_county =  $('#tcounty').DataTable(
+        {
+            "pagingType": "full_numbers",
+            "processing": true,
+            "select" : true,            
+            "language": {
+                          "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                        },
+            "serverSide": false,
+            dom: 'Blfrtip',        
+             buttons: [
+                    'colvis',
+                    'excel',
+                    'print'
+                ],       
+
+            "columnDefs": 
+                [
+                    { targets: [0,1,2], visible: true}
+                    //{ targets: [0,1], width: "20%"},
+                    //{ targets: [2], width: "60%"}
+                ]     
+        });
+
+        // ------------------------------------
+        //         #ts tbody CLICK
+        // -----------------------------------
+        $('#tcounty tbody').on( 'click', 'tr', function () 
+        {
+
+            var data = table_county.row( this ).data();
+            // alert("data : "+data[1]);
+
+            
+            $("#modal-county").modal('hide');
+            $("#county").val(data[2]);
+
+        });
+
+
+        // ------------------------------------
+        //         Actitate table Supply
+        // -----------------------------------
+        var oDetail =  $('#tdetail').DataTable(
+                  {
+                      //"pagingType": "full",
+                      "bPaginate": false,
+                      "searching": false,
+                      "bLengthChange": false,
+                      "pageLength": 50,
+                      dom: 'Bfrtip',
+                      select: true,
+                      "language": {
+                                      "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                                  },            
+                        "columnDefs": 
+                      [
+                          { targets: [0,1,2,3,4,5,6,7], visible: true},
+                          { targets: [2,3,5,7], width: "20%"},
+                          { targets: [6], width: "12%"},
+
+                          { targets: [0], searchable: false},
+                          { targets: '_all', width: null},
+
+                          { targets: '_all', visible: false }            
+                      ]
+                  });
+
+
+        // ------------------------------------
+        //         Actitate table Supply
+        // -----------------------------------
+        var otax =  $('#ttax').DataTable(
+        {
+            //"pagingType": "full",
+            "bPaginate": false,
+            "searching": false,
+            "bLengthChange": false,
+            "pageLength": 50,
+            dom: 'Bfrtip',
+            select: false,
+            "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                        },            
+              "columnDefs": 
+            [
+                { targets: [0,1,2], visible: true},
+                //{ targets: [0,1], width: "20%"},
+                { targets: [2], width: "60%"}
+            ]     
+        }); 
+        
+        /*
+
+        addline();
+        addtax();
+        */
+        
+       // -----------------------------------------------------
+        //         Actitate table tsuppliers_by_approval_area
+        // -----------------------------------------------------
+        var tsupplier_by_approval_area =  $('#tsuppliers_by_approval_area').DataTable(
+        {
+            "pagingType": "full_numbers",
+            "processing": true,
+            "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                        },
+            "columnDefs": 
+                        [                
+                            { targets: [0], "title": "Valores Disponibles", visible: true},
+                            //{ targets: [0,1], width: "20%"},
+                            { targets: [0], width: "90%"}        
+                            
+                        ],
+            columns: 
+                        [                
+                            { targets: [0], "title": "Valores Disponibles", visible: true},
+                            //{ targets: [0,1], width: "20%"},
+                            { targets: [0], width: "90%"}        
+                            
+                        ]              
+        });
+
+        // -----------------------------------------------------
+        //         Actitate table tceco_by_supplier
+        // -----------------------------------------------------
+        var tceco_by_supplier =  $('#tceco_by_supplier').DataTable(
+        {
+            "pagingType": "full_numbers",
+            "processing": true,
+            "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
+                        },
+            "columnDefs": 
+                        [                
+                            { targets: [0], "title": "Valores Disponibles", visible: true},
+                            //{ targets: [0,1], width: "20%"},
+                            { targets: [0], width: "90%"}        
+                           
+                        ],
+            columns: 
+                        [                
+                            { targets: [0], "title": "Valores Disponibles", visible: true},
+                            //{ targets: [0,1], width: "20%"},
+                            { targets: [0], width: "90%"}        
+                            
+                        ]              
+        });
+
+    });
+
+</script>
+
+
+
+<script type="text/javascript">
+
+
+
+        // *******************************************************
+        //
+        //                modal
+        //              btn_state
+        //
+        // *******************************************************
+
+        $('#btn-state').on( 'click', function () 
+        {
+
+          //alert("modal-state");
+
+          var t_params = "country="+$("#country").val()
+          var dataString = "dat1=hola"
+
+          $.ajax(
+          {
+            type: "GET",
+            url: "/api/states/",
+            data: t_params,
+            success: function(data_resp) 
+            {
+                //alert("success");
+                var table = $('#tstate').DataTable();
+                table.clear();
+
+                //alert(JSON.stringify(data_resp));
+
+                for(var key in data_resp) 
+                {
+                    //alert(JSON.stringify(data_resp[0].data[key]));
+                    //alert(data_resp[key].state);
+                    //var tval =  data_resp[0].data[key].supplier;
+                    var tval =  data_resp[0].datastate;
+                    /*
+                    var ndospuntos = tval.indexOf(":");
+                    if (ndospuntos > 0)
+                    {
+                      //alert(data_resp[0].suppliers[key].supplier);
+                      table.row.add([data_resp[0].suppliers[key].supplier,""]).draw();
+                    }
+                    */
+                    //console.log([data_resp[key].country+"<>"+data_resp[key].state]);
+                    table.row.add([data_resp[key].country, data_resp[key].state]).draw();  
+                } 
+                table.draw();                  
+            }
+          });   
+        });  
+    
+
+        // *******************************************************
+        //
+        //                modal
+        //              btn_county
+        //
+        // *******************************************************
+
+        $('#btn-county').on( 'click', function () 
+        {
+
+          //alert("modal-state");
+
+          var t_params = "country="+$("#country").val()+"&state="+$("#state").val()
+          var dataString = "dat1=hola"
+
+          $.ajax(
+          {
+            type: "GET",
+            url: "/api/county/",
+            data: t_params,
+            success: function(data_resp) 
+            {
+                //alert("success");
+                var table = $('#tcounty').DataTable();
+                table.clear();
+
+                //alert(JSON.stringify(data_resp));
+
+                for(var key in data_resp) 
+                {
+                    //alert(JSON.stringify(data_resp[0].data[key]));
+                    //alert(data_resp[key].state);
+                    //var tval =  data_resp[0].data[key].supplier;
+                    //var tval =  data_resp[0].datastate;
+                    /*
+                    var ndospuntos = tval.indexOf(":");
+                    if (ndospuntos > 0)
+                    {
+                      //alert(data_resp[0].suppliers[key].supplier);
+                      table.row.add([data_resp[0].suppliers[key].supplier,""]).draw();
+                    }
+                    */
+                    //console.log([data_resp[key].country+"<>"+data_resp[key].state]);
+                    table.row.add([data_resp[key].country, data_resp[key].state,                                data_resp[key].county]).draw();  
+                } 
+                table.draw();                  
+            }
+          });   
+        });  
+
+
+        // *******************************************************
+        //
+        //                tceco_by_supplier
+        //
+        // *******************************************************
+
+
+
+
+        // ------------------------------------
+        //         btn_clearcecos
+        // -----------------------------------        
+        $('#btn_clearcecos').on( 'click', function () 
+        {
+
+            // alert("btn_clearcecos");
+            var table = $('#tdetail').DataTable();
+            if (table.cell( $("#currentRow").val(), 3).data())
+            {
+                var tval =  '<input type="text" class="form-control separate-bottom" readonly="readonly" '+ 
+                            'placeholder="indique el Cecos" name="costcenter" id="costcenter" '+
+                            ' value=""/><span class="input-group-addon">'+
+                            '<a href="#" data-toggle="modal" data-target=".modal-cecos">'+
+                            '<span class="fa fa-external-link"></a></span>';
+                //var xx = $("#currentRow").val();
+                table.cell( $("#currentRow").val(), 2).data(tval);
+            }
+          });
+
+        // ------------------------------------
+        //         btn_clearaccount
+        // -----------------------------------
+        $('#btn_clearaccount').on( 'click', function () 
+        {
+
+            //alert("btn_clearcecos");
+            var table = $('#tdetail').DataTable();
+            if (table.cell( $("#currentRow").val(), 3).data())
+            {
+                var tval =  '<input type="text" class="form-control separate-bottom" readonly="readonly" '+ 
+                            'placeholder="indique la Cuenta" name="accountcode" id="accountaccountcode" '+
+                            ' value=""| "{{this.accountcode}}"/><span class="input-group-addon">'+
+                            '<a href="#" data-toggle="modal" data-target=".modal-accounts">'+
+                            '<span class="fa fa-external-link"></a></span>'
+
+                table.cell( $("#currentRow").val(), 3).data(tval);
+            }
+        });
+
+
+        // ------------------------------------
+        //         btn_orden
+        // -----------------------------------        
+        $('#btn_clearorden').on( 'click', function () 
+        {
+            //alert("btn_clearorden");
+            var table = $('#tdetail').DataTable();
+            if (table.cell( $("#currentRow").val(), 3).data())
+            {
+                var table = $('#tdetail').DataTable();
+                var tval =  '<input type="text" class="form-control separate-bottom" readonly="readonly" '+ 
+                            'placeholder="indique la Orden" name="order" id="order" '+
+                            ' value= ""'+'| "{{this.order}}"/><span class="input-group-addon">'+
+                            '<a href="#" data-toggle="modal" data-target=".modal-tfiorders">'+
+                            '<span class="fa fa-external-link"></a></span>'            
+                table.cell( $("#currentRow").val(), 4).data(tval);
+            }
+
+        });
+
+        // ------------------------------------
+        //         btn_clearconcept
+        // -----------------------------------
+        $('#btn_clearconcept').on( 'click', function () 
+        {
+
+            //alert("btn_clearconcept");
+            var table = $('#tdetail').DataTable();
+            var tval =  '<input type="text" class="form-control separate-bottom"'+ 
+                        ' readonly="readonly" placeholder="indique Concepto" name="concept"'+ 
+                        'id="concept" value=""/>'+
+                        '<span class="input-group-addon">'+
+                        '<a href="#" data-toggle="modal" data-target=".modal-concepts">'+
+                        '<span class="fa fa-external-link"></a></span>'
+            table.cell( $("#currentRow").val(), 5).data(tval);
+
+        });
+
+        // ------------------------------------
+        //         btn_cleardescription
+        // -----------------------------------
+        $('#btn_cleardescription').on( 'click', function () 
+        {
+
+            //alert("btn_clearcecos");
+            var table = $('#tdetail').DataTable();
+            var tval =  '<input type="text" class="form-control separate-bottom" readonly="readonly" '+ 
+                        'placeholder="indique la description" name="description" id="description" '+
+                        ' value=""/><span class="input-group-addon">'+
+                        '<a href="#" data-toggle="modal" data-target=".modal-description">'+
+                        '<span class="fa fa-external-link"></a></span>'            
+            table.cell( $("#currentRow").val(), 7).data(tval);
+
+        });
+
+
+
+
+
+
+    // ------------------------------------
+    //         addline()
+    // -----------------------------------
+    //    $('#addLine').on( 'click', function (e) 
+    function addline()
+    {
+
+        //  e.preventDefault();
+        //  alert('addLine1');
+        var ts = $('#tdetail').DataTable();
+        //  alert(ts.rows().data()[0]);
+
+        if (ts.rows().data()[0])
+        {
+          alert("Solo se permite una linea")
+        }
+        else
+        {
+/*
+              '<td><a class="delete" href=""><i class="fa fa-times" aria-hidden="true"></i></a></td>'+" "+
+  
+
+                   <input type="button" name="addLine" onclick="addline()"
+                           id="addLine" class="btn btn-success">
+*/
+            currentRow = ts.row.add( 
+            [
+                /*'<td><input type="button" name="modifyline" onclick="modifyline()" value="Modif"></td>'+" "+
+                '<td><input type="button" name="deleteLine" onclick="deleteline()" value="Elimin"></td>',
+                */
+                ' ',
+                '<input type="text" class="form-control separate-bottom" readonly="readonly"  name="linenumber" id="linenumber" value="10"/>',
+                '<input type="text" class="form-control separate-bottom" readonly="readonly" placeholder="indique el Cecos" name="costcenter" id="costcenter" value="{{this.costcenter}}"/> <span class="input-group-addon"><a href="#" data-toggle="modal" data-target=".modal-cecos"><span class="fa fa-external-link"></a></span>',
+                '<input type="text" class="form-control separate-bottom" readonly="readonly" placeholder="indique la Cta Contable" name="accountcode" id="accountcode" value="{{this.accountcode}}"/> <span class="input-group-addon"><a href="#" data-toggle="modal" data-target=".modal-accounts"><span class="fa fa-external-link"></a></span>',
+                '<input type="text" class="form-control separate-bottom" readonly="readonly" placeholder="indique nro orden" name="order" id="order" value="{{this.order}}"/> <span class="input-group-addon"> <a href="#" data-toggle="modal" data-target=".modal-tfiorders"><span class="fa fa-external-link"></a></span>',
+                '<input type="text" class="form-control separate-bottom" readonly="readonly" placeholder="indique Concepto" name="concept" id="concept" value="{{this.concept}}"/><span class="input-group-addon"><a href="#" data-toggle="modal" data-target=".modal-concepts"><span class="fa fa-external-link"></a></span>',
+                '<input type="month" class="form-control separate-bottom" placeholder="indique mes servicio" name="servicemonth" id="servicemonth" value="{{this.servicemonth}}"/>',
+                '<input type="text" class="form-control separate-bottom" placeholder="indique description" name="description" id="description" readonly="readonly" value="{{this.description}}"/><span class="input-group-addon"><a href="#" data-toggle="modal" data-target=".modal-description"><span class="fa fa-external-link"></a></span>',
+                'N'
+            ] ).draw();
+
+            // alert(currentRow);
+        };
+    };
+
+
+    // ------------------------------------
+    //         modifyline()
+    // -----------------------------------
+    function modifyline()
+    {
+      alert("Modify Line");
+    };
+
+    // ------------------------------------
+    //         deleteline()
+    // -----------------------------------
+    function deleteline()
+    {
+      alert("Delete Line");
+    };
+
+    $('#tdetail tbody').on( 'click', 'td', function () 
+    {
+
+      // alert("Entro ");
+      var currentColumn = $(this).parent().children().index($(this));
+      var currentRow = $(this).parent().parent().children().index($(this).parent());
+      $("#currentRow").val($(this).parent().parent().children().index($(this).parent()));
+
+      //  $("#currentRow").val(this);
+
+      //  alert('Row: ' + currentRow + ', Column: ' + currentColumn);          
+      //  console.log('this:',this);
+      //  console.log('this.row:',$(this).row().index());
+      //  alert('this:',this);
+      //  alert('this.row:',$(this).row().index());
+
+
+      if ($(this).index()==7)
+      {
+          var ts = $('#tdetail').DataTable();
+          var data = ts.cell( this ).data();
+          // alert(' Entrando description data:'+data);
+
+          var data1 = extraerInput(data);
+          // alert('data1:'+data1);
+
+          $("#tdescription").val(data1);
+      }
+    });
+
+
+
+    $('#btn_mdescription').on( 'click', function () 
+    {
+      //alert('saliendo de description:'+$('#tdescription').val());
+
+      var table = $('#tdetail').DataTable();
+      var tval =  '<input type="text" class="form-control separate-bottom" readonly="readonly" '+ 
+                  'placeholder="indique la description" name="description" id="description" '+
+                  ' value='+$('#tdescription').val()+'| "{{this.costcenter}}"/><span class="input-group-addon">'+
+                  '<a href="#" data-toggle="modal" data-target=".modal-description">'+
+                  '<span class="fa fa-external-link"></a></span>'            
+      table.cell( $("#currentRow").val(), 7).data(tval);
+    });
+
+    $('#btn_mdescriptionxxx').on( 'click', function () 
+    {
+      // alert('saliendo de description:'+$('#tdescription').val());
+
+      var table = $('#tdetail').DataTable();
+      var tval =  '<input type="text" class="form-control separate-bottom" readonly="readonly" '+ 
+                  'placeholder="indique la description" name="description" id="description" '+
+                  ' value='+$('#tdescription').val()+'| "{{this.costcenter}}"/><span class="input-group-addon">'+
+                  '<a href="#" data-toggle="modal" data-target=".modal-description">'+
+                  '<span class="fa fa-external-link"></a></span>'            
+      table.cell( $("#currentRow").val(), 6).data(tval);
+    });
+//}
+</script>
+
+
+<script type="text/javascript">
+
+//    $('#grabar').on( 'click', function (e) 
+
+    // ------------------------------------
+    //         grabar()
+    // -----------------------------------
+    function grabar()
+    {
+        //var svar = "variable enviada"
+
+        if (formValidation())
+        {
+
+         var e_currency = $("#currency :selected").text(); ;
+         //alert(e_currency);
+
+         //alert('e_currency:'+e_currency);
+
+         var t_amountinvoice = transform_2_number($("#amountinvoice").val());
+         //var t_amountinvoice = transform_2_formatnumber(num1);
+
+         var t_params = "approvalarea="+$("#approvalarea").val()+
+                        "&amountinvoice="+t_amountinvoice+
+                        "&currency="+$("#currency :selected").text()+
+                        "&costcenter="+$("#costcenter").val()+'"'
+
+          console.log('t_amountinvoice:',t_amountinvoice);               
+          $.ajax(
+          {
+                url: "/api/exist_approvalschema?"+t_params,  
+                success: function(returnval) 
+                {
+                   //                alert("testajax - return success:");
+
+                   //alert("testajax - Data:"+returnval["error"]+"<>"+returnval["message"]);
+                   //alert("testajax - Data-message:",data["message"]);
+
+
+                    if (returnval["error"] == true) 
+                    {
+                        //alert("No puede grabar la factura. Requiere definir un Esquema de Aprobación");
+                        alert(returnval["message"]);
+                        
+                    }
+                    else
+                    {
+                      //alert("testajax - aplevel:"+returnval["aplevel"]);
+                      $("#aplevel").val(returnval["aplevel"]);
+                      $("#approver1").val(returnval["approver1"]);
+                      $("#approver2").val(returnval["approver2"]);
+                      $("#approver3").val(returnval["approver3"]);
+                      $("#approver4").val(returnval["approver4"]);
+                      $("#approver5").val(returnval["approver5"]);
+                      //alert("Parametros recibidos:"+$("#aplevel").val()+"<>"+$("#approver1").val()+"<>"+
+                      //                  $("#approver2").val()+"<>"+$("#approver3").val()+"<>"+
+                      //                  $("#approver4").val()+"<>"+$("#approver5").val());
+
+                      $('#supplierInvoice_new').submit();
+
+
+                      //                      document.getElementById('returnaction').value = "Modificar"
+                      //$('#supplierinvoicePostEdit').submit();
+                    }
+
+                },
+                error: function(returnval) {
+                            alert("Error - Requiere definir un Esquema de Aprobación");
+                            //$(".message").text(returnval + " failure");
+                            //$(".message").fadeIn("slow");
+                            //$(".message").delay(2000).fadeOut(1000);
+                        }
+                //        ,
+                //complete : function(xhr, status) {
+                //        alert('Petición realizada');
+                //        alert('xhr', xhr);
+                //        alert('status', status);
+                //    }                        
+
+
+          });                        
+
+        }
+
+          /*
+            testAjax(t_params, function(err, result)
+            {
+              //         var output = testAjax(t_params);  // output will be undefined...
+              alert('output:'+t_params);
+              alert('err:'+err);
+              alert('result:'+result);
+            });
+          */
+
+    };
+ //);
+
+
+    // ------------------------------------
+    //        exist_invoice()
+    // -----------------------------------
+    function exist_invoice()
+    {
+
+         var t_params = "supplier="+$("#supplier").val()+
+                        "&numdoc="+$("#numdoc").val()+
+                        '&crud_type="NEW"'
+
+
+          console.log('t_params:',t_params);               
+          $.ajax(
+          {
+                url: "/api/exist_supplierinvoicenumber?"+t_params,  
+                success: function(returnval) 
+                {
+                   //                alert("testajax - return success:");
+
+                   //alert("testajax - Data:"+returnval["error"]+"<>"+returnval["message"]);
+                   //alert("testajax - Data-message:",data["message"]);
+
+                    if (returnval["error"] == true) 
+                    {
+                      var infotext = returnval["message"]+
+                                      "\n   Fecha Doc : "+returnval["documentdate"]+
+                                      "\n   Tipo Doc  : "+returnval["documenttype"]+
+                                      "\n   Monto Neto: "+returnval["netamount"];
+                        alert("ADVERTENCIA! : "+infotext)
+                    }
+                    else
+                    {
+                      //alert("testajax - validación OK:"+returnval["message"]);                       
+                    }
+
+
+                },
+                error: function(returnval) {
+                            alert("Error - se ejecuto la validación de factura repetida");
+                            //$(".message").text(returnval + " failure");
+                            //$(".message").fadeIn("slow");
+                            //$(".message").delay(2000).fadeOut(1000);
+                        }
+          });                        
+
+   };
+
+
+    function extraerInput(data)
+    {
+      // console.log('extraerInput(data):',data);
+      var s_init = data.indexOf("value=")+7;
+      var s_end = data.indexOf('|');
+      var long = s_end - s_init
+      // console.log("data/s_init/s_end/long",data,'<>',s_init,'<>',s_end,'<>',long);
+      if (long>0)
+      {
+          var data1 = data.substr(s_init,long);
+      }
+      else
+      {
+          var data1 = "";
+      }
+      // console.log("data1:",data1);
+
+      return data1;
+    }
+
+
+
+</script>   
+
+
+<!--
+
+        si se activo la rutina por crear nueva factura
+
+            1. se debe pasar un nuevo registro en memoria todos los campos
+                pero con el detalle, se debe
+                a nuevos  (N)
+                    se agrega al nuevo arreglo
+                b nuevos borrados (M), 
+                    al  pasar por lectura se ingnora
+                b para update (U)
+                    se agrega al nuevo arreglo
+                c para borrar (D)
+                    la pasar la lectura se ignora
+
+        si se activo la rutina por modificar la factura
+            1. se debe pasar un nuevo registro en memoria todos los campos
+                pero con el detalle, se debe
+                a nuevos  (N)
+                    se agrega al nuevo arreglo
+                b nuevos borrados (M), 
+                    al  pasar por lectura se ingnora
+                b para update (U)
+                    se agrega al nuevo arreglo
+                c para borrar (D)
+                    la pasar la lectura se ignora
+
+        si se activo la rutina por eliminar la factura
+
+            1. se debe eliminar el documento por completo
+
+-->
+
+<script type="text/javascript">
+    function old_grabar()
+    {
+//        e.preventDefault();
+//        alert("#grabar");
+
+//        "form[name="myform"]").submit();
+
+
+
+        alert("Old Grabar");
+
+
+        var action = $('#titulo').text();
+  //      alert(action);
+
+
+        action = action.trim().substr(0,5); 
+//        alert(action);
+
+        var t_id = $('#id').text();
+
+//        var ts = $('#tdetail').DataTable();
+
+//        alert("t_id:",t_id);
+        if (action == 'Crear')
+        {
+            var  detail = [];
+            
+//            alert('Entro por Crear');
+            var ts = $('#tdetail').DataTable();
+            ts.rows().every( function ( rowIdx, tableLoop, rowLoop ) 
+            {
+
+                console.log(rowIdx);
+                console.log(tableLoop);
+                console.log(rowLoop);
+
+                var  Detail = new Object();
+
+                var data = this.data();
+
+                // var cell = this.cell({ row: rowIdx, column: 6}).cachrender();
+               // console.log("cell:",cell);                
+               // alert('cell:'+cell);
+
+               // alert('cell value:'+$('input, select, textarea', cell).text());
+
+                var tmp_string = ""
+//                var data1 = data[1].value();
+
+                alert('data.length:'+data.length);
+
+                var i = 1; 
+                while (i < 8)
+                {
+                   if (i >= 2 && i <= 5 || i==7)
+                    {
+                      data1 = extraerInput(data[i]);
+                    }
+                    else
+                    {
+                      if (i==6)
+                      {
+                          var s_init1 = data[i].indexOf('</opmodal')+9;
+                          var s_end1 = data[i].indexOf('</select')-1;
+                          var long = s_end1 - s_init1
+                          // alert('Init1/End1/Long: '+s_init1+'<>'+s_end1+'<>'+long); 
+                          if (long>0)
+                          {
+                              var data1 = data[i].substr(s_init1,long);
+                              var s_init2 = data1.indexOf('<option>')+8;
+                              var s_end2 = data1.indexOf('</');
+                              var long = s_end2 - s_init2
+                              // alert('data1/Init2/End2/Long: '+data1+s_init2+'<>'+s_end2+'<>'+long); 
+                              var data1 = data1.substr(s_init2,long);                              
+                          }
+                          else
+                          {
+                              var data1 = "";
+                          }
+
+                      }
+
+                    }
+                    //    if (i in [1,2,3,4]) {
+                    //    var s_init = data[i].indexOf("value=")+6;
+                    //    var data1 = data[i].substr(s_init,40);
+
+                    //    console.log("data1:",data1);
+
+                    //    var s_end = data1.indexOf('"')-1;
+                    //    data1 = data1.substr(0,s_end);
+                    //}
+                    //else
+                    //{
+                    //    var data1 = data[i];
+                    //}
+
+                    console.log("data1:",data1);
+
+                    switch(i) 
+                    {
+                        case 2:
+                            Detail.costcenter = data1;
+                            break;
+                        case 3:
+                            Detail.accountcode = data1;
+                            break;
+                        case 4:
+                            Detail.order = data1;
+                            break;
+                        case 5:
+                            Detail.concept = data1;
+                            break;
+                        case 6:
+                            Detail.servicemonth = data1;
+                            break;
+                        case 7:
+                            Detail.description = data1;
+                            break;
+                    }
+
+                    i++
+                }
+                detail.push(Detail);
+                console.log(detail);
+            } );                
+
+
+
+        }
+        else
+        {
+            alert('Entror por otra');        
+        }
+
+
+        $('#supplierInvoice_new').submit();
+
+ };
+
+
+
+    // ------------------------------------
+    //         addtax()
+    // -----------------------------------
+
+    function addtax()
+    {
+
+        //  e.preventDefault();
+        // alert('addTax');
+        var tt = $('#ttax').DataTable();
+        //  alert(ts.rows().data()[0]);
+
+        //if (tt.rows().data()[0])
+        //{
+        //  alert("Solo se permite una linea")
+        //}
+        //else
+        //{
+           /*
+              <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
+           */
+            currentRow = tt.row.add( 
+            [
+              //'<td align="center"><a class="btn btn-danger"><em class="fa fa-trash"></em></a></td>',
+              '<td align="center"><a type="delete" class="btn btn-danger"><em class="fa fa-trash"></em></a></td>',
+
+              //'<td><input type="text" class="form-control separate-bottom" name="linenumber" id="linenumber" value="10"/></td>',
+              '<td><select class="form-control selectpicker show-tick" name="taxcode" id="taxcode">'+
+              '<option selected>{{this.taxcode}}</option>'+
+              '<option>00:Cod</option>'+
+              '<option>C1:IVA 21%</option>'+
+              '<option>CX:Sin Impuestos</option>'+
+              '<option>S1:IVA 27%</option>'+
+              '<option>T1:IVA 10,5%</option>'+
+              '<option>XC:Per.IVA 1,5%</option>'+
+              '<option>XD:Per.IVA 3,00%</option>'+
+              '<option>X3:Per.IVA 5%</option>'+
+              '<option>XN:Perc. IIBB CABA 1,00%</option>'+              
+              '<option>X2:Perc. IIBB CABA 3.5%</option>'+
+              '<option>X6:Perc. IIBB CABA 2.0%</option>'+
+              '<option>X0:Perc. IIBB CABA 6.0%</option>'+
+              '<option>XH:Perc. IIBB Pcia. Buenos Aires 2.5%</option>'+
+              '<option>XB:Perc. IIBB Pcia. Buenos Aires 5.0%</option>'+
+              '<option>X5:Perc. IIBB Santa Fe 1.25%</option>'+
+              '<option>XG:Perc. IIBB Tucumán 1.75%</option>'+
+              '<option>X9:Perc. IIBB Tucumán 1.50%</option>'+
+              '<option>XE:Perc. IIBB San Luis 2.0%</option>'+
+              '<option>XF:Perc. IIBB Misiones 3.31%</option>'+
+              '<option>XI:Perc. IIBB San Juan 1.20%</option>'+
+              '<option>XJ:Perc. IIBB Salta 0.02%</option>'+
+              '<option>XK:Perc. IIBB Catamarca 2.5%</option>'+
+              '<option>XL:Perc. IIBB Mendoza 1.5%</option>'+
+              '<option>XM:Perc. IIBB Jujuy 3,00%</option>'+         
+              '</select></td>',
+              '<td><input type="text" class="form-control separate-bottom" placeholder="Monto" name="taxamount" id="taxamount" value="{{this.taxamount}}"/></td>'
+            ] ).draw();
+
+ 
+
+            // alert(currentRow);
+        //};
+    };
+
+        // ------------------------------------
+        //  Ttax click
+        //     - Borrar Linea
+        // -----------------------------------
+            $('#ttax tbody').on( 'click', 'a[type="delete"]', function () 
+            {
+                //alert("Click en table tax column delete");
+                var table = $('#ttax').DataTable();
+
+                table
+                    .row( $(this).parents('tr') )
+                    .remove()
+                    .draw();                    
+            } );
+
+
+
+    $('#ttax tbody').on( 'click', 'td', function () 
+    {
+
+      // alert("Entro ");
+      var currentColumn = $(this).parent().children().index($(this));
+      var currentRow = $(this).parent().parent().children().index($(this).parent());
+      $("#currentRow").val($(this).parent().parent().children().index($(this).parent()));
+    });
+
+
+
+        // -----------------------------------
+        //         exchangerate
+        // -----------------------------------
+        $("#currency").blur(function () 
+        {
+          //alert("Currency blur");
+
+          //alert("Company");
+          //alert(t_company["XA01"][0]); 
+          var xcompany = $("#company :selected").text().split(":")[0];
+          if (xcompany != "000")
+          {
+
+          //alert(xcompany); 
+          var curr_company = t_company[xcompany][1];
+
+          // var xcompany1 = xcompany..;
+          //alert(c_currency); 
+
+          // alert(xcompany1); 
+          //alert(t_company[][0]); 
+
+
+          //var currcompany = "USD";
+          var valcurr = $("#currency :selected").text();
+          if (curr_company == valcurr)
+          {
+            $("#exchangerate").val(1);
+            document.getElementById("exchangerate").setAttribute("readonly", "readonly");
+          }
+          else
+          {
+            document.getElementById("exchangerate").removeAttribute("readonly");
+          }
+          }
+          else
+          {
+            alert("Debe seleccionar una compañía Primero");
+            $("#currency").val("000");
+          }            
+
+        });
+
+
+        // ------------------------------------
+        //         montoneto
+        // -----------------------------------
+        $("#amountinvoice").blur(function () {
+
+
+            totaliza_factura();
+
+            var num1 = transform_2_number($("#amountinvoice").val());
+            var num = transform_2_formatnumber(num1);
+
+            $("#amountinvoice").val(num);   
+
+        });
+
+
+        // ------------------------------------
+        //         totaltax
+        // -----------------------------------
+        $("#totaltax").blur(function () {
+
+            //var tstring = $("#totaltax").val();
+            var tstring = document.getElementById("totaltax").value.trim();
+            //alert('tstring:'+tstring+"<>"+tstring.length);
+            //$("#totaltax").val(tstring);
+            if (tstring.length > 0)
+            {
+              //alert("totaltax > 0");
+              totaliza_factura();
+            }
+            else
+            {              
+              $("#totaltax").val(0);
+              totaliza_factura();              
+              //alert("totaltax = 0");
+            }
+            var num1 = transform_2_number($("#totaltax").val());
+            var num = transform_2_formatnumber(num1);
+
+            $("#totaltax").val(num);   
+
+        });
+
+
+        // ------------------------------------
+        //         totalinvoice
+        // -----------------------------------
+        $("#totalinvoice").blur(function () {
+            //var input = $("#totalinvoice").val();
+            //input = parseFloat(num.replace(/,/g,"")).toFixed(2);
+            //var num = parseFloat(input).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + " $";
+            //$("#totalinvoice").val(transform_2_formatnumber(num));
+
+            // en el replace /,/g significa reemplaza todas las ocurrencias!!
+            //alert('Valor Numerico: '+parseFloat(num.replace(/,/g,"")).toFixed(2));
+            //alert('Valor Numerico: '+parseFloat(num).toFixed(2));  
+        });
+
+        // -----------------------------------
+        //         totaliza_factura()
+        // -----------------------------------
+        function totaliza_factura()
+        {
+            var tstring = document.getElementById("totaltax").value.trim();
+            //alert('tstring:'+tstring+"<>"+tstring.length);
+            if (tstring.length > 0)
+            {
+              var tax = transform_2_number($("#totaltax").val());
+            }
+            else
+            {
+              var tax = 0;  
+            }
+            var neto  = transform_2_number($("#amountinvoice").val());
+            //alert('tax : '+tax);
+            var totalfact = neto + tax;
+            //alert('tax : '+tax);
+            //alert('totalfact : '+totalfact);
+
+            $("#totalinvoice").val(transform_2_formatnumber(totalfact));
+            // en el replace /,/g significa reemplaza todas las ocurrencias!!
+            //var numreturn = parseFloat(valor_2_convert.replace(/,/g,"")).toFixed(2);
+
+            //alert('Valor Numerico: '+num);
+            //alert('Valor Numerico: '+parseFloat(num).toFixed(2));  
+            //return numreturn;
+
+        };
+
+
+
+    // ------------------------------------
+    //        exist_invoice()
+    // -----------------------------------
+    function exist_invoice()
+    {
+
+         var t_params = "supplier="+$("#supplier").val()+
+                        "&numdoc="+$("#numdoc").val()+
+                        '&crud_type="NEW"'
+
+
+          console.log('t_params:',t_params);               
+          $.ajax(
+          {
+                url: "/api/exist_supplierinvoicenumber?"+t_params,  
+                success: function(returnval) 
+                {
+                   //                alert("testajax - return success:");
+
+                   //alert("testajax - Data:"+returnval["error"]+"<>"+returnval["message"]);
+                   //alert("testajax - Data-message:",data["message"]);
+
+                    if (returnval["error"] == true) 
+                    {
+                      var infotext = returnval["message"]+
+                                      "\n   Fecha Doc : "+returnval["documentdate"]+
+                                      "\n   Tipo Doc  : "+returnval["documenttype"]+
+                                      "\n   Monto Neto: "+returnval["netamount"];
+                        alert("ADVERTENCIA! : "+infotext);
+
+                    }
+                    else
+                    {
+                      //alert("testajax - validación OK:"+returnval["message"]);                       
+                    }
+
+
+                },
+                error: function(returnval) {
+                            alert("Error - se ejecuto la validación de factura repetida");
+                            //$(".message").text(returnval + " failure");
+                            //$(".message").fadeIn("slow");
+                            //$(".message").delay(2000).fadeOut(1000);
+                        }
+          });                        
+
+   };
+function validarFormulario()
+{
+   return true;
+
+}
+
+        // -------------------------------------
+        //     formValidation
+        // -------------------------------------        
+        function formValidation()
+        {  
+          var supplier = document.supplierInvoice_new.supplier;
+          var company  = document.supplierInvoice_new.company;
+          var currency = document.supplierInvoice_new.currency;
+          var amountinvoice = document.supplierInvoice_new.amountinvoice;
+          var costcenter = document.supplierInvoice_new.costcenter;
+          var accountcode = document.supplierInvoice_new.accountcode;
+          // alert("formValidation");
+          if(validation_fill(supplier))  
+          {  
+            if(validation_select(company))  
+            {
+              if(validation_select(currency))  
+              {
+                if(validation_fill(amountinvoice))  
+                {
+                  if(validation_fill(costcenter))  
+                  {
+                    if(validation_fill(accountcode))  
+                    {
+                      return true;
+                    }
+                  }
+                }
+              }
+            }  
+          }  
+          return false;  
+        } 
+
+
+        function email_validation(email,mx,my)  
+        {  
+          var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+          if(email.value.match(mailformat))  
+          {  
+            return true;  
+          }  
+          else  
+          {  
+            alert("Email no valido");  
+            email.focus();  
+            return false;  
+          }  
+        }  
+
+        function validation_fill(field)
+        {  
+          //alert("validation_fill - field:"+field.placeholder);
+
+          var field_len = field.value.length;  
+          if (field_len == 0)  
+          {  
+            alert("Campo no puede estar vacío, "+field.placeholder);
+            field.focus();  
+            return false;  
+          }  
+          return true;  
+        }  
+
+        function validation_select(field)
+        {  
+
+          var field_val = field.value;  
+          //alert("validation_currency - value:"+field_val);
+
+          var field_select = field_val.split(":");
+          if (field_select[0] == "000")
+          {  
+            alert("Campo no puede estar vacío. "+field_select[1]); 
+            field.focus();  
+            return false;  
+          }  
+          return true;  
+        }  
+
+
+        function name_validation(name,mx,my)
+        {  
+          var name_len = name.value.length;  
+          if (name_len == 0 || name_len >= my || name_len < mx)  
+          {  
+            alert("Nombre no puede estar vacío / logitud debe ser entre "+mx+" to "+my);  
+            name.focus();  
+            return false;  
+          }  
+          return true;  
+        }  
+
+
+
+ //);
+</script>
+
+
