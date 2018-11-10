@@ -64,9 +64,11 @@
           <div class="col-lg-12 col-md-4 col-sm-12">
 
             <div class="btn-group" role="group" aria-label="Basic example" >
+                <button type="button" class="btn btn-success btn-lg" 
+                        data-toggle="modal" data-target=".modal-approved" >Aceptar Propuesta <i class="fa fa-thumbs-up"></i></button>                
                 <button type="button" class="btn btn-danger btn-lg" 
                         data-toggle="modal" data-target=".modal-newplan" >Rechazar<i class="fa fa-thumbs-down"></i></button>
-                <button type="button" class="btn btn-success btn-lg" >Aceptar Propuesta <i class="fa fa-thumbs-up"></i></button>
+
              </div>
           </div>
       </div>
@@ -277,6 +279,32 @@
         </div>
     </div>   
 
+    <!--   
+        Confirmación de Aprobación
+    -->       
+    <div    class="modal fade modal-approved" tabindex="-1" 
+            id="modal-approved"
+            role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="btn_newplan" name="btn_newplan" type="button" class="close" data-dismiss="modal" aria-hidden="true">Cerrar &times;</button>
+                        {{火}} {{huo}}
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-8 col-md-8 col-sm-12 col-xs-12">Esta Seguro?</label> 
+                    </div>  
+                </div>    
+                <div class="modal-footer">          
+                    <button id="btn_approved" name="btn_approved" type="button" 
+                            class="close" data-dismiss="modal" aria-hidden="true">Aprobar Propuesta</button>
+                        {{火}} {{huo}}
+                </div>                
+            </div>
+        </div>
+    </div>  
+
  
 <!--  ************************************************ -->
 
@@ -397,6 +425,18 @@
                 $('#proposal_approvreject_detail').submit();                    
 
             });
+    
+        // ------------------------------------
+        //         btn_approved
+        // -----------------------------------        
+            $('#btn_approved').on( 'click', function () 
+            {
+                alert("btn_approved");
+                alert("operation_id:"+$('#operation_id').val());                
+                document.getElementById('returnaction').value = "APPROVED"
+                $('#proposal_approvreject_detail').submit();                    
+
+            });    
     
 
 

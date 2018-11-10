@@ -1,6 +1,9 @@
 var mongo = require('mongodb');
 
 
+
+var emaildestino = "jbcarta@hotmail.com";
+
 var express = require('express');
 var path = require('path');
 var router = express.Router();
@@ -625,9 +628,10 @@ var nodemailer = require('nodemailer');
                     console.log("proposal_approvreject -> Encontré registro!!!...: "+docs);
                     if(req.body.returnaction == 'REJECT')
                     {
+
                         docs.status = '02-rechazado',
                         docs.status_date = getDateTime_asString();
-     
+
                         docs.save(function (err, todo) 
                         {
                             if (err) 
@@ -636,7 +640,7 @@ var nodemailer = require('nodemailer');
                             }
                             else
                             {
-                                console.log('doc saved:',docs)
+                                console.log('doc saved:',docs);
                                 //res.send(todo);                    
                         
                                 // -------------------------------------
@@ -651,7 +655,7 @@ var nodemailer = require('nodemailer');
                                     });
 
                                     var mailOptions = {
-                                        from: 'jbcarta@hotmail.com',
+                                        from: 'sirmionep2planding@gmail.com',
                                         to: 'jbcarta@hotmail.com',
                                         subject: 'Notificación sobre su Propuesta Enviada',
                                         text: 
@@ -681,6 +685,170 @@ var nodemailer = require('nodemailer');
                                 res.redirect('/');
                             }
                         });    // docs.save                  
+                        
+                    }
+                    else
+                    {
+                            var bank_id = 0;
+                            var doc_type= "CI";
+                            var doc_num="51060391"			  
+                                    
+                            var destinatioUrl = "http://apicast-hackaton-galicia.b9ad.pro-us-east-1.openshiftapps.com/api/v1/customers?apikey=b5776541fc93e7f10a07f7c5f0ec7c8e";
+                            var options = 
+                            {
+                              uri: destinatioUrl,
+                              method: 'GET'
+                              //json: json_t_invoice
+                              //body: json_t_invoice
+                            };
+
+                            console.log("----------------------------------");
+                            console.log("Request --------------------------");			
+
+                            request(options, function (error, response, body) 
+                            {
+                                if (!error && response.statusCode == 200) 
+                                {
+                                 console.log("body.id:",body.id) // Print the shortened url.
+                                }
+                                console.log("Error:", error);
+                                //console.log("Response:", response);´´
+                                //console.log("body:", body);
+
+                                var t_body = JSON.parse(body);
+                                var record_selected = -1;
+                                console.log("t_body:", t_body);
+                                for (var i = t_body.length-1; i > 0; i--) 
+                                {
+                                    console.log(t_body[i].Doc_Type+"<>"+doc_type+"<>"+i);
+                                    //console.log(t_body[i].Doc_Type);                        
+                                    if (t_body[i].Doc_Type == doc_type && t_body[i].Doc_Number == doc_num)
+                                    {
+                                        record_selected = i;
+                                        console.log("RecSelected"+">"+t_body[i]+"<>"+t_body[i].Doc_Type+"<>"+i);
+                                        i = -10;
+                                    }
+
+                                };
+                                if (record_selected > -1)
+                                {
+                                    var bank_id = t_body[record_selected].Id;
+                                    console.log("bank_id:"+bank_id);
+                                //-----------------------------------    
+			  
+                                    
+                                    var destinatioUrl = "http://apicast-hackaton-galicia.b9ad.pro-us-east-1.openshiftapps.com/api/v1/customers/"+bank_id+"/accounts?apikey=b5776541fc93e7f10a07f7c5f0ec7c8e";
+                                    var options = 
+                                    {
+                                      uri: destinatioUrl,
+                                      method: 'GET'
+                                      //json: json_t_invoice
+                                      //body: json_t_invoice
+                                    };
+
+                                    console.log("----------------------------------");
+                                    console.log("Request --------------------------");			
+
+                                    request(options, function (error, response, body) 
+                                    {
+                                        if (!error && response.statusCode == 200) 
+                                        {
+                                         console.log("body.id:",body.id) // Print the shortened url.
+                                        }
+                                        console.log("Error:", error);
+                                        //console.log("Response:", response);´´
+                                        //console.log("body:", body);
+
+                                        var t_body = JSON.parse(body);
+                                        var record_selected = -1;
+                                        console.log("t_body:", t_body);
+                                        for (var i = t_body.length-1; i > 0; i--) 
+                                        {
+                                            console.log(t_body[i].Doc_Type+"<>"+doc_type+"<>"+i);
+                                            //console.log(t_body[i].Doc_Type);                        
+                                            if (t_body[i].Type == "Checking")
+                                            {
+                                                record_selected = i;
+                                                console.log("RecSelected"+">"+t_body[i]+"<>"+t_body[i].Account_Number+"<>"+i);
+                                                i = -10;
+                                            }
+
+                                        };
+                                        if (record_selected > -1)
+                                        {
+                                            var account_number = t_body[record_selected].Account_Number;
+                                            console.log("Account_Number:"+account_number);
+                                    
+                                //------------------------------------        
+                                        
+                                            docs.status = '03-Aceptado, en espera de fondos',
+                                            docs.status_date = getDateTime_asString();
+
+                                            docs.save(function (err, todo) 
+                                            {
+                                                if (err) 
+                                                {
+                                                    console.log(" error al grabar:"+err);   
+                                                }
+                                                else
+                                                {
+                                                    console.log('doc saved:',docs);
+                                                    //res.send(todo);                    
+
+                                                    // -------------------------------------
+                                                    //   Enviar email de notificación
+
+                                                        var transporter = nodemailer.createTransport({
+                                                          service: 'gmail',
+                                                          auth: {
+                                                            user: 'sirmionep2planding@gmail.com',
+                                                            pass: 'Sirmione01.'
+                                                          }
+                                                        });
+
+                                                        var mailOptions = {
+                                                            from: 'sirmionep2planding@gmail.com',
+                                                            to: emaildestino, //'jbcarta@hotmail.com',
+                                                            subject: 'Su oferta fué aceptada!!',
+                                                            text: 
+                                                                "Tenemos en el agrado de informarles que su propuesta fué aceptada. Por favor proceda a realizar la transferencia a la cuenta Nro.:"+account_number+"\n"+
+                                                                "Detalle de su propuesta:"+"\n"+
+                                                                "Nro. Propuesta:"+docs._id+"\n"+                                    
+                                                                "Monto Ofertado:"+docs.amount_requested+"\n"+                    
+                                                                "Nro. de Cuotas:"+docs.numbers_payment+"\n"+
+                                                                "Primer Pago   :"+docs.first_payment+"\n"+  
+                                                                "Tasa Interes  :"+docs.interest_rate+"\n"+                    
+                                                                "Frecuencia    :"+docs.frecuency+"\n"+"\n"+
+
+                                                                "SIRMIONE P2P Landing....Tu socio para ayudarte a crecer!"
+                                                        };
+
+                                                        transporter.sendMail(mailOptions, function(error, info)
+                                                        {
+                                                          if (error) 
+                                                          {
+                                                            console.log(error);
+                                                          } else 
+                                                          {
+                                                            console.log('Email sent: ' + info.response);
+                                                          }
+                                                        }); 
+
+                                                    res.redirect('/');
+                                                }
+                                            });    // docs.save                  
+                                        }
+                                            
+                                    });
+                                }
+                                else
+                                {
+                                    console.log("MENSAJE: No esta registrado en el Banco.  Recuerde usted dará mayor confianza a los inversores si posee cuentas en el BANCO GALICIA");
+                                }
+
+                              console.log("despues de body")
+                            });
+                            
                         
 
 
@@ -1196,6 +1364,71 @@ var nodemailer = require('nodemailer');
                         first_payment: assets[i].data.first_payment,
                         interest_rate: assets[i].data.interest_rate,
                         frecuency: assets[i].data.frecuency
+                    };
+                    //console.log("j: "+j);                    
+                    //console.log("asset_alldata:"+asset_alldata[j].asset_name);                    
+                    j++;
+                    //output["data"].push(asset_alldata);
+                };               
+     
+            }
+
+            
+            console.log("Encontré registros!!!...cantidad de registros: "+assets.length);
+            var totrec = j; //assets.length;
+            console.log('totrec :',totrec);
+            var output = { "iTotalRecords" : totrec, "iTotalDisplayRecords" : 10 };
+            //output["data"] = assets.data;
+            output["data"] = asset_alldata;
+            console.log('Json(output) :'+output["data"]);
+            res.json(output);
+        });
+
+		        
+        //res.redirect('/');      
+    }); 
+
+    //  ------------------------
+    //        /api/cuotas
+    //  ------------------------
+    router.get('/api/cuotas', function (req, res)
+    {
+        var asset_alldata = [];
+        console.log("*************************************************");     
+        console.log("/api/assetlist         -------------------------*");
+        var tmp_id = req.session.passport.user;
+        var tmp_email = "sin valor";
+        var tmp_name = "sin valor";
+        console.log("****** Antes de findById......");   
+        console.log("****** tmp_id    :", tmp_id);   
+        var output = ""; // { "iTotalRecords" : 0, "iTotalDisplayRecords" : 10 };
+        connDb.searchAssets('FY6tCC2YNQSCkoFuXHnVpoB4Mhs6UCk9tcKW7HWsSmck')
+        .then(assets => //console.log('Found assets :', assets));
+        {
+            //console.log('Found assets :', assets);
+            //console.log('assets.length :', assets.length);
+            var j = 0;
+            for(i = 0; i < assets.length; i++) 
+            {
+                console.log("i: "+i+"<>"+assets[i].data.operation);
+                if (assets[i].data.operation != "51-Cuota Pendiente sin Vencer" && assets[i].data.operation != undefined)
+                {
+                    asset_alldata[j] = 
+                    {
+                    
+                        id: assets[i].id,  
+                        operation : assets[i].data.operation,
+                        owner_publicKey: assets[i].data.owner_publicKey,
+                        investment_publicKey: assets[i].data.investment_publicKey,
+                        asset_id: assets[i].data.asset_id, 
+                        proposal : assets[i].data.proposal,
+                        amount_requested: assets[i].data.amount_requested,
+                        numbers_payment: assets[i].data.numbers_payment,
+                        first_payment: assets[i].data.first_payment,
+                        interest_rate: assets[i].data.interest_rate,
+                        frecuency: assets[i].data.frecuency,
+                        duedate: assets[i].data.duedate,
+                        cuota: assets[i].data.cuota
                     };
                     //console.log("j: "+j);                    
                     //console.log("asset_alldata:"+asset_alldata[j].asset_name);                    
