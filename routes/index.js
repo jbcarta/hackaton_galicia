@@ -656,7 +656,7 @@ var nodemailer = require('nodemailer');
 
                                     var mailOptions = {
                                         from: 'sirmionep2planding@gmail.com',
-                                        to: 'jbcarta@hotmail.com',
+                                        to: emaildestino,
                                         subject: 'Notificación sobre su Propuesta Enviada',
                                         text: 
                                             "Lamentamos informarle que su oferta no fue aceptada."+"\n"+"\n"+
@@ -1681,8 +1681,8 @@ var nodemailer = require('nodemailer');
                 });
 
                 var mailOptions = {
-                    from: 'jbcarta@hotmail.com',
-                    to: 'jbcarta@hotmail.com',
+                    from: 'sirmionep2planding@gmail.com',
+                    to: emaildestino,
                     subject: 'Nueva Propuesta de Financiamiento',
                     text: 
                         "Tenemos Nuevas Noticias!"+"\n"+
