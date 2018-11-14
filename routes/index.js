@@ -220,7 +220,7 @@ var nodemailer = require('nodemailer');
 
 
     // Invoice2pay settings
-    var settings = require('../I2P_settings.js');
+    var settings = require('../i2p_settings.js');
 
     var Casupo = require('../public/js/casupolibs.js');
 

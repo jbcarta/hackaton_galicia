@@ -27,9 +27,9 @@ var app = express();
 //app.disable('etag'); no hizo nada se mantuvo igual
 
 
-var settings = require('./I2P_settings.js');
+var settings = require('./i2p_settings.js');
 
-//require('./I2P_functions.js');
+//require('./i2p_functions.js');
 
 
 console.log("MongoServer: ",settings.MongoServer);
